@@ -3,223 +3,4227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taka</title>
+<title>Taka Yamamoto</title>
+<meta name="description" content="Software engineer based in San Francisco. 20 countries, 10+ languages collected. Building things at the intersection of code and culture.">
+<!-- OGP -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://taka-yamamoto369.github.io/">
+<meta property="og:title"       content="Taka Yamamoto">
+<meta property="og:description" content="Software engineer. 20 countries. Language collector.">
+<meta property="og:image"       content="https://taka-yamamoto369.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale"      content="ja_JP">
+<!-- Twitter Card -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Taka Yamamoto">
+<meta name="twitter:description" content="Software engineer. 20 countries. Language collector.">
+<meta name="twitter:image"       content="https://taka-yamamoto369.github.io/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #000;
-    --card-bg: #1c1c1e;
-    --card-border: rgba(255,255,255,.08);
-    --text-primary: #f5f5f7;
-    --text-secondary: rgba(255,255,255,.5);
-    --accent: #2997ff;
-  }
+:root {
+  --bg:    #0b110d;
+  --gold:  #c8922a;
+  --gold2: #e8b84b;
+  --text:  #f0ebe0;
+  --sub:   rgba(240,235,224,.5);
+  --line:  rgba(200,146,42,.2);
+  --card:  #0f1711;
+  --card-hover: #141f16;
+}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 1.5rem;
-    -webkit-font-smoothing: antialiased;
-  }
+html { scroll-behavior: smooth; }
 
-  /* ── Hero ── */
-  .hero {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-  .avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #2997ff 0%, #5e5ce6 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    margin: 0 auto 1.5rem;
-    box-shadow: 0 0 0 1px rgba(255,255,255,.1);
-  }
+/* ── PARTICLE CANVAS ── */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
 
-  .hero h1 {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 700;
-    letter-spacing: -.02em;
-    line-height: 1.05;
-    background: linear-gradient(180deg, #fff 60%, rgba(255,255,255,.4));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* ── SCROLL PROGRESS ── */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--gold2));
+  z-index: 200;
+  width: 0%;
+  transition: width .08s linear;
+}
 
-  .hero p {
-    margin-top: .75rem;
-    font-size: 17px;
-    color: var(--text-secondary);
-    font-weight: 400;
-    letter-spacing: .01em;
-  }
+/* ── CURSOR GLOW ── */
+#cursor-glow {
+  position: fixed;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,146,42,.07) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 1;
+  top: 0; left: 0;
+  will-change: transform;
+}
 
-  /* ── Grid ── */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    width: 100%;
-    max-width: 820px;
-  }
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
 
-  /* ── Card ── */
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 18px;
-    padding: 1.75rem;
-    text-decoration: none;
-    color: inherit;
-    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-  }
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.2rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(11,17,13,.85);
+  border-color: var(--line);
+}
+.nav-logo {
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--gold2); text-decoration: none;
+}
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a {
+  font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--sub);
+  text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--gold2); }
 
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.04), transparent 40%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity .3s;
-  }
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 0 5vw;
+  z-index: 1;
+}
+.hero-glow {
+  position: absolute; top: -10%; left: 20%;
+  width: 70vw; height: 70vw;
+  max-width: 750px; max-height: 750px;
+  background: radial-gradient(circle, rgba(200,146,42,.11) 0%, transparent 60%);
+  pointer-events: none;
+  animation: glowPulse 8s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100%{ transform:scale(1); opacity:.65; }
+  50%    { transform:scale(1.25); opacity:1; }
+}
 
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0,0,0,.5);
-    border-color: rgba(255,255,255,.15);
-  }
-  .card:hover::before { opacity: 1; }
+/* Poem lines */
+.poem-wrap {
+  max-width: 700px;
+}
+.poem-eyebrow {
+  font-size: 10px; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp .6s .2s forwards;
+}
+.poem-stanza {
+  margin-bottom: 2.5rem;
+}
+.poem-line {
+  display: block;
+  font-size: clamp(1.6rem, 4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.25;
+  overflow: hidden;
+}
+.poem-line span {
+  display: block;
+  transform: translateY(110%);
+  background: linear-gradient(148deg, var(--text) 50%, rgba(200,146,42,.55));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.poem-line:nth-child(1) span { animation: slideUp 1.2s cubic-bezier(.16,1,.3,1) .4s forwards; }
+.poem-line:nth-child(2) span { animation: slideUp 1.2s cubic-bezier(.16,1,.3,1) .9s forwards; }
+.poem-stanza + .poem-stanza .poem-line:nth-child(1) span { animation-delay: 1.5s; }
+.poem-stanza + .poem-stanza .poem-line:nth-child(2) span { animation-delay: 2.0s; }
 
-  .card-icon {
-    font-size: 28px;
-    line-height: 1;
-    margin-bottom: .25rem;
-  }
+.poem-en {
+  margin-top: 3rem;
+  font-size: clamp(12px, 1.6vw, 15px);
+  color: var(--sub); font-weight: 300;
+  line-height: 1.85; font-style: italic;
+  letter-spacing: .01em;
+  max-width: 380px;
+  border-left: 1px solid var(--line);
+  padding-left: 1.5rem;
+  opacity: 0; animation: fadeUp .9s 2.9s forwards;
+}
+.hero-tagline {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  letter-spacing: .06em;
+  color: rgba(200,146,42,0.6);
+  font-weight: 300;
+  margin: 0 0 2rem;
+  line-height: 1.2;
+  opacity: 0; animation: fadeUp .9s 1.2s forwards;
+}
+.hero-byline {
+  margin-top: 3rem;
+  display: flex; align-items: center; gap: 1rem;
+  opacity: 0; animation: fadeUp .7s 3.5s forwards;
+}
+.hero-name {
+  font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold2);
+}
+.hero-sep { color: var(--line); }
+.hero-roles {
+  font-size: 11px; letter-spacing: .1em;
+  color: var(--sub);
+}
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; right: 5vw;
+  font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--sub); display: flex; flex-direction: column;
+  align-items: center; gap: .5rem;
+  opacity:0; animation: fadeUp .6s 2.2s forwards;
+}
+.scroll-hint::after {
+  content: ''; width: 1px; height: 50px;
+  background: linear-gradient(to bottom, rgba(200,146,42,.6), transparent);
+  animation: dropLine 2.4s ease-in-out 2.4s infinite;
+}
+@keyframes dropLine {
+  0%  { transform:scaleY(0); transform-origin:top; opacity:1; }
+  65% { transform:scaleY(1); transform-origin:top; opacity:1; }
+  100%{ transform:scaleY(1); transform-origin:top; opacity:0; }
+}
+@keyframes slideUp { to { transform: translateY(0); } }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
 
-  .card-tag {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: .1rem;
-  }
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden; padding: 2rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative; z-index: 1;
+}
+.marquee-track {
+  display: flex; width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  font-size: clamp(12px, 2vw, 15px);
+  font-weight: 400; letter-spacing: .06em;
+  color: var(--sub); white-space: nowrap;
+  padding: 0 2.5rem; transition: color .2s;
+}
+.marquee-item:hover { color: var(--text); }
+.marquee-sep {
+  font-size: 10px; color: var(--gold);
+  opacity: .5; align-self: center; white-space: nowrap;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 
-  .card h2 {
-    font-size: 19px;
-    font-weight: 600;
-    letter-spacing: -.01em;
-    color: var(--text-primary);
-  }
+/* ── DIVIDER ── */
+.divider {
+  height: 1px; background: var(--line);
+  margin: 0 5vw; position: relative; z-index: 1;
+}
 
-  .card p {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-top: .15rem;
-  }
+/* ── SECTION ── */
+.section {
+  padding: 10vh 5vw;
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+}
+.section-wrap {
+  position: relative; z-index: 1;
+}
+.section-label {
+  display: block;
+  font-size: 10px; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 3rem;
+}
 
-  .card-arrow {
-    margin-top: auto;
-    padding-top: 1rem;
-    font-size: 13px;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: .3rem;
-  }
+/* ── PHILOSOPHY ── */
+.phil-layout {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media(max-width:768px){
+  .phil-layout { grid-template-columns: 1fr; }
+  .phil-num { display: none; }
+}
+.about-layout {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media(max-width:768px){
+  .about-layout { grid-template-columns: 1fr; }
+  .about-layout .phil-num { display: none; }
+}
+.about-inner {
+  max-width: 680px;
+  position: relative;
+}
+.about-toggle {
+  position: absolute;
+  top: 0; right: 0;
+  display: flex; gap: .4rem;
+  z-index: 2;
+}
+.about-toggle button {
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--sub);
+  padding: .25rem .75rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+  font-family: inherit;
+}
+.about-toggle button.active {
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+.about-lang { transition: opacity .35s; }
+.about-lang.hidden { display: none; }
+.about-q {
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+  background: linear-gradient(148deg, var(--text) 50%, rgba(200,146,42,.55));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: .5rem;
+}
+.pull-sub {
+  font-size: 12px; color: var(--gold);
+  letter-spacing: .1em;
+  margin-bottom: 2.5rem;
+}
+.about-coda {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: clamp(1.7rem, 4vw, 3.2rem);
+  color: var(--text); font-style: italic;
+  line-height: 1.2;
+  border-left: 2px solid var(--gold);
+  padding-left: 1.5rem;
+}
+.pull-quote.about-coda {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  text-shadow: 0 4px 32px rgba(200,146,42,.15), 0 1px 0 rgba(255,255,255,.04);
+  border-left: 3px solid var(--gold);
+  padding-left: 1.8rem;
+}
+.about-en {
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: var(--sub);
+  line-height: 2;
+  font-style: italic;
+}
+.phil-num {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  color: rgba(200,146,42,.15);
+  letter-spacing: -.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  padding-top: .1em;
+}
+.pull-quote {
+  font-size: clamp(1.7rem, 4vw, 3.2rem);
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+  color: var(--text);
+  position: relative;
+}
+.pull-quote::before {
+  content: '';
+  position: absolute; top: -.2em; left: -.5em;
+  font-size: 3em; color: rgba(200,146,42,.18);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+/* word reveal for pull-quote */
+.word-reveal .word {
+  display: inline-block; overflow: hidden;
+  vertical-align: bottom; margin-right: .22em;
+}
+.word-reveal .word span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform .85s cubic-bezier(.16,1,.3,1);
+}
+.word-reveal.visible .word span { transform: translateY(0); }
 
-  /* card accent colors */
-  .card.game1 { --accent: #ff9f0a; }
-  .card.game2 { --accent: #30d158; }
-  .card.note  { --accent: #bf5af2; }
-  .card.insta { --accent: #ff375f; }
+.phil-body {
+  margin-top: 1.5rem;
+  font-size: clamp(14px, 1.7vw, 17px);
+  color: var(--sub); line-height: 1.9;
+}
+.phil-en {
+  padding-top: .4rem;
+  font-size: clamp(13px, 1.5vw, 15px);
+  color: rgba(240,235,224,.55);
+  line-height: 2; font-style: italic;
+  border-left: 2px solid var(--gold);
+  padding-left: 2rem;
+}
 
-  /* ── Footer ── */
-  footer {
-    margin-top: 4rem;
-    font-size: 12px;
-    color: rgba(255,255,255,.2);
-    letter-spacing: .04em;
-  }
+/* ── STATS ROW ── */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  padding: 5vh 5vw;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative; z-index: 1;
+  flex-wrap: wrap;
+}
+.stat {
+  display: flex; flex-direction: column;
+  align-items: center; gap: .3rem;
+}
+.stat-n {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: var(--gold2);
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+.stat-l {
+  font-size: 10px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--sub);
+}
+.stat-sep {
+  font-size: 1.5rem; color: var(--line);
+}
+
+/* ── RPG WALKER ── */
+.rpg-walker-wrap {
+  position: relative; z-index: 1;
+  background: rgba(2,6,3,0.7);
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+#rpg-walker-canvas {
+  display: block; width: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ── RPG SECTION ── */
+.rpg-wrap {
+  position: relative; z-index: 1;
+  padding: 6vh 5vw;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(4,10,5,0.6);
+}
+.rpg-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  font-family: 'Courier New', Courier, monospace;
+}
+/* area ticker */
+.rpg-area-wrap {
+  overflow: hidden;
+  border: 1px solid rgba(200,146,42,0.25);
+  border-radius: 4px;
+  padding: .35rem .75rem;
+  margin-bottom: 1.5rem;
+  background: rgba(200,146,42,0.04);
+}
+.rpg-area-label {
+  font-size: 9px; letter-spacing: .2em;
+  color: rgba(200,146,42,0.5);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.rpg-area-ticker {
+  font-size: 11px;
+  color: rgba(200,146,42,0.7);
+  white-space: nowrap;
+  display: block;
+}
+/* dialog box */
+.rpg-dialog {
+  border: 1px solid rgba(200,146,42,0.3);
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background: rgba(0,0,0,0.3);
+  min-height: 4.5rem;
+  position: relative;
+}
+.rpg-dialog-label {
+  font-size: 9px; letter-spacing: .2em;
+  color: rgba(200,146,42,0.4);
+  text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.rpg-dialog p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text);
+  margin: 0;
+}
+.rpg-cursor {
+  display: inline-block;
+  width: 7px; height: 13px;
+  background: var(--gold);
+  opacity: 0.8;
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink .75s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.rpg-next {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 11px;
+  margin-left: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+  animation: blink .6s step-end infinite;
+  user-select: none;
+}
+/* quest log */
+.rpg-log-label {
+  font-size: 9px; letter-spacing: .2em;
+  color: rgba(200,146,42,0.4);
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+}
+.rpg-quests {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.rpg-q {
+  display: flex;
+  align-items: baseline;
+  gap: .65rem;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.rpg-q-tag {
+  font-size: 9px;
+  letter-spacing: .12em;
+  padding: 1px 5px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+.rpg-q-tag.done {
+  background: rgba(200,146,42,0.12);
+  color: rgba(200,146,42,0.6);
+  border: 1px solid rgba(200,146,42,0.2);
+}
+.rpg-q-tag.active {
+  background: rgba(80,200,100,0.1);
+  color: rgba(100,220,120,0.8);
+  border: 1px solid rgba(80,200,100,0.25);
+}
+.rpg-q-text {
+  color: var(--text);
+}
+.rpg-q-text .q-jp { color: var(--text); }
+.rpg-q-text .q-en {
+  color: var(--sub);
+  font-size: 11px;
+  margin-left: .4rem;
+}
+.rpg-q.is-done .rpg-q-text .q-jp,
+.rpg-q.is-done .rpg-q-text .q-en {
+  color: var(--sub);
+}
+
+/* ── shared rpg mini ── */
+.rpgm-wrap {
+  position: relative; z-index: 1;
+  padding: 6vh 5vw;
+  border-top: 1px solid var(--line);
+}
+.rpgm-inner { max-width: 640px; margin: 0 auto; font-family: 'Courier New', monospace; }
+.rpgm-label {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(200,146,42,0.4); margin-bottom: .8rem;
+}
+.rpgm-dialog {
+  font-size: 13px; line-height: 1.85; color: var(--text);
+  margin-top: .9rem; min-height: 2.4rem;
+}
+
+/* A — MAP */
+#rpg-map { background: rgba(3,8,4,0.6); }
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 3px; margin-bottom: .5rem;
+}
+.map-cell {
+  aspect-ratio: 1;
+  border-radius: 1px;
+  background: rgba(200,146,42,0.06);
+  transition: background .3s;
+}
+.map-cell.visited { background: rgba(200,146,42,0.35); }
+.map-cell.active  { background: rgba(200,146,42,0.75); box-shadow: 0 0 4px rgba(200,146,42,0.5); }
+
+/* A — SVG map */
+.map-opt-label { font-size:.6rem; color:var(--sub); letter-spacing:.1em; margin:.8rem 0 .3rem; opacity:.65; }
+.map-opt-label:first-child { margin-top:0; }
+.land { fill:rgba(200,146,42,0.04); stroke:rgba(200,146,42,0.2); stroke-width:.5; }
+.visited-c { fill:rgba(200,146,42,0.13); stroke:rgba(200,146,42,0.55); stroke-width:.7; cursor:default; transition:fill .2s; }
+.visited-c:hover { fill:rgba(200,146,42,0.25); }
+.city-dot { fill:var(--gold2); }
+.map-label { font-size:5.5px; fill:rgba(200,146,42,0.45); font-family:monospace; pointer-events:none; }
+
+/* B — ENCOUNTER */
+#rpg-enc { background: rgba(6,3,2,0.7); }
+.enc-box {
+  border: 1px solid rgba(200,146,42,0.35);
+  border-radius: 6px; padding: 1.1rem 1.25rem;
+  background: rgba(0,0,0,0.4);
+}
+.enc-header {
+  display: flex; align-items: center; gap: .6rem;
+  margin-bottom: .7rem;
+}
+.enc-bang {
+  font-size: 18px; color: var(--gold);
+  animation: blink .5s step-end infinite;
+}
+.enc-title {
+  font-size: 10px; letter-spacing: .25em;
+  color: rgba(200,146,42,0.7); text-transform: uppercase;
+}
+.enc-battle-ui { display: flex; flex-direction: column; }
+.enc-battle-text {
+  border: 1px solid rgba(200,146,42,0.3);
+  border-top: none;
+  background: rgba(6,3,2,0.85);
+  padding: .5rem .8rem;
+  font-size: 12px; line-height: 1.6;
+  color: var(--text); letter-spacing: .04em;
+  min-height: 2.4rem;
+}
+.enc-menu {
+  border: 1px solid rgba(200,146,42,0.3);
+  border-top: 1px solid rgba(200,146,42,0.12);
+  background: rgba(6,3,2,0.7);
+  padding: .35rem .6rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: .1rem .4rem;
+}
+.enc-choice {
+  font-size: 11px; letter-spacing: .04em;
+  color: rgba(200,146,42,0.65);
+  cursor: pointer; padding: .2rem .3rem;
+  border-radius: 3px; transition: color .12s, background .12s;
+  font-family: "SF Mono", monospace;
+  white-space: pre;
+}
+.enc-choice:hover { color: var(--gold2); background: rgba(200,146,42,0.07); }
+.enc-choice.cursor { color: var(--gold2); }
+
+/* C — STATUS */
+#rpg-stat { background: rgba(2,5,3,0.6); }
+.stat-bars { margin-bottom: .8rem; display: flex; flex-direction: column; gap: .5rem; }
+.stat-bar-row { display: flex; align-items: center; gap: .75rem; }
+.stat-bar-label {
+  font-size: 10px; color: var(--sub); min-width: 70px; text-align: right;
+}
+.stat-bar-track {
+  flex: 1; height: 6px; border-radius: 3px;
+  background: rgba(200,146,42,0.08);
+  border: 1px solid rgba(200,146,42,0.15); overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%; background: rgba(200,146,42,0.55);
+  border-radius: 3px; width: 0; transition: width 1.2s ease;
+}
+.stat-bar-val {
+  font-size: 9px; color: rgba(200,146,42,0.5); min-width: 28px;
+}
+
+/* D — MINIMAP */
+#rpg-mini { background: rgba(2,4,3,0.65); }
+.minimap-row { display: flex; align-items: flex-start; gap: 1.5rem; }
+.minimap-grid {
+  display: grid; grid-template-columns: repeat(12, 8px);
+  grid-template-rows: repeat(7, 8px); gap: 2px; flex-shrink: 0;
+}
+.mm-cell { width: 8px; height: 8px; border-radius: 1px; background: rgba(200,146,42,0.07); }
+.mm-cell.wall { background: rgba(200,146,42,0.22); }
+.mm-cell.you {
+  background: var(--gold2);
+  box-shadow: 0 0 5px rgba(232,184,75,0.9);
+  animation: blink .6s step-end infinite;
+}
+.mm-cell.path { background: rgba(200,146,42,0.12); }
+.mm-cell.you  { background: rgba(200,146,42,0.9); animation: blink .8s step-end infinite; }
+
+/* E — ITEM LOG */
+#rpg-item { background: rgba(3,6,4,0.6); }
+.item-log { display: flex; flex-direction: column; gap: .45rem; }
+.item-entry {
+  display: flex; align-items: baseline; gap: .6rem;
+  font-size: 12px; opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity .4s, transform .4s;
+}
+.item-entry.show { opacity: 1; transform: translateX(0); }
+.item-tag {
+  font-size: 9px; padding: 1px 6px; border-radius: 2px;
+  background: rgba(200,146,42,0.1); border: 1px solid rgba(200,146,42,0.25);
+  color: rgba(200,146,42,0.65); letter-spacing: .08em; white-space: nowrap;
+}
+.item-text { color: var(--text); line-height: 1.7; }
+
+/* ── INTERESTS ── */
+.interests-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+@media(max-width:640px){ .interests-grid { grid-template-columns: 1fr; } }
+.interest-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px; padding: 1.6rem;
+  transition: border-color .3s;
+}
+.interest-card:hover { border-color: rgba(200,146,42,0.35); }
+.interest-eyebrow {
+  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(200,146,42,0.55); margin-bottom: .8rem;
+}
+.interest-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700; letter-spacing: -.02em;
+  color: var(--text); margin-bottom: .25rem; line-height: 1.1;
+}
+.interest-sub {
+  font-size: 11px; color: var(--sub); margin-bottom: 1rem;
+  letter-spacing: .06em;
+}
+.interest-body {
+  font-size: 13px; color: var(--sub); line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+.interest-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+.lang-list { display: flex; flex-direction: column; gap: .55rem; margin-top: .25rem; }
+.lang-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: .55rem; border-bottom: 1px solid rgba(200,146,42,0.07);
+}
+.lang-row:last-child { border-bottom: none; padding-bottom: 0; }
+.lang-name { font-size: 13px; color: var(--sub); }
+.lang-badge {
+  font-size: 9px; letter-spacing: .1em; padding: 2px 8px;
+  border-radius: 2px; text-transform: uppercase; white-space: nowrap;
+}
+.lang-badge.n { background: rgba(200,146,42,0.18); color: var(--gold2); border: 1px solid rgba(200,146,42,0.4); }
+.lang-badge.h { background: rgba(200,146,42,0.09); color: rgba(200,146,42,0.8); border: 1px solid rgba(200,146,42,0.2); }
+.lang-badge.m { background: transparent; color: rgba(200,146,42,0.55); border: 1px solid rgba(200,146,42,0.15); }
+.lang-badge.l { background: transparent; color: rgba(200,146,42,0.35); border: 1px solid rgba(200,146,42,0.08); }
+
+/* ── STATEMENT FULLSCREEN ── */
+.statement-wrap {
+  position: relative; z-index: 1;
+  padding: 18vh 5vw;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+.statement-line {
+  display: block;
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -.04em;
+  line-height: 1.0;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(200,146,42,.2);
+  overflow: hidden;
+  margin-bottom: .1em;
+  transition: color .6s ease, -webkit-text-stroke .6s ease;
+}
+.statement-wrap.visible .statement-line { color: var(--text); -webkit-text-stroke: 0; }
+.statement-wrap.visible .statement-line:nth-child(1) { transition-delay: 0s; }
+.statement-wrap.visible .statement-line:nth-child(2) { transition-delay: .18s; }
+.statement-wrap.visible .statement-line:nth-child(3) { transition-delay: .36s; }
+.statement-line ruby rt {
+  font-size: .24em;
+  letter-spacing: .05em;
+  color: rgba(240,235,224,.22);
+  font-weight: 300;
+}
+.statement-en {
+  margin-top: 1.8rem;
+  font-size: clamp(11px, 1.1vw, 13px);
+  color: var(--sub);
+  letter-spacing: .14em;
+  font-style: italic;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .7s .54s, transform .7s .54s;
+}
+.statement-wrap.visible .statement-en { opacity: 1; transform: none; }
+.statement-sub {
+  margin-top: .9rem;
+  font-size: clamp(.72rem, 1.4vw, .95rem);
+  color: rgba(200,146,42,0.5);
+  letter-spacing: .22em;
+  font-style: normal;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .7s .7s, transform .7s .7s;
+}
+.statement-wrap.visible .statement-sub { opacity: 1; transform: none; }
+
+/* ── TIMELINE ── */
+.timeline-wrap {
+  position: relative; z-index: 1;
+  padding: 10vh 5vw;
+  max-width: 1000px; margin: 0 auto;
+}
+.timeline-line {
+  position: absolute;
+  top: 0; bottom: 0; left: calc(5vw + 80px);
+  width: 1px;
+  background: linear-gradient(to bottom, transparent 5%, var(--line) 20%, var(--line) 80%, transparent 95%);
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0 3rem;
+  padding: 2.5rem 0;
+  position: relative;
+  opacity: 0; transform: translateX(-14px);
+  transition: opacity .7s cubic-bezier(0.16,1,0.3,1), transform .7s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+.tl-item.visible { opacity: 1; transform: none; }
+.tl-year {
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .05em; color: var(--gold);
+  text-align: right; padding-top: .1em;
+  font-variant-numeric: tabular-nums;
+}
+.tl-dot { display: none; }
+.tl-content {}
+.tl-title {
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  font-weight: 600; letter-spacing: -.02em;
+  color: var(--sub); line-height: 1.2;
+  margin-bottom: .5rem;
+}
+.tl-desc {
+  font-size: 13px; color: var(--sub);
+  line-height: 1.7;
+}
+.tl-tag {
+  display: inline-block; margin-top: .6rem;
+  font-size: 10px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid var(--line); padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* ── JOURNEY ── */
+.journey-wrap {
+  position: relative; z-index: 1;
+  padding: 10vh 0;
+  overflow: hidden;
+}
+.journey-header {
+  padding: 0 5vw;
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 3rem;
+}
+.journey-hint {
+  font-size: 10px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--sub);
+  display: flex; align-items: center; gap: .5rem;
+}
+.journey-hint::after { content: '→'; animation: nudgeRight 2s ease-in-out infinite; }
+@keyframes nudgeRight { 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(5px); } }
+.journey-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 5vw;
+}
+.journey-scroll::-webkit-scrollbar { display: none; }
+.journey-card {
+  flex: 0 0 110px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: .85rem .75rem;
+  display: flex; flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  transition: background .3s, transform .2s, border-color .2s;
+  touch-action: pan-y;
+}
+.journey-card:hover { background: var(--card-hover); transform: translateY(-2px); }
+.journey-card.active { border-color: var(--gold); }
+.jc-flag { font-size: 1.5rem; line-height: 1; }
+.jc-name { font-size: 12px; font-weight: 600; color: var(--text); margin-top: 5px; }
+.jc-local { font-size: 10px; color: var(--sub); }
+.jc-days { font-size: 10px; color: rgba(200,146,42,.5); margin-top: 2px; }
+
+/* Flavor popup */
+.jc-popup {
+  position: fixed;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: var(--card);
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  max-width: 380px;
+  width: calc(100% - 3rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  z-index: 200;
+}
+.jc-popup.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.jc-popup-flag { font-size: 1.8rem; margin-bottom: .5rem; }
+.jc-popup-name { font-size: 13px; font-weight: 600; color: var(--gold2); margin-bottom: .6rem; letter-spacing: .04em; }
+.jc-popup-text { font-size: 13px; color: var(--sub); line-height: 1.8; }
+.jc-popup-close { position: absolute; top: .75rem; right: 1rem; font-size: 16px; color: var(--sub); cursor: pointer; background: none; border: none; }
+
+/* ── CARD GRID ── */
+.section-header {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 2.5rem;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5px;
+  background: var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.card {
+  background: var(--card);
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  transition: background .3s;
+  position: relative; overflow: hidden;
+}
+.card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(200,146,42,.12),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity .35s;
+  pointer-events: none;
+}
+.card:hover { background: var(--card-hover); }
+.card:hover::after { opacity: 1; }
+
+/* Card image area */
+.card-image {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.card-image::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--card) 100%);
+  transition: background .3s;
+}
+.card:hover .card-image::after {
+  background: linear-gradient(to bottom, transparent 40%, var(--card-hover) 100%);
+}
+.card-image-bg {
+  position: absolute; inset: 0;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.card:hover .card-image-bg { transform: scale(1.05); }
+
+/* Card themes */
+.ci-pokdeng .card-image-bg  { background: linear-gradient(135deg,#1a0808 0%,#6a1818 40%,#c8922a 100%); }
+.ci-sangoku .card-image-bg  { background: linear-gradient(135deg,#080f08 0%,#183018 40%,#4a7a2a 100%); }
+.ci-laos .card-image-bg     { background: linear-gradient(135deg,#080f08 0%,#203820 40%,#7a9a4a 100%); }
+.ci-rainbow .card-image-bg  { background: linear-gradient(135deg,#08080f 0%,#182038 40%,#2a4a8a 100%); }
+
+.card-image-label {
+  position: absolute; z-index: 2;
+  bottom: 1rem; left: 1.5rem;
+  font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(240,235,224,.5);
+}
+
+.card-body {
+  padding: 1.5rem 2rem 2.5rem;
+  display: flex; flex-direction: column; gap: .55rem;
+  flex-grow: 1;
+}
+.card-meta {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: .4rem;
+}
+.card-num {
+  font-size: 10px; color: var(--gold);
+  letter-spacing: .12em; opacity: .7;
+  font-variant-numeric: tabular-nums;
+}
+.card-tag {
+  font-size: 10px; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--sub);
+  border: 1px solid var(--line); padding: 2px 7px;
+  border-radius: 20px;
+}
+.card-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  font-weight: 600; letter-spacing: -.02em;
+  line-height: 1.12; color: var(--text);
+  margin-top: .2rem;
+}
+.card-desc {
+  font-size: 13px; color: var(--sub);
+  line-height: 1.65; max-width: 30ch;
+  flex-grow: 1;
+}
+.card-link {
+  margin-top: 1.2rem;
+  font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gold2);
+  display: flex; align-items: center; gap: .4rem;
+  transition: gap .2s;
+}
+.card:hover .card-link { gap: .75rem; }
+
+/* ── HOLOGRAPHIC SHINE ── */
+.card-shine {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity .45s;
+  z-index: 5;
+  background: linear-gradient(
+    115deg,
+    transparent        18%,
+    rgba(255, 80, 80,  .28) 26%,
+    rgba(255,200, 50,  .28) 34%,
+    rgba( 80,255,140,  .28) 42%,
+    rgba( 40,180,255,  .28) 50%,
+    rgba(180, 40,255,  .28) 58%,
+    rgba(255, 80,140,  .28) 66%,
+    transparent        74%
+  );
+  background-size: 200% 200%;
+  mix-blend-mode: screen;
+}
+.card.holo-reset,
+.journey-card.holo-reset {
+  transition: transform .55s cubic-bezier(.16,1,.3,1), background .3s;
+}
+.card { will-change: transform; }
+.journey-card { will-change: transform; touch-action: pan-y; }
+
+/* ── FADE ── */
+.fade {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .72s cubic-bezier(0.16,1,0.3,1),
+              transform .72s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+.fade.visible { opacity:1; transform:none; }
+
+/* ── TRAVEL MAP ── */
+.tmap-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  margin: 2rem auto 0;
+}
+#tmap-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid rgba(200,146,42,0.1);
+}
+.tmap-replay {
+  display: block;
+  margin: 1rem auto 0;
+  background: transparent;
+  border: 1px solid rgba(200,146,42,0.3);
+  color: rgba(200,146,42,0.6);
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: .2em;
+  padding: 7px 20px;
+  cursor: pointer;
+  transition: all .25s;
+  opacity: 0;
+  pointer-events: none;
+}
+.tmap-replay.ready {
+  opacity: 1;
+  pointer-events: auto;
+}
+.tmap-replay:hover {
+  background: rgba(200,146,42,0.07);
+  border-color: rgba(200,146,42,0.6);
+  color: rgba(200,146,42,1);
+}
+
+/* ── TRAVEL MAP SCRUBBER ── */
+.tmap-scrubber-wrap {
+  padding: 6px 2px 2px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tmap-scrubber-track {
+  position: relative;
+  height: 2px;
+  background: rgba(200,146,42,0.12);
+}
+.tmap-scrubber-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: rgba(200,146,42,0.45);
+  pointer-events: none;
+  width: 0%;
+}
+.tmap-scrubber-thumb {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 9px; height: 9px;
+  background: rgba(200,146,42,0.9);
+  border-radius: 50%;
+  left: 0%;
+  margin-left: -4.5px;
+  transition: transform .15s;
+  pointer-events: none;
+}
+.tmap-scrubber-wrap:hover .tmap-scrubber-thumb,
+.tmap-scrubber-wrap.dragging .tmap-scrubber-thumb {
+  transform: translateY(-50%) scale(1.55);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem 5vw;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
+  position: relative; z-index: 1;
+  max-width: 1200px; margin: 0 auto;
+}
+.footer-copy { font-size:11px; color:var(--sub); letter-spacing:.06em; }
+.footer-links { display:flex; gap:2rem; }
+.footer-links a {
+  font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--sub); text-decoration:none; transition:color .2s;
+}
+.footer-links a:hover { color:var(--gold2); }
 </style>
 </head>
 <body>
 
+<canvas id="particle-canvas"></canvas>
+<div id="progress-bar"></div>
+<div id="cursor-glow"></div>
+<canvas id="bg-canvas"></canvas>
+
+<nav id="nav">
+  <a class="nav-logo" href="#">TY</a>
+  <ul class="nav-links">
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#writing">Writing</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO: POEM ── -->
 <section class="hero">
-  <div class="avatar">🧑‍💻</div>
-  <h1>Taka</h1>
-  <p>Games · Writing · Travel</p>
+  <div class="hero-glow"></div>
+  <div class="poem-wrap">
+    <div class="poem-stanza">
+      <p class="poem-line"><span>道に迷ったら、</span></p>
+      <p class="poem-line"><span>景色がはじまった。</span></p>
+    </div>
+
+    <div class="poem-stanza">
+      <p class="poem-line"><span>地図を閉じたら、</span></p>
+      <p class="poem-line"><span>世界がひろがった。</span></p>
+    </div>
+
+    <p class="poem-en">
+      When I got lost, the scenery began.<br>
+      When I closed the map, the world opened up.
+
+    </p>
+
+    <div class="hero-byline">
+      <span class="hero-name">Taka Yamamoto</span>
+      <span class="hero-sep">—</span>
+      <span class="hero-roles">Wanderer · Drifter · Roamer</span>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
 </section>
 
-<div class="grid">
-
-  <a class="card game1" href="https://taka-yamamoto369.github.io/pok-deng/">
-    <div class="card-icon">🃏</div>
-    <div class="card-tag">Game</div>
-    <h2>ポークデン</h2>
-    <p>タイのカードゲーム。ベットして、引いて、ディーラーに勝て。</p>
-    <div class="card-arrow">Play now →</div>
-  </a>
-
-  <a class="card game2" href="https://app-liart-nine-16.vercel.app" target="_blank">
-    <div class="card-icon">⚔️</div>
-    <div class="card-tag">Game</div>
-    <h2>三国志ゲーム</h2>
-    <p>Vercelで公開中の三国志シミュレーション。</p>
-    <div class="card-arrow">Play now →</div>
-  </a>
-
-  <a class="card note" href="https://note.com/sozoro_tabi/n/n906641afa4ad" target="_blank">
-    <div class="card-icon">✍️</div>
-    <div class="card-tag">Writing</div>
-    <h2>同じ釜の飯を食う</h2>
-    <p>ラオスの農家の食卓。仲間になる方法はシンプルかもしれない。</p>
-    <div class="card-arrow">Read →</div>
-  </a>
-
-  <a class="card insta" href="https://instagram.com/" target="_blank">
-    <div class="card-icon">📸</div>
-    <div class="card-tag">Social</div>
-    <h2>Instagram</h2>
-    <p>日常の写真、旅の記録。</p>
-    <div class="card-arrow">Follow →</div>
-  </a>
-
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">ラオス / Laos</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Card Game</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">三国志</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">旅と言葉</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ป๊อกเด้ง</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">国境を越える</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Strategy</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">東南アジア / SE Asia</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ラオス / Laos</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Card Game</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">三国志</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">旅と言葉</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ป๊อกเด้ง</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">国境を越える</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Strategy</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">東南アジア / SE Asia</span><span class="marquee-sep">◆</span>
+  </div>
 </div>
 
-<footer>taka-yamamoto369.github.io</footer>
+<!-- ── PHILOSOPHY ── -->
+<div class="section-wrap" id="about">
+  <div class="section">
+    <span class="section-label fade">迷い方について</span>
+    <div class="about-layout">
+      <div class="phil-num fade" aria-hidden="true">01</div>
+      <div class="about-inner">
+        <div class="about-toggle">
+          <button id="btn-jp" class="active" onclick="setLang('jp')">JP</button>
+          <button id="btn-en" onclick="setLang('en')">EN</button>
+        </div>
+
+        <div id="about-jp" class="about-lang">
+          <blockquote class="pull-quote about-coda word-reveal fade">
+            <span class="word"><span>"Where</span></span>
+            <span class="word"><span>are</span></span>
+            <span class="word"><span>you</span></span>
+            <span class="word"><span>going?"</span></span>
+          </blockquote>
+          <p class="pull-sub fade">——どこに向かってるの？</p>
+
+          <p class="phil-body fade">
+            あたらしい町につくたびに、きかれる質問。<br>
+            でも、ぼくの答えはいつも "I don't know"——わかんない。<br><br>
+            行き先はない。宿もきめてない。<br>
+            今日なにを食べるかさえ、まだわからない。<br>
+            気づいたら、地図をとじていた。<br><br>
+            バスターミナルで飛びかう声をよそに、<br>
+            とりあえず、どこかへ歩き出す。<br><br>
+            迷う。バスを逃す。丸一日、何もすすまない。<br>
+            それでいい。<br><br>
+            遠回りしたぶんだけ、景色が増えた。<br>
+            乗り間違えたぶんだけ、知らない人と話せた。<br>
+            調べなかったぶんだけ、驚きがあった。<br><br>
+            だから、たぶん。<br>
+            旅は効率が悪いほうがおもしろい。<br><br>
+            バスを逃したあの日の屋台、<br>
+            まだずっとどこかにある。
+          </p>
+        </div>
+
+        <div id="about-en" class="about-lang hidden about-en">
+          <blockquote class="pull-quote about-coda" style="margin-bottom:1.5rem;">
+            "Where are you going?"
+          </blockquote>
+          <p class="phil-body">
+            <em>"Where are you going?"</em><br>
+            Step into any new town, and a local asks.<br>
+            My answer is always the same — <em>I don't know.</em><br><br>
+            No destination. No hotel booked.<br>
+            I don't even know what I'll eat today.<br>
+            Before I knew it, I'd closed the map.<br><br>
+            While voices blur around me at the bus terminal,<br>
+            I just start walking. Somewhere.<br><br>
+            I get lost. I miss buses.<br>
+            Some days, nothing moves forward.<br>
+            That's fine.<br><br>
+            Every detour added scenery.<br>
+            Every wrong turn started a conversation.<br>
+            Every unplanned visit brought a surprise.<br><br>
+            The less efficient the journey,<br>
+            the more interesting it gets.<br><br>
+            That food stall from the day I missed my bus —<br>
+            it still lives somewhere inside me.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-row fade">
+  <div class="stat">
+    <span class="stat-n" data-target="20">0</span>
+    <span class="stat-l">Countries</span>
+  </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n" data-target="1617">0</span>
+    <span class="stat-l">Days abroad</span>
+  </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n">∞</span>
+    <span class="stat-l">Borders crossed</span>
+  </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n" data-target="2">0</span>
+    <span class="stat-l">Games</span>
+  </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n" data-target="2">0</span>
+    <span class="stat-l">Essays</span>
+  </div>
+</div>
+
+<!-- ── RPG ── -->
+<div class="rpg-wrap fade" id="rpg">
+  <div class="rpg-inner">
+    <!-- Area ticker -->
+    <div class="rpg-area-wrap">
+      <div class="rpg-area-label">FIELD MOVE</div>
+      <span class="rpg-area-ticker" id="rpg-ticker">▸ Japan → Thailand → Laos → Vietnam → India → Mexico ▸</span>
+    </div>
+    <!-- Dialog -->
+    <div class="rpg-dialog">
+      <div class="rpg-dialog-label">PLAYER LOG</div>
+      <p id="rpg-dialog-text"><span class="rpg-cursor"></span></p>
+    </div>
+    <!-- Quest log -->
+    <div class="rpg-log-label">QUEST LOG</div>
+    <div class="rpg-quests">
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">国境を越える</span><span class="q-en">Cross a border</span></span>
+      </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">バスを逃す</span><span class="q-en">Miss a bus</span></span>
+      </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">読めない文字のメニューを注文する</span><span class="q-en">Order from a menu I can't read</span></span>
+      </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">地図を閉じる</span><span class="q-en">Close the map</span></span>
+      </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">はじめての言語で村人と話す</span><span class="q-en">Talk to a local in a language I just learned</span></span>
+      </div>
+      <div class="rpg-q">
+        <span class="rpg-q-tag active">ACTIVE</span>
+        <span class="rpg-q-text"><span class="q-jp">どこに向かってるかを理解する</span><span class="q-en">Figure out where I'm going</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── JOURNEY ── -->
+<div class="journey-wrap" id="journey">
+  <div class="journey-header">
+    <span class="section-label fade" style="margin-bottom:0">Journey / 旅の軌跡</span>
+    <span class="journey-hint fade">Tap to explore</span>
+  </div>
+  <div class="journey-scroll" id="journey-scroll">
+    <div class="journey-card fade" data-flag="🇯🇵" data-name="Japan" data-days="Origin" data-flavor="帰るたびに、知らない国みたいな顔をして帰ってくる。自販機の数は異常だし、ゴミ箱がない割に街は綺麗。でも結局、ここが一番落ち着く。"><div class="jc-flag">🇯🇵</div><div class="jc-name">Japan</div><div class="jc-local">日本</div><div class="jc-days">Origin</div></div>
+    <div class="journey-card fade" data-flag="🇹🇭" data-name="Thailand" data-days="395 days" data-flavor="ここでポークデンを覚えた。屋台で知らないおじさんと賭けて、気づいたら3時間いた。人生が変わった国。"><div class="jc-flag">🇹🇭</div><div class="jc-name">Thailand</div><div class="jc-local">ประเทศไทย</div><div class="jc-days">395 days</div></div>
+    <div class="journey-card fade" data-flag="🇨🇳" data-name="China" data-days="289 days" data-flavor="漢字は読める。でも声調が違うだけで何も通じない。チャーハンだけはどこで食べても裏切らない。"><div class="jc-flag">🇨🇳</div><div class="jc-name">China</div><div class="jc-local">中国</div><div class="jc-days">289 days</div></div>
+    <div class="journey-card fade" data-flag="🇺🇸" data-name="USA" data-days="225 days" data-flavor="とにかくデカい。食事も道も空間も全部デカい。慣れてしまうのが一番怖い。"><div class="jc-flag">🇺🇸</div><div class="jc-name">USA</div><div class="jc-local">United States</div><div class="jc-days">225 days</div></div>
+    <div class="journey-card fade" data-flag="🇱🇦" data-name="Laos" data-days="173 days" data-flavor="何もしなくていい空気が流れていた。バスが来なくても誰も怒らない。それが正解だったと今でも思う。"><div class="jc-flag">🇱🇦</div><div class="jc-name">Laos</div><div class="jc-local">ລາວ</div><div class="jc-days">173 days</div></div>
+    <div class="journey-card fade" data-flag="🇻🇳" data-name="Vietnam" data-days="124 days" data-flavor="道を渡るのにコツがいる。バイクの波に身を委ねると、なぜかちゃんと渡れる。あれは信頼の問題だと思う。"><div class="jc-flag">🇻🇳</div><div class="jc-name">Vietnam</div><div class="jc-local">Việt Nam</div><div class="jc-days">124 days</div></div>
+    <div class="journey-card fade" data-flag="🇲🇽" data-name="Mexico" data-days="75 days" data-flavor="タコスで全部解決できると気づいた国。スペイン語が怪しくても、屋台に並べば仲良くなれた。"><div class="jc-flag">🇲🇽</div><div class="jc-name">Mexico</div><div class="jc-local">México</div><div class="jc-days">75 days</div></div>
+    <div class="journey-card fade" data-flag="🇹🇼" data-name="Taiwan" data-days="75 days" data-flavor="夜市に行くたびに食べすぎる。毎回。学習しない。でも後悔したことは一度もない。"><div class="jc-flag">🇹🇼</div><div class="jc-name">Taiwan</div><div class="jc-local">台灣</div><div class="jc-days">75 days</div></div>
+    <div class="journey-card fade" data-flag="🇭🇰" data-name="Hong Kong" data-days="64 days" data-flavor="縦に長い街。エスカレーターで山を登る。密度がすごいのに、なぜか息苦しくない。"><div class="jc-flag">🇭🇰</div><div class="jc-name">Hong Kong</div><div class="jc-local">香港</div><div class="jc-days">64 days</div></div>
+    <div class="journey-card fade" data-flag="🇮🇳" data-name="India" data-days="42 days" data-flavor="全部が予想の斜め上をいく。良い意味でも悪い意味でも。胃だけじゃなく、価値観も鍛えられた気がする。"><div class="jc-flag">🇮🇳</div><div class="jc-name">India</div><div class="jc-local">भारत</div><div class="jc-days">42 days</div></div>
+    <div class="journey-card fade" data-flag="🇵🇭" data-name="Philippines" data-days="36 days" data-flavor="島が7,000以上ある。どこに行けばいいかわからなくて、とりあえず海に行った。正解だった。"><div class="jc-flag">🇵🇭</div><div class="jc-name">Philippines</div><div class="jc-local">Pilipinas</div><div class="jc-days">36 days</div></div>
+    <div class="journey-card fade" data-flag="🇲🇾" data-name="Malaysia" data-days="36 days" data-flavor="マレー料理も中華も南インド料理も全部ある。コーヒーが濃くて甘い。何でも揃いすぎて逆に迷う。"><div class="jc-flag">🇲🇾</div><div class="jc-name">Malaysia</div><div class="jc-local">Malaysia</div><div class="jc-days">36 days</div></div>
+    <div class="journey-card fade" data-flag="🇧🇩" data-name="Bangladesh" data-days="33 days" data-flavor="人の密度がすごい。でも、みんな笑顔で困った顔をしてくれた。悪意がない国だと思う。"><div class="jc-flag">🇧🇩</div><div class="jc-name">Bangladesh</div><div class="jc-local">বাংলাদেশ</div><div class="jc-days">33 days</div></div>
+    <div class="journey-card fade" data-flag="🇰🇷" data-name="Korea" data-days="16 days" data-flavor="チキンとビールの組み合わせを発明した国。深夜でも街が明るい。眠れない夜に向いてる。"><div class="jc-flag">🇰🇷</div><div class="jc-name">Korea</div><div class="jc-local">대한민국</div><div class="jc-days">16 days</div></div>
+    <div class="journey-card fade" data-flag="🇮🇩" data-name="Indonesia" data-days="15 days" data-flavor="島が17,000以上ある。フィリピンの倍以上。どこにいるか常にわからない。それでいい気がした。"><div class="jc-flag">🇮🇩</div><div class="jc-name">Indonesia</div><div class="jc-local">Indonesia</div><div class="jc-days">15 days</div></div>
+    <div class="journey-card fade" data-flag="🇸🇬" data-name="Singapore" data-days="6 days" data-flavor="綺麗すぎて落ち着かない。チューインガムが売っていない。でも飯はうまい。矛盾を楽しむ街。"><div class="jc-flag">🇸🇬</div><div class="jc-name">Singapore</div><div class="jc-local">新加坡</div><div class="jc-days">6 days</div></div>
+    <div class="journey-card fade" data-flag="🇲🇲" data-name="Myanmar" data-days="5 days" data-flavor="時間がゆっくり流れていた。本当に。街全体がそういう空気だった。また行きたい国のひとつ。"><div class="jc-flag">🇲🇲</div><div class="jc-name">Myanmar</div><div class="jc-local">မြန်မာ</div><div class="jc-days">5 days</div></div>
+    <div class="journey-card fade" data-flag="🇲🇴" data-name="Macau" data-days="3 days" data-flavor="カジノで3,000円負けた。それだけ。ポルトガル料理はおいしかった。"><div class="jc-flag">🇲🇴</div><div class="jc-name">Macau</div><div class="jc-local">澳門</div><div class="jc-days">3 days</div></div>
+    <div class="journey-card fade" data-flag="🇨🇦" data-name="Canada" data-days="3 days" data-flavor="広すぎる。移動だけで1日終わる。空だけは本当に広くて、それだけで来た価値があった。"><div class="jc-flag">🇨🇦</div><div class="jc-name">Canada</div><div class="jc-local">Canada</div><div class="jc-days">3 days</div></div>
+    <div class="journey-card fade" data-flag="🇧🇳" data-name="Brunei" data-days="2 days" data-flavor="2日しかいなかったのに、なぜか印象に残っている。水上集落がすごかった。また来ると思う。"><div class="jc-flag">🇧🇳</div><div class="jc-name">Brunei</div><div class="jc-local">Brunei</div><div class="jc-days">2 days</div></div>
+  </div>
+</div>
+
+<!-- Flavor popup -->
+<div class="jc-popup" id="jc-popup">
+  <button class="jc-popup-close" id="jc-popup-close">✕</button>
+  <div class="jc-popup-flag" id="jc-popup-flag"></div>
+  <div class="jc-popup-name" id="jc-popup-name"></div>
+  <p class="jc-popup-text" id="jc-popup-text"></p>
+</div>
+
+<!-- ── STATEMENT ── -->
+<div class="statement-wrap fade" id="statement">
+  <span class="statement-line"><ruby>酔<rt>よ</rt></ruby>うこと。</span>
+  <span class="statement-line"><ruby>迷<rt>まよ</rt></ruby>うこと。</span>
+  <span class="statement-line"><ruby>彷徨<rt>さまよ</rt></ruby>うこと。</span>
+  <p class="statement-en">Intoxicated. Adrift. Wandering.</p>
+  <p class="statement-sub">あらすじのない旅</p>
+</div>
+
+<!-- ── PIXEL TRAVELER ── -->
+<div style="position:relative;z-index:1;border-top:1px solid var(--line);background:rgba(2,5,3,0.3);overflow:hidden;">
+  <canvas id="traveler-canvas" height="80" style="display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges;"></canvas>
+</div>
+
+<!-- ── TIMELINE ── -->
+<div class="section-wrap">
+  <div class="section" style="padding-bottom:0">
+    <span class="section-label fade">History / 年表</span>
+  </div>
+  <div class="timeline-wrap">
+    <div class="timeline-line"></div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2012</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">インドに、ぶん殴られた。</h3>
+        <p class="tl-desc">高校の友達に誘われてガンジス川へ。いい意味で道を踏み外す。<br><span style="font-size:11px;opacity:.55">A friend dragged me to the Ganges. Got punched by India — in the best way.</span></p>
+        <span class="tl-tag">Travel · India</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2013</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">サンフランシスコで、ベーコントマトスパゲッティを作り続けた。</h3>
+        <p class="tl-desc">英語と、スパゲッティと、青春。サンフランシスコの半年。<br><span style="font-size:11px;opacity:.55">English, pasta, and something that felt like youth. Six months in San Francisco.</span></p>
+        <span class="tl-tag">Travel · USA</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2014</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">香港で、スイッチが入った。</h3>
+        <p class="tl-desc">中国語ペラペラの白人2人と仲良くなり、俺だけ中国語が話せないアジア人になった。その日から中国語を始める。<br><span style="font-size:11px;opacity:.55">Two white guys spoke perfect Mandarin. I didn't. That stung. Started studying that night.</span></p>
+        <span class="tl-tag">Travel · Hong Kong</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2015</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">台湾に、ハマった。気づいたら7回行ってた。</h3>
+        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Went to Taiwan once. Then again. Then five more times.</span></p>
+        <span class="tl-tag">Travel · Taiwan</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2016</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">四川人の熱量に、やられた。</h3>
+        <p class="tl-desc">ゲストハウスで知り合った人たちと麻辣火鍋と麻雀。こういう旅がしたかった。<br><span style="font-size:11px;opacity:.55">Strangers at a guesthouse. Hotpot, mahjong, and more warmth than I expected.</span></p>
+        <span class="tl-tag">Travel · China</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2017</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">深圳→香港5分→深圳。を、繰り返した。</h3>
+        <p class="tl-desc">何をしていたのかよくわからない。でも楽しかった。<br><span style="font-size:11px;opacity:.55">Crossed the border just to turn around. Repeated until it stopped making sense.</span></p>
+        <span class="tl-tag">Travel · Hong Kong · China</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2018</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">日本なのに、外国だった。</h3>
+        <p class="tl-desc">夏でも涼しくて、どこまでも広くて、スケールが違った。北海道は異文化だった。<br><span style="font-size:11px;opacity:.55">Same passport, different world. Hokkaido didn't feel like Japan.</span></p>
+        <span class="tl-tag">Life · Japan</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2019</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">タコスとチョコラテ。山には賊がいた。</h3>
+        <p class="tl-desc">メキシコ・オアハカ。カラフルでのほほんとした街。山に行こうとしたら止められた。<br><span style="font-size:11px;opacity:.55">Tacos and chocolate every day in Oaxaca. Tried to hike into the hills. Was warned about bandits.</span></p>
+        <span class="tl-tag">Travel · Mexico</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2020</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">親友代表として呼ばれ、インドネシア語で何かを叫んだ。</h3>
+        <p class="tl-desc">友達の結婚式に出席。インドネシア語で詩みたいなやつを読み上げた。意味はわからなかった。<br><span style="font-size:11px;opacity:.55">Called up as best buddy at an Indonesian wedding. Delivered a speech in Indonesian. No idea what I said. Everyone cheered.</span></p>
+        <span class="tl-tag">Life · Indonesia</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2021</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">ステイホーム。暇すぎて、あつ森でアジアの地図を作った。</h3>
+        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Stayed home. Built a map of Asia in Animal Crossing. That's it.</span></p>
+        <span class="tl-tag">Life · Japan</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2022</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">ベトナム。バイクを避けながら、生き返った。</h3>
+        <p class="tl-desc">コロナ後、久々の海外。バイクの波に飛び込んで、やっと戻ってきた気がした。<br><span style="font-size:11px;opacity:.55">First trip post-COVID. Dodged motorbikes in Hanoi. Felt alive again.</span></p>
+        <span class="tl-tag">Travel · Vietnam</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2023</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">バングラデシュで、世界最大の集落を歩いた。</h3>
+        <p class="tl-desc">コックスバザールのミャンマー料理屋で知り合った家族と、ロヒンギャキャンプへ。どこまでも続いていた。<br><span style="font-size:11px;opacity:.55">A family I met at a Myanmar restaurant took me to a Rohingya camp. It went on and on.</span></p>
+        <span class="tl-tag">Travel · Bangladesh</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2024</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">桃源郷、実在した。</h3>
+        <p class="tl-desc">ラオス北部の山奥、雲の上の村。アカ族の集落に数日滞在した。水なし、電気なし、電波なし。雲海が毎朝見えた。夜、竹筒の煙を吸い、赤いスープと名前のわからない植物を食べた。なんにもないのに、なんかあった。<br><span style="font-size:11px;opacity:.55">A village above the clouds in northern Laos. No water, no electricity, no signal. Sea of clouds every morning. Bamboo pipe smoke, red soup, unidentified plants. Nothing there, but something was.</span></p>
+        <span class="tl-tag">Travel · Laos</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2025</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">砂まみれになりながら、ラオスとタイを往復した。</h3>
+        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Bounced between Laos and Thailand until I lost count. Always covered in dust.</span></p>
+        <span class="tl-tag">Travel · Thailand · Laos</span>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <span class="tl-year">2026</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">— 続く。</h3>
+        <p class="tl-desc">次の国、次の言葉、次の物語。<br><span style="font-size:11px;opacity:.55">Next country. Next language. Next story. To be continued.</span></p>
+        <span class="tl-tag">To be continued</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── GAMES ── -->
+<div class="section-wrap" id="games">
+  <div class="section">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">Games / ゲーム</p>
+    </div>
+    <div class="card-grid">
+      <a class="card ci-pokdeng fade" href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Interactive · Browser</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">01</span>
+            <span class="card-tag">Card Game</span>
+          </div>
+          <h2 class="card-title">ป๊อกเด้ง<br>ポークデン</h2>
+          <p class="card-desc">タイのカードゲーム。ベットして、引いて、ディーラーに勝て。<br><span style="font-size:11px;opacity:.6">Thai card game — bet, draw, beat the dealer.</span></p>
+          <span class="card-link">Play now →</span>
+        </div>
+      </a>
+      <a class="card ci-sangoku fade" href="https://app-liart-nine-16.vercel.app" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Strategy · Simulation</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">02</span>
+            <span class="card-tag">Strategy</span>
+          </div>
+          <h2 class="card-title">三国志<br>ゲーム</h2>
+          <p class="card-desc">Vercelで公開中の三国志シミュレーション。<br><span style="font-size:11px;opacity:.6">Three Kingdoms strategy sim, hosted on Vercel.</span></p>
+          <span class="card-link">Play now →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── WRITING ── -->
+<div class="section-wrap" id="writing">
+  <div class="section">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">Writing / エッセイ</p>
+    </div>
+    <div class="card-grid">
+      <a class="card ci-laos fade" href="https://note.com/sozoro_tabi/n/n906641afa4ad" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Essay · note.com</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">01</span>
+            <span class="card-tag">Essay · Laos</span>
+          </div>
+          <h2 class="card-title">同じ釜の<br>飯を食う</h2>
+          <p class="card-desc">ラオスの農家の食卓。仲間になる方法はシンプルかもしれない。<br><span style="font-size:11px;opacity:.6">Eating together at a Laotian farmhouse table.</span></p>
+          <span class="card-link">Read on note →</span>
+        </div>
+      </a>
+      <a class="card ci-rainbow fade" href="https://note.com/sozoro_tabi/n/nffea00c50cd4" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Essay · note.com</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">02</span>
+            <span class="card-tag">Essay · Laos</span>
+          </div>
+          <h2 class="card-title">「日本にも<br>虹あるの？」</h2>
+          <p class="card-desc">ラオスの畑で聞かれたひとこと。言葉と旅のエッセイ。<br><span style="font-size:11px;opacity:.6">"Does Japan have rainbows too?" — a question from a field.</span></p>
+          <span class="card-link">Read on note →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── RPG WALKER ── -->
+<div class="rpg-walker-wrap" id="rpg-walker">
+  <canvas id="rpg-walker-canvas" height="80"></canvas>
+</div>
+
+<!-- ── RPG-MAP: WORLD MAP ── -->
+<div class="rpgm-wrap fade" id="rpg-map">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">WORLD MAP</div>
+    <!-- ── Option A: SVG ── -->
+    <div class="map-opt-label">A — SVG</div>
+    <svg id="asia-map-svg" viewBox="0 0 310 278" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;border-radius:3px;overflow:hidden;margin-bottom:.25rem;">
+      <rect width="310" height="278" fill="rgba(2,5,3,0.92)" rx="3"/>
+      <defs>
+        <filter id="mg"><feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- NON-VISITED (dim outlines) -->
+      <!-- Mongolia -->
+      <path class="land" d="M 46,45 L 62,23 L 200,22 L 240,15 L 228,38 L 200,50 L 100,50 L 60,55 Z"/>
+      <!-- North Korea -->
+      <path class="land" d="M 246,59 L 256,56 L 262,63 L 255,74 L 243,76 L 232,77 L 228,68 L 234,61 Z"/>
+      <!-- South Korea -->
+      <path class="land" d="M 232,77 L 243,72 L 250,79 L 245,91 L 231,92 Z"/>
+      <!-- Myanmar -->
+      <path class="land" d="M 113,117 L 128,98 L 141,112 L 142,130 L 134,149 L 127,167 L 118,181 L 107,181 L 100,171 L 100,154 L 107,135 Z"/>
+      <!-- Cambodia -->
+      <path class="land" d="M 133,175 L 150,172 L 155,180 L 151,191 L 139,191 L 131,184 Z"/>
+      <!-- Malaysia peninsula -->
+      <path class="land" d="M 118,213 L 130,208 L 133,218 L 130,231 L 120,233 L 114,224 Z"/>
+      <!-- Philippines – Luzon -->
+      <path class="land" d="M 262,121 L 269,116 L 274,124 L 271,136 L 261,136 Z"/>
+      <!-- VISITED countries -->
+      <!-- China (large, glow) -->
+      <path class="visited-c" filter="url(#mg)" d="M 46,68 L 46,45 L 62,23 L 200,22 L 240,15 L 261,32 L 246,59 L 218,77 L 215,113 L 190,149 L 168,140 L 141,149 L 130,135 L 98,122 L 70,113 Z"/>
+      <!-- India -->
+      <path class="visited-c" filter="url(#mg)" d="M 35,90 L 67,90 L 98,122 L 96,158 L 79,185 L 63,212 L 53,212 L 43,200 L 39,181 L 36,162 L 28,149 Z"/>
+      <!-- Bangladesh -->
+      <path class="visited-c" d="M 98,122 L 113,117 L 122,127 L 120,144 L 108,149 L 98,140 Z"/>
+      <!-- Taiwan -->
+      <path class="visited-c" d="M 209,133 L 218,129 L 222,138 L 218,150 L 209,152 L 205,143 Z"/>
+      <!-- Japan – Honshu -->
+      <path class="visited-c" filter="url(#mg)" d="M 237,104 L 255,97 L 274,89 L 291,72 L 297,72 L 291,80 L 269,98 L 249,106 Z"/>
+      <!-- Japan – Hokkaido -->
+      <path class="visited-c" d="M 279,48 L 299,37 L 310,41 L 305,51 L 280,55 Z"/>
+      <!-- Japan – Kyushu -->
+      <path class="visited-c" d="M 232,107 L 246,101 L 253,110 L 247,120 L 232,117 Z"/>
+      <!-- Thailand (+ peninsula) -->
+      <path class="visited-c" d="M 107,135 L 121,128 L 133,135 L 141,149 L 134,162 L 127,175 L 124,188 L 122,201 L 117,209 L 112,205 L 115,194 L 117,183 L 118,171 L 121,160 L 118,150 Z"/>
+      <!-- Laos -->
+      <path class="visited-c" d="M 141,149 L 158,144 L 165,158 L 164,175 L 157,185 L 142,185 L 133,179 L 134,162 Z"/>
+      <!-- Vietnam -->
+      <path class="visited-c" d="M 158,144 L 172,140 L 177,149 L 176,162 L 172,176 L 165,191 L 157,202 L 148,206 L 145,200 L 150,190 L 155,176 L 152,162 L 149,153 Z"/>
+      <!-- Indonesia – Sumatra -->
+      <path class="visited-c" d="M 118,226 L 139,218 L 158,220 L 171,232 L 175,248 L 168,262 L 151,265 L 131,260 L 116,249 Z"/>
+      <!-- Indonesia – Borneo -->
+      <path class="visited-c" d="M 168,225 L 184,215 L 205,214 L 219,224 L 216,241 L 200,251 L 179,251 L 164,238 Z"/>
+      <!-- Indonesia – Java -->
+      <path class="visited-c" d="M 164,267 L 184,262 L 205,263 L 214,269 L 198,275 L 171,274 Z"/>
+      <!-- City dots -->
+      <circle cx="60" cy="117" r="1.6" class="city-dot"/>
+      <text x="63" y="115" class="map-label">Delhi</text>
+      <circle cx="105" cy="140" r="1.6" class="city-dot"/>
+      <text x="94" y="138" class="map-label">Dhaka</text>
+      <circle cx="190" cy="149" r="1.6" class="city-dot"/>
+      <text x="180" y="147" class="map-label">HK</text>
+      <circle cx="213" cy="135" r="1.6" class="city-dot"/>
+      <text x="216" y="133" class="map-label">台北</text>
+      <circle cx="281" cy="86" r="1.6" class="city-dot"/>
+      <text x="283" y="84" class="map-label">東京</text>
+      <circle cx="143" cy="185" r="1.6" class="city-dot"/>
+      <text x="128" y="183" class="map-label">BKK</text>
+      <circle cx="161" cy="153" r="1.6" class="city-dot"/>
+      <text x="164" y="151" class="map-label">Hanoi</text>
+      <circle cx="151" cy="167" r="1.6" class="city-dot"/>
+      <text x="136" y="165" class="map-label">VTE</text>
+      <circle cx="165" cy="198" r="1.6" class="city-dot"/>
+      <text x="168" y="196" class="map-label">HCMC</text>
+      <circle cx="166" cy="272" r="1.6" class="city-dot"/>
+      <text x="169" y="270" class="map-label">JKT</text>
+      <!-- Sea labels -->
+      <text x="6" y="268" class="map-label" style="opacity:.25">インド洋</text>
+      <text x="245" y="196" class="map-label" style="opacity:.25">太平洋</text>
+    </svg>
+    <!-- ── Option B: Dot grid ── -->
+    <div class="map-opt-label" style="margin-top:.9rem">B — ドット格子</div>
+    <div class="map-grid" id="map-grid"></div>
+    <div class="rpgm-dialog" id="map-dialog"></div>
+  </div>
+</div>
+
+<!-- ── RPG-ENC: ENCOUNTER ── -->
+<div class="rpgm-wrap fade" id="rpg-enc">
+  <div class="rpgm-inner">
+    <div class="enc-box">
+      <div class="enc-header">
+        <span class="enc-bang">！</span>
+        <span class="enc-title">ENCOUNTER</span>
+      </div>
+      <div class="enc-battle-ui">
+        <canvas id="enc-monster" width="280" height="130" style="display:block;width:100%;border:1px solid rgba(200,146,42,0.3);border-bottom:none;border-radius:4px 4px 0 0;"></canvas>
+        <div class="enc-battle-text" id="enc-battle-text">未知の言語が現れた！</div>
+        <div class="enc-menu" id="enc-menu">
+          <div class="enc-choice cursor" data-idx="0">▶ A：学習する</div>
+          <div class="enc-choice"        data-idx="1">　 B：話しかける</div>
+          <div class="enc-choice"        data-idx="2">　 C：写真をとる</div>
+          <div class="enc-choice"        data-idx="3">　 D：にげる</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RPG-STAT: STATUS ── -->
+<div class="rpgm-wrap fade" id="rpg-stat">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">STATUS</div>
+    <div class="stat-bars">
+      <div class="stat-bar-row"><span class="stat-bar-label">旅欲</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="100"></div></div><span class="stat-bar-val">MAX</span></div>
+      <div class="stat-bar-row"><span class="stat-bar-label">好奇心</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="98"></div></div><span class="stat-bar-val">98</span></div>
+      <div class="stat-bar-row"><span class="stat-bar-label">適応力</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="85"></div></div><span class="stat-bar-val">85</span></div>
+      <div class="stat-bar-row"><span class="stat-bar-label">節約力</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="72"></div></div><span class="stat-bar-val">72</span></div>
+      <div class="stat-bar-row"><span class="stat-bar-label">ノーマップ力</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="90"></div></div><span class="stat-bar-val">90</span></div>
+    </div>
+    <div class="rpgm-dialog" id="stat-dialog"></div>
+  </div>
+</div>
+
+<!-- ── RPG-MINI: MINIMAP ── -->
+<div class="rpgm-wrap fade" id="rpg-mini">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">MINIMAP</div>
+    <div class="minimap-row">
+      <div class="minimap-grid" id="mini-grid"></div>
+      <div class="rpgm-dialog" style="margin-top:0" id="mini-dialog"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RPG-ITEM: ITEM LOG ── -->
+<div class="rpgm-wrap fade" id="rpg-item">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">ITEM LOG</div>
+    <div class="item-log" id="item-log"></div>
+  </div>
+</div>
+
+<!-- ── INTERESTS ── -->
+<div class="section-wrap" id="interests">
+  <div class="section">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">Interests / 興味</p>
+    </div>
+    <div class="interests-grid">
+
+      <div class="interest-card fade">
+        <div class="interest-eyebrow">Music</div>
+        <h2 class="interest-title">モーラム</h2>
+        <p class="interest-sub">Mor Lam &nbsp;·&nbsp; หมอลำ &nbsp;·&nbsp; ໝໍລຳ</p>
+        <p class="interest-body">
+          ラオスと東北タイに根ざした民族音楽。ケーン（ひょうたんの笛）とともに、語りかけるように歌う。<br><br>
+          フィールドで初めて聞いたとき、こんな音楽が存在することを知らなかった。
+          屋台の脇で、誰かがスピーカーから流していた。
+          それだけで、そこにいる理由ができた。
+        </p>
+        <div class="interest-tags">
+          <span class="tl-tag">Laos · Thailand</span>
+          <span class="tl-tag">Folk · Traditional</span>
+        </div>
+      </div>
+
+      <div class="interest-card fade">
+        <div class="interest-eyebrow">Language</div>
+        <h2 class="interest-title">言語学習</h2>
+        <p class="interest-sub">Languages collected on the road</p>
+        <div class="lang-list">
+          <div class="lang-row">
+            <span class="lang-name">日本語</span>
+            <span class="lang-badge n">母語</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">English</span>
+            <span class="lang-badge h">日常会話</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">中文（普通話）</span>
+            <span class="lang-badge h">日常会話</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">ภาษาไทย</span>
+            <span class="lang-badge m">旅行会話</span>
+          </div>
+          <div class="lang-row">
+            <span class="lang-name">ພາສາລາວ</span>
+            <span class="lang-badge l">勉強中</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── PLAYGROUND ── -->
+<div class="section-wrap" id="playground">
+  <div class="section" style="padding-bottom:2rem;">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">お遊び / Playground</p>
+    </div>
+    <p class="fade" style="font-size:clamp(13px,1.5vw,15px);color:var(--sub);line-height:1.8;max-width:480px;margin-bottom:3rem;">
+      東京からパリまでの旅路を3Dで。<br>
+      ドラッグして回してみてください。<br>
+      <span style="font-size:11px;opacity:.5">The Tokyo → Paris route, in three dimensions. Drag to spin.</span>
+    </p>
+    <div id="globe-wrap" class="fade" style="
+      position:relative;
+      width:100%; max-width:700px;
+      height:clamp(320px,50vw,520px);
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      cursor:grab;
+    ">
+      <canvas id="globe3d" style="display:block;width:100%;height:100%;"></canvas>
+      <div style="position:absolute;top:16px;left:20px;pointer-events:none;">
+        <p style="font-size:10px;letter-spacing:.22em;color:rgba(200,146,42,.55);text-transform:uppercase;">Tokyo → Paris</p>
+      </div>
+      <div id="globe-hint" style="position:absolute;bottom:16px;right:18px;font-size:9px;letter-spacing:.18em;color:rgba(200,146,42,.35);text-transform:uppercase;pointer-events:none;transition:opacity .4s;">drag to rotate</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TRAVEL MAP ── -->
+<section class="section fade" id="travel-map" style="padding:5rem 5vw;">
+  <p class="sec-label">VISITED CITIES</p>
+  <h2 class="sec-title" style="margin-bottom:.5rem;">行った場所</h2>
+  <p class="sec-sub" style="margin-bottom:0;">20 countries · 93 cities</p>
+  <div class="tmap-wrap">
+    <canvas id="tmap-canvas" height="380"></canvas>
+    <div class="tmap-scrubber-wrap" id="tmap-scrubber">
+      <div class="tmap-scrubber-track">
+        <div class="tmap-scrubber-fill" id="tmap-fill"></div>
+        <div class="tmap-scrubber-thumb" id="tmap-thumb"></div>
+      </div>
+    </div>
+    <button id="tmap-replay" class="tmap-replay">↺ REPLAY</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 🐼 panda — ひっそり -->
+<div style="position:relative;z-index:1;overflow:hidden;background:rgba(2,5,3,0.4);border-top:1px solid var(--line);">
+  <canvas id="panda-canvas" height="64" style="display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges;"></canvas>
+</div>
+
+<div style="position:relative;z-index:1;">
+  <footer>
+    <span class="footer-copy">© Taka Yamamoto · 旅人 · ゲーム制作者 · 書き手</span>
+    <nav class="footer-links">
+      <a href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">Pok Deng</a>
+      <a href="https://app-liart-nine-16.vercel.app" target="_blank">三国志</a>
+      <a href="https://note.com/sozoro_tabi" target="_blank">note</a>
+    </nav>
+  </footer>
+</div>
 
 <script>
-  // カードにマウス追尾グロー
-  document.querySelectorAll('.card').forEach(card => {
+/* ══════════════════════════════════════════════
+   WORLD MAP FLIGHT ROUTE ANIMATION
+   Tokyo → Vientiane → Paris → Space
+   ══════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  /* ── LAND OUTLINES [lon, lat] ── */
+  const LANDS = [
+    // Japan (Honshu + Kyushu)
+    [[130.3,31.2],[131.6,31.5],[131.9,33.0],[132.5,33.5],[133.0,33.7],
+     [134.6,35.0],[135.4,34.7],[136.9,34.8],[137.6,34.7],[138.2,35.1],
+     [139.5,35.5],[139.8,36.5],[140.5,38.3],[141.1,39.6],[141.5,40.9],
+     [140.1,40.8],[139.4,38.5],[137.2,37.0],[136.0,35.7],[135.2,35.6],
+     [134.5,35.5],[133.5,34.5],[132.4,33.9],[131.0,31.9],[130.3,31.2]],
+    [[141.0,41.0],[142.0,43.0],[143.5,44.0],[144.5,44.0],[145.0,43.5],
+     [144.5,43.0],[143.0,42.0],[141.5,41.5],[141.0,41.0]],
+    [[126.1,34.7],[127.9,34.9],[128.8,35.1],[129.4,36.5],[129.4,37.5],
+     [127.7,37.7],[126.7,37.7],[126.2,37.3],[126.6,36.4],[126.0,35.0],[126.1,34.7]],
+    [[119.8,22.0],[120.7,24.2],[121.6,25.0],[121.9,26.8],[120.9,28.5],
+     [121.0,30.0],[121.9,30.9],[121.8,31.5],[120.0,33.7],[119.2,35.0],
+     [119.8,36.7],[121.4,37.6],[121.4,38.5],[121.2,39.7],[121.8,40.8],
+     [121.2,40.6],[120.1,38.9],[120.6,37.6],[119.6,35.1],[120.4,33.1],
+     [121.3,31.8],[120.6,29.8],[120.8,27.0],[119.7,25.3],[119.3,23.3],
+     [118.0,23.0],[117.5,22.0],[119.8,22.0]],
+    [[120.1,22.0],[121.5,22.6],[121.9,24.2],[121.6,25.3],[120.8,25.0],
+     [120.2,23.5],[120.1,22.0]],
+    [[100.5,5.6],[100.5,8.0],[100.0,9.5],[99.5,11.0],[100.0,13.0],
+     [100.1,14.0],[99.3,14.5],[98.5,15.5],[98.0,16.5],[98.0,18.0],
+     [97.6,19.5],[98.5,20.0],[100.0,21.0],[100.8,22.5],[101.5,22.2],
+     [102.8,22.0],[103.9,22.5],[106.5,22.9],[107.5,21.5],[107.8,20.5],
+     [108.0,19.5],[106.8,19.0],[106.5,17.5],[107.3,16.5],[108.5,15.5],
+     [109.0,14.0],[108.0,12.5],[107.0,11.0],[106.5,10.5],[106.8,9.5],
+     [105.5,9.0],[104.5,10.3],[103.5,10.0],[102.5,10.0],[101.0,6.0],[100.5,5.6]],
+    [[100.5,5.6],[101.2,2.8],[103.7,1.2],[104.0,1.4],[103.5,2.5],[102.0,3.8],[100.5,5.6]],
+    [[66.5,23.0],[68.5,22.0],[72.0,20.5],[73.0,19.0],[72.8,17.0],
+     [72.5,15.5],[73.5,14.5],[75.0,12.0],[76.5,10.0],[77.5,8.0],
+     [79.5,9.0],[80.5,10.0],[82.0,11.5],[80.5,13.0],[80.2,16.5],
+     [81.0,19.5],[82.5,21.0],[85.0,21.5],[87.0,21.5],[88.5,22.0],
+     [90.5,22.5],[91.5,22.0],[92.0,24.0],[91.5,25.0],[89.5,26.0],
+     [87.0,26.5],[84.0,28.0],[81.0,30.0],[79.0,31.5],[76.5,31.5],
+     [73.5,32.0],[70.0,28.0],[67.5,25.0],[66.5,23.0]],
+    [[79.8,7.0],[80.7,7.5],[81.9,9.0],[80.5,9.8],[79.8,9.0],[79.8,7.0]],
+    [[39.0,22.0],[42.0,20.0],[45.0,18.5],[50.0,16.5],[52.0,17.0],
+     [55.0,20.0],[57.0,22.0],[59.0,24.0],[57.5,25.0],[56.5,26.0],
+     [55.0,29.0],[50.0,29.5],[47.0,29.5],[44.5,29.5],[40.5,29.0],
+     [37.0,25.5],[37.5,23.5],[39.0,22.0]],
+    [[44.0,39.5],[47.0,39.7],[52.5,40.0],[54.0,37.5],[57.0,37.5],
+     [60.0,37.0],[63.0,36.5],[62.0,35.0],[61.5,33.0],[61.0,29.0],
+     [57.0,22.0],[56.5,27.5],[51.5,29.5],[47.5,29.5],[46.5,31.0],
+     [45.5,33.5],[44.5,37.5],[44.0,39.5]],
+    [[26.0,36.5],[27.5,37.0],[29.5,36.5],[33.0,36.5],[36.5,36.5],
+     [39.0,36.7],[41.5,38.5],[44.0,39.5],[44.5,39.0],[43.5,38.5],
+     [40.5,36.5],[36.0,36.0],[33.5,35.0],[30.5,36.5],[27.0,37.3],
+     [26.5,38.5],[27.0,40.0],[28.5,40.8],[32.0,41.5],[36.0,42.0],
+     [40.5,40.5],[41.5,40.0],[41.5,40.5],[37.5,41.5],[32.0,42.0],
+     [28.0,41.0],[26.5,40.0],[26.0,40.5],[26.0,36.5]],
+    [[40.5,41.0],[41.5,40.0],[44.0,39.5],[46.5,40.0],[48.5,38.5],
+     [50.0,40.3],[50.0,41.0],[48.5,41.5],[46.0,42.5],[43.5,43.5],
+     [41.0,41.5],[40.5,41.0]],
+    [[-8.5,43.5],[-9.5,39.0],[-6.5,36.5],[-5.0,36.0],[-2.5,36.5],
+     [0.0,37.5],[1.5,40.5],[3.5,40.5],[3.0,42.0],[0.0,43.5],
+     [-1.5,46.5],[0.5,47.5],[2.0,50.5],[2.5,51.0],[3.0,50.0],
+     [4.5,49.5],[5.5,49.0],[7.5,49.0],[7.5,47.5],[6.5,46.5],
+     [5.0,45.5],[4.0,43.5],[3.0,43.0],[-2.0,43.5],[-5.5,43.5],[-8.5,43.5]],
+    [[7.5,44.0],[9.0,44.5],[10.5,43.7],[11.5,42.5],[12.5,41.5],
+     [13.5,40.5],[14.5,40.8],[16.0,41.0],[15.8,39.8],[15.5,38.5],
+     [15.5,37.5],[14.0,38.5],[10.0,44.0],[7.5,44.0]],
+    [[22.0,37.5],[23.5,37.0],[24.5,37.0],[25.0,38.5],[24.0,40.5],
+     [22.5,40.5],[22.5,41.5],[21.0,42.5],[20.0,41.0],[20.0,39.5],
+     [21.0,38.5],[22.0,37.5]],
+    [[-5.5,50.0],[-2.5,50.0],[1.5,51.5],[0.0,53.5],[-2.0,55.0],
+     [-5.0,58.5],[-6.0,58.0],[-5.5,56.0],[-3.5,51.5],[-5.5,50.0]],
+    [[5.0,58.0],[7.0,55.0],[9.0,57.0],[10.0,58.5],[11.5,58.5],
+     [12.0,57.0],[10.5,55.5],[9.5,55.5],[12.5,60.0],[5.0,62.0],
+     [7.0,65.0],[14.0,69.0],[28.0,70.5],[30.0,70.0],[28.0,68.0],
+     [22.0,65.5],[22.5,63.5],[25.0,59.5],[25.5,60.5],[21.5,63.5],
+     [18.5,67.0],[16.5,69.0],[12.0,66.0],[11.5,63.0],[5.0,58.0]],
+    [[28.0,70.0],[50.0,73.0],[70.0,73.0],[90.0,73.0],[110.0,71.0],
+     [130.0,66.0],[135.0,63.0],[133.0,58.0],[130.0,53.0],[134.5,43.5],
+     [131.0,43.0],[130.0,42.0],[128.0,44.5],[130.5,47.0]],
+    [[52.0,41.0],[55.0,41.0],[61.5,40.0],[66.0,38.0],[70.0,38.0],
+     [75.0,40.0],[80.0,42.5],[83.0,47.0],[80.0,51.0],[73.0,54.0],
+     [64.0,54.0],[55.0,55.0],[51.0,54.0],[49.0,52.0],[51.0,47.0],[52.0,41.0]],
+    [[118.5,9.5],[120.0,10.0],[122.0,11.5],[124.0,11.0],[123.5,10.0],
+     [122.5,9.5],[122.0,8.0],[121.5,7.5],[120.5,8.0],[119.5,8.5],[118.5,9.5]],
+    [[108.1,0.8],[110.3,1.1],[113.3,1.5],[115.5,2.0],[117.5,4.2],
+     [118.0,5.9],[116.5,7.1],[115.3,6.3],[113.0,4.5],[110.5,3.0],[108.1,0.8]],
+    [[95.2,5.7],[97.5,4.0],[99.5,2.0],[103.0,0.2],[104.5,0.5],
+     [106.0,2.5],[102.3,4.5],[100.3,5.6],[96.0,5.6],[95.2,5.7]],
+  ];
+
+  /* country index → base camera scale */
+  /* Camera Scale per country: higher = more zoomed in.
+     Asia (0-14) all set to 18 → smooth pan, no zoom jitter.
+     India(15)=5 for trans-global drama. Americas(16-18) at 10-12. Index 19 = Pacific bridge (3). */
+  const CS = [18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,5,10,10,12, 3];
+
+  const WP = [
+    /* 0 Japan */    {c:0,  lon:132.46, lat:34.39, label:'Hiroshima'},
+    /* 1 Korea */    {c:1,  lon:129.07, lat:35.10, label:'Busan'},
+    /* 4 China */    {c:4,  lon:121.47, lat:31.23, label:'Shanghai'},
+    /* 2 Taiwan */   {c:2,  lon:121.56, lat:25.04, label:'Taipei'},
+    /* 3 HK */       {c:3,  lon:114.17, lat:22.32, label:'Hong Kong'},
+    /* 13 Phil. */   {c:13, lon:120.97, lat:14.60, label:'Manila'},
+    /* 11 Brunei */  {c:11, lon:114.94, lat:4.94,  label:'Bandar Seri Begawan'},
+    /* 12 Indo. */   {c:12, lon:106.87, lat:-6.20, label:'Jakarta'},
+    /* 10 Sing. */   {c:10, lon:103.82, lat:1.35,  label:'Singapore'},
+    /* 9 Penang */   {c:9,  lon:100.33, lat:5.41,  label:'Penang'},
+    /* 7 Thailand */ {c:7,  lon:100.50, lat:13.75, label:'Bangkok'},
+    /* 6 Laos */     {c:6,  lon:102.62, lat:17.97, label:'Vientiane'},
+    /* 5 Vietnam */  {c:5,  lon:105.85, lat:21.03, label:'Hanoi'},
+    /* 8 Myanmar */  {c:8,  lon:99.88,  lat:20.45, label:'Tachileik'},
+    /* 14 B\'desh */ {c:14, lon:90.41,  lat:23.72, label:'Dhaka'},
+    /* 15 India */   {c:15, lon:77.22,  lat:28.64, label:'New Delhi'},
+    /* 17 Canada */  {c:17, lon:-73.57, lat:45.50, label:'Montréal'},
+    /* 18 Mexico */  {c:18, lon:-99.13, lat:19.43, label:'Mexico City'},
+    /* 16 USA */     {c:16, lon:-122.42,lat:37.77, label:'San Francisco'},
+    /* Pacific */   {c:19, lon:-175,   lat:25,    label:''},           // zoom-out bridge: whole-earth view (c:19 = CS=3)
+    /* 0 Japan */   {c:0,  lon:-227.54,lat:34.39, label:'Hiroshima'},  // virtual lon (132.46-360) for westward Pacific crossing
+  ];
+
+  /* Camera keyframes: look-ahead average of next 2 WPs + country scale.
+     New Delhi & SF: look-ahead=1 so the camera centers on the city itself
+     (averaging with the next far-away city would pull the camera off to sea). */
+  const CAM_KF = WP.map((wp, i) => {
+    const noLookahead = wp.label === 'New Delhi' || wp.label === 'San Francisco';
+    const n = noLookahead ? 1 : Math.min(2, WP.length - i);
+    let lon=0, lat=0;
+    for(let j=i; j<i+n; j++){ lon+=WP[j].lon; lat+=WP[j].lat; }
+    return { lon:lon/n, lat:lat/n, s:CS[wp.c] };
+  });
+
+  const SEG_DUR = WP.slice(0,-1).map((wp,i) => {
+    if(wp.c===WP[i+1].c) return 0.8;
+    if(wp.label==='New Delhi')      return 3.5;  // trans-global sweep
+    if(wp.label==='San Francisco')  return 1.2;  // fast pull-out to Pacific view
+    if(wp.c===19)                   return 3.5;  // Pacific arc → Hiroshima
+    return i >= 11 ? 2.5 : 2.2;
+  });
+  const TOTAL = SEG_DUR.reduce((a,b)=>a+b, 0);
+  const PRE_GLOBE_DUR = 3.5;  // empty globe spin before journey starts
+  const INTRO_DUR = 2.0;      // Hiroshima zoom-out intro
+  const SPACE_DUR = 38;       // final globe with route (longer to cover full rotation)
+  const FULL = PRE_GLOBE_DUR + INTRO_DUR + TOTAL + SPACE_DUR;
+
+  const STARS = [];
+  function initStars(){
+    for(let i=0; i<320; i++){
+      STARS.push({ nx:Math.random(), ny:Math.random(),
+                   r:Math.random()*1.3+0.2, a:Math.random()*0.5+0.5,
+                   tw:Math.random()*Math.PI*2 });
+    }
+  }
+
+  const TRAIL = [], PULSES = [];
+  const lerp = (a,b,t) => a+(b-a)*t;
+  function ease(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  let cam = {lon:139.7, lat:35.7, s:26};
+  function proj(lon, lat){
+    return [ W/2+(lon-cam.lon)*cam.s, H/2-(lat-cam.lat)*cam.s ];
+  }
+
+  function stateAt(tSec){
+    let acc=0;
+    for(let i=0;i<SEG_DUR.length;i++){
+      if(tSec<=acc+SEG_DUR[i]){
+        const u=ease((tSec-acc)/SEG_DUR[i]);
+        return {
+          pos:{lon:lerp(WP[i].lon,WP[i+1].lon,u),lat:lerp(WP[i].lat,WP[i+1].lat,u)},
+          camTarget:{lon:lerp(CAM_KF[i].lon,CAM_KF[i+1].lon,u),
+                     lat:lerp(CAM_KF[i].lat,CAM_KF[i+1].lat,u),
+                     s:lerp(CAM_KF[i].s,CAM_KF[i+1].s,u)},
+          seg:i
+        };
+      }
+      acc+=SEG_DUR[i];
+    }
+    return {pos:{...WP[WP.length-1]},camTarget:{...CAM_KF[CAM_KF.length-1]},seg:SEG_DUR.length-1};
+  }
+
+  function drawGrid(){
+    ctx.lineWidth=0.4;
+    for(let lat=-90;lat<=90;lat+=30){
+      const[,y]=proj(0,lat); if(y<-2||y>H+2) continue;
+      ctx.strokeStyle=lat===0?'rgba(200,146,42,0.07)':'rgba(200,146,42,0.04)';
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    }
+    for(let lon=-180;lon<=180;lon+=30){
+      const[x]=proj(lon,0); if(x<-2||x>W+2) continue;
+      ctx.strokeStyle=lon===0?'rgba(200,146,42,0.07)':'rgba(200,146,42,0.04)';
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+    }
+  }
+
+  function drawLands(alpha){
+    ctx.lineWidth=0.65; ctx.strokeStyle=`rgba(200,146,42,${alpha})`;
+    // Draw at normal lon AND at lon-360 so Asia appears when camera is over Pacific
+    [-360, 0].forEach(offset=>{
+      LANDS.forEach(pts=>{
+        // Quick cull: skip if first point is way off-screen
+        const[tx]=proj(pts[0][0]+offset,pts[0][1]);
+        if(tx<-W*2||tx>W*3) return;
+        ctx.beginPath(); let first=true;
+        pts.forEach(([lon,lat])=>{
+          const[x,y]=proj(lon+offset,lat);
+          first?ctx.moveTo(x,y):ctx.lineTo(x,y); first=false;
+        }); ctx.stroke();
+      });
+    });
+  }
+
+  function drawRouteGhost(){
+    /* Layer 1: domestic routes — solid, slightly brighter */
+    ctx.setLineDash([]); ctx.lineWidth=0.75;
+    for(let i=0;i<WP.length-1;i++){
+      if(WP[i].c!==WP[i+1].c) continue;
+      ctx.strokeStyle='rgba(200,146,42,0.13)';
+      const[x1,y1]=proj(WP[i].lon,WP[i].lat);
+      const[x2,y2]=proj(WP[i+1].lon,WP[i+1].lat);
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    }
+    /* Layer 2: international connections — dashed, very faint */
+    ctx.setLineDash([3,8]); ctx.lineWidth=0.6;
+    for(let i=0;i<WP.length-1;i++){
+      if(WP[i].c===WP[i+1].c) continue;
+      ctx.strokeStyle='rgba(200,146,42,0.06)';
+      const[x1,y1]=proj(WP[i].lon,WP[i].lat);
+      const[x2,y2]=proj(WP[i+1].lon,WP[i+1].lat);
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  function drawCompletedRoute(tSec){
+    if(tSec<=0) return;
+    ctx.shadowColor='rgba(232,184,75,0.5)'; ctx.shadowBlur=6;
+    let acc=0;
+    for(let i=0;i<SEG_DUR.length;i++){
+      const domestic=WP[i].c===WP[i+1].c;
+      ctx.lineWidth=domestic?1.8:1.1;
+      ctx.strokeStyle=domestic?'rgba(232,184,75,0.48)':'rgba(232,184,75,0.22)';
+      if(!domestic) ctx.setLineDash([4,6]); else ctx.setLineDash([]);
+      const[x1,y1]=proj(WP[i].lon,WP[i].lat);
+      ctx.beginPath();ctx.moveTo(x1,y1);
+      if(tSec>=acc+SEG_DUR[i]){
+        const[x2,y2]=proj(WP[i+1].lon,WP[i+1].lat);ctx.lineTo(x2,y2);ctx.stroke();
+      } else if(tSec>acc){
+        const u=ease((tSec-acc)/SEG_DUR[i]);
+        const[x2,y2]=proj(lerp(WP[i].lon,WP[i+1].lon,u),lerp(WP[i].lat,WP[i+1].lat,u));
+        ctx.lineTo(x2,y2);ctx.stroke();break;
+      } else break;
+      acc+=SEG_DUR[i];
+    }
+    ctx.setLineDash([]);ctx.shadowBlur=0;ctx.shadowColor='transparent';
+  }
+
+  function drawTrail(){
+    const n=TRAIL.length;
+    TRAIL.forEach(({lon,lat},i)=>{
+      const t=i/n; const[x,y]=proj(lon,lat);
+      ctx.beginPath(); ctx.arc(x,y,lerp(0.5,3,t),0,Math.PI*2);
+      ctx.fillStyle=`rgba(232,184,75,${lerp(0,0.75,t)})`; ctx.fill();
+    });
+  }
+
+  function drawPlane(lon,lat){
+    const[x,y]=proj(lon,lat);
+    const grd=ctx.createRadialGradient(x,y,0,x,y,22);
+    grd.addColorStop(0,'rgba(232,184,75,0.55)'); grd.addColorStop(0.4,'rgba(232,184,75,0.2)'); grd.addColorStop(1,'rgba(232,184,75,0)');
+    ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(x,y,22,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2); ctx.fillStyle='#fffbe8'; ctx.fill();
+  }
+
+  function drawCities(activeSeg){
+    WP.forEach(({lon,lat,label},i)=>{
+      if(!label) return;  // skip ghost waypoints (e.g. Pacific zoom-out bridge)
+      const[x,y]=proj(lon,lat); if(x<-60||x>W+60||y<-60||y>H+60) return;
+      const alpha=i<=activeSeg?0.65:0.22;
+      ctx.beginPath(); ctx.arc(x,y,2.5,0,Math.PI*2); ctx.fillStyle=`rgba(200,146,42,${alpha})`; ctx.fill();
+      if(cam.s>8){ctx.font=`${Math.min(11,Math.max(8,cam.s*0.32))}px -apple-system,sans-serif`;ctx.fillStyle=`rgba(240,235,224,${alpha*0.75})`;ctx.textAlign='left';ctx.fillText(label,x+6,y-3);}
+    });
+  }
+
+  function drawPulses(){
+    for(let i=PULSES.length-1;i>=0;i--){
+      const p=PULSES[i]; p.r+=1.8; p.a-=0.022;
+      if(p.a<=0){PULSES.splice(i,1);continue;}
+      const[x,y]=proj(p.lon,p.lat);
+      ctx.beginPath(); ctx.arc(x,y,p.r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(232,184,75,${p.a})`; ctx.lineWidth=1.5; ctx.stroke();
+    }
+  }
+
+  function drawStars(alpha,ts){
+    if(alpha<0.01) return;
+    STARS.forEach(s=>{
+      const tw=0.7+0.3*Math.sin(s.tw+ts*0.0008);
+      ctx.beginPath(); ctx.arc(s.nx*W,s.ny*H,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(240,235,224,${s.a*alpha*tw})`; ctx.fill();
+    });
+  }
+
+  function drawGlobe(cLon,cLat,globeAlpha,showRoute=true){
+    const cx=W/2,cy=H/2,R=Math.min(W,H)*0.4;
+    const D2R=Math.PI/180,cLon_r=cLon*D2R,cLat_r=cLat*D2R;
+    function projG(lon,lat){
+      const ln=lon*D2R,lt=lat*D2R;
+      const cosc=Math.sin(cLat_r)*Math.sin(lt)+Math.cos(cLat_r)*Math.cos(lt)*Math.cos(ln-cLon_r);
+      if(cosc<0) return null;
+      return[cx+R*Math.cos(lt)*Math.sin(ln-cLon_r),cy-R*(Math.cos(cLat_r)*Math.sin(lt)-Math.sin(cLat_r)*Math.cos(lt)*Math.cos(ln-cLon_r))];
+    }
+    const ocean=ctx.createRadialGradient(cx-R*0.15,cy-R*0.15,0,cx,cy,R);
+    ocean.addColorStop(0,'#101e12'); ocean.addColorStop(1,'#050c07');
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.fillStyle=ocean; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+    ctx.lineWidth=0.35;
+    for(let lat=-90;lat<=90;lat+=30){ctx.beginPath();ctx.strokeStyle='rgba(200,146,42,0.09)';let f=true;for(let lon=-180;lon<=180;lon+=3){const p=projG(lon,lat);if(!p){f=true;continue;}f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}ctx.stroke();}
+    for(let lon=-180;lon<180;lon+=30){ctx.beginPath();ctx.strokeStyle='rgba(200,146,42,0.09)';let f=true;for(let lat=-90;lat<=90;lat+=3){const p=projG(lon,lat);if(!p){f=true;continue;}f?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;}ctx.stroke();}
+    ctx.lineWidth=0.7; ctx.strokeStyle=`rgba(200,146,42,${0.28*globeAlpha})`;
+    LANDS.forEach(pts=>{ctx.beginPath();let f=true,wv=false;pts.forEach(([lon,lat])=>{const p=projG(lon,lat);if(!p){wv=false;f=true;return;}(f||!wv)?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]);f=false;wv=true;});ctx.stroke();});
+    if(showRoute){
+      ctx.lineWidth=2.2; ctx.strokeStyle=`rgba(232,184,75,${0.65*globeAlpha})`;
+      ctx.shadowColor='rgba(232,184,75,0.5)'; ctx.shadowBlur=10;
+      ctx.beginPath(); let rs=false;
+      for(let ri=0;ri<=220;ri++){
+        const rt=(ri/220)*TOTAL; let rlon,rlat,acc=0;
+        for(let i=0;i<SEG_DUR.length;i++){if(rt<=acc+SEG_DUR[i]){const u=ease((rt-acc)/SEG_DUR[i]);rlon=lerp(WP[i].lon,WP[i+1].lon,u);rlat=lerp(WP[i].lat,WP[i+1].lat,u);break;}acc+=SEG_DUR[i];}
+        if(rlon===undefined) continue;
+        const p=projG(rlon,rlat); if(!p){rs=false;continue;}
+        rs?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]); rs=true;
+      }
+      ctx.stroke(); ctx.shadowBlur=0; ctx.shadowColor='transparent';
+      WP.forEach(({lon,lat,label})=>{const p=projG(lon,lat);if(!p)return;ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,Math.PI*2);ctx.fillStyle=`rgba(232,184,75,${0.9*globeAlpha})`;ctx.fill();ctx.font='10px -apple-system,sans-serif';ctx.fillStyle=`rgba(240,235,224,${0.7*globeAlpha})`;ctx.textAlign='left';ctx.fillText(label,p[0]+5,p[1]-3);});
+    }
+    ctx.restore();
+    const atm=ctx.createRadialGradient(cx,cy,R*0.88,cx,cy,R*1.12);
+    atm.addColorStop(0,`rgba(40,80,50,${0.55*globeAlpha})`);
+    atm.addColorStop(0.4,`rgba(30,60,40,${0.25*globeAlpha})`);
+    atm.addColorStop(1,'rgba(20,40,30,0)');
+    ctx.fillStyle=atm; ctx.beginPath(); ctx.arc(cx,cy,R*1.12,0,Math.PI*2); ctx.fill();
+    const night=ctx.createRadialGradient(cx+R*0.55,cy,0,cx+R*0.4,cy,R*1.05);
+    night.addColorStop(0,'rgba(4,8,5,0)'); night.addColorStop(0.5,'rgba(4,8,5,0.08)'); night.addColorStop(1,`rgba(4,8,5,${0.6*globeAlpha})`);
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+    ctx.fillStyle=night; ctx.fillRect(cx-R,cy-R,R*2,R*2); ctx.restore();
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(200,146,42,${0.22*globeAlpha})`; ctx.lineWidth=0.8; ctx.stroke();
+  }
+
+  let start=null,lastSeg=-1,cycleN=-1,lastIntroPulse=-1;
+
+  function tick(ts){
+    if(!start) start=ts;
+    const elapsed=(ts-start)/1000, phase=elapsed%FULL, cycle=Math.floor(elapsed/FULL);
+    if(cycle!==cycleN){TRAIL.length=0;PULSES.length=0;lastSeg=-1;lastIntroPulse=-1;cycleN=cycle;}
+
+    const inPreGlobe = phase < PRE_GLOBE_DUR;
+    const pAfterPre  = phase - PRE_GLOBE_DUR;
+    const inIntro    = !inPreGlobe && pAfterPre < INTRO_DUR;
+    const fp         = phase - PRE_GLOBE_DUR - INTRO_DUR;   // flight-phase time
+    const inSpace    = !inPreGlobe && !inIntro && fp > TOTAL;
+    const spRaw      = inSpace ? (fp-TOTAL)/SPACE_DUR : 0;
+    const starAlpha  = (inPreGlobe||inSpace) ? Math.min(0.85,ease(Math.max(0,inPreGlobe?(phase/1.2):(spRaw-0.20)/0.15))) : 0.07;
+
+    /* ── CAMERA ── */
+    if(inPreGlobe){
+      /* globe is self-contained; keep cam at Hiroshima so it's ready for intro */
+      cam.lon=WP[0].lon; cam.lat=WP[0].lat; cam.s=80;
+    } else if(inIntro){
+      const u=ease(pAfterPre/INTRO_DUR);
+      cam.lon=WP[0].lon; cam.lat=WP[0].lat;
+      cam.s=lerp(80,CAM_KF[0].s,u);
+    } else if(!inSpace||spRaw<0.17){
+      if(!inSpace){const{camTarget}=stateAt(fp);cam.lon=camTarget.lon;cam.lat=camTarget.lat;cam.s=camTarget.s;}
+      else{const u=ease(spRaw/0.17),c=CAM_KF[CAM_KF.length-1];cam.lon=lerp(c.lon,-105.0,u);cam.lat=lerp(c.lat,28.0,u);cam.s=lerp(c.s,3.2,u);}
+    }
+
+    ctx.clearRect(0,0,W,H);
+
+    if(inPreGlobe){
+      /* ── PRE-GLOBE: empty spinning globe ── */
+      const pgRaw   = phase/PRE_GLOBE_DUR;
+      const fadeIn  = pgRaw<0.12 ? ease(pgRaw/0.12) : 1.0;
+      const fadeOut = pgRaw>0.82 ? 1-ease((pgRaw-0.82)/0.18) : 1.0;
+      const ga      = fadeIn*fadeOut;
+      // Spin from Asia-Pacific (cLon=150) toward Asia (cLon=120) — setting up Hiroshima
+      const cLon=lerp(165,110,ease(pgRaw));
+      drawStars(starAlpha*ga,ts);
+      drawGlobe(cLon,28,ga,false);   // showRoute=false: empty globe
+      // Fade overlays
+      if(pgRaw<0.12){ctx.fillStyle=`rgba(11,17,13,${1-fadeIn})`;ctx.fillRect(0,0,W,H);}
+      if(pgRaw>0.82){ctx.fillStyle=`rgba(11,17,13,${1-fadeOut})`;ctx.fillRect(0,0,W,H);}
+
+    } else if(inIntro){
+      /* ── INTRO: Hiroshima close-up zoom-out ── */
+      const fadeIn=Math.min(1,pAfterPre/0.5);
+      drawStars(0.07*fadeIn,ts); drawGrid(); drawLands(0.11*fadeIn);
+      [{t:0.3,i:0},{t:0.8,i:1},{t:1.4,i:2}].forEach(({t,i})=>{
+        if(pAfterPre>=t&&lastIntroPulse<i){PULSES.push({lon:WP[0].lon,lat:WP[0].lat,r:3,a:0.92});lastIntroPulse=i;}
+      });
+      const[hx,hy]=proj(WP[0].lon,WP[0].lat);
+      const grd=ctx.createRadialGradient(hx,hy,0,hx,hy,40);
+      grd.addColorStop(0,'rgba(232,184,75,0.7)');grd.addColorStop(0.3,'rgba(232,184,75,0.2)');grd.addColorStop(1,'rgba(232,184,75,0)');
+      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(hx,hy,40,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(hx,hy,4,0,Math.PI*2);ctx.fillStyle='#fffbe8';ctx.shadowColor='rgba(232,184,75,0.9)';ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0;
+      if(cam.s>14){ctx.font='11px -apple-system,sans-serif';ctx.fillStyle=`rgba(240,235,224,${fadeIn*0.8})`;ctx.textAlign='left';ctx.fillText('Hiroshima',hx+8,hy-5);}
+      drawPulses();
+      if(pAfterPre<0.4){ctx.fillStyle=`rgba(11,17,13,${1-ease(pAfterPre/0.4)})`;ctx.fillRect(0,0,W,H);}
+
+    } else if(!inSpace){
+      /* ── FLIGHT ── */
+      drawStars(0.07,ts); drawGrid(); drawLands(0.11);
+      const{pos,seg}=stateAt(fp);
+      if(seg!==lastSeg){if(seg<WP.length)PULSES.push({lon:WP[seg].lon,lat:WP[seg].lat,r:3,a:0.85});lastSeg=seg;}
+      TRAIL.push({lon:pos.lon,lat:pos.lat}); if(TRAIL.length>65)TRAIL.shift();
+      drawRouteGhost(); drawCompletedRoute(fp); drawTrail();
+      drawPlane(pos.lon,pos.lat); drawCities(seg); drawPulses();
+
+    } else if(spRaw<0.17){
+      drawStars(starAlpha,ts); drawGrid(); drawLands(0.17);
+      drawCompletedRoute(TOTAL); drawCities(WP.length-1);
+    } else if(spRaw<0.25){
+      drawStars(starAlpha,ts); drawGrid(); drawLands(0.17);
+      drawCompletedRoute(TOTAL);
+      const blackA=ease((spRaw-0.17)/0.08);
+      ctx.fillStyle=`rgba(11,17,13,${blackA})`; ctx.fillRect(0,0,W,H);
+    } else if(spRaw<0.88){
+      const globeT=(spRaw-0.25)/0.63, fadeIn=spRaw<0.30?ease((spRaw-0.25)/0.05):1.0;
+      const globeCLon=lerp(-110,130,ease(globeT));  // Americas → Asia: full route visible
+      drawStars(starAlpha,ts); drawGlobe(globeCLon,28,fadeIn);   // showRoute=true (default)
+      if(spRaw<0.30){ctx.fillStyle=`rgba(11,17,13,${1-fadeIn})`;ctx.fillRect(0,0,W,H);}
+    } else {
+      const fadeA=ease((spRaw-0.88)/0.12);
+      drawStars(starAlpha*(1-fadeA),ts); drawGlobe(130,28,1-fadeA);
+      ctx.fillStyle=`rgba(11,17,13,${fadeA})`; ctx.fillRect(0,0,W,H);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+  window.addEventListener('resize',resize); resize(); initStars(); requestAnimationFrame(tick);
+})();
+
+/* ── CLICK PARTICLES ── */
+(function(){
+  const cv = document.getElementById('particle-canvas');
+  const cx = cv.getContext('2d');
+  let W, H, pts = [];
+
+  function resize(){ W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+  window.addEventListener('resize', resize); resize();
+
+  document.addEventListener('click', e => {
+    const x = e.clientX, y = e.clientY;
+    for(let i=0; i<18; i++){
+      pts.push({
+        x: x + (Math.random()-.5)*24,
+        y,
+        vx: (Math.random()-.5)*.9,
+        vy: -1.2 - Math.random()*2.8,
+        r:  5 + Math.random()*10,
+        a:  .35 + Math.random()*.3,
+        decay: .007 + Math.random()*.006,
+        g: -.015,
+      });
+    }
+  });
+
+  (function loop(){
+    requestAnimationFrame(loop);
+    cx.clearRect(0,0,W,H);
+    for(let i=pts.length-1; i>=0; i--){
+      const p=pts[i];
+      p.x += p.vx; p.y += p.vy; p.vy += p.g;
+      p.r += .18; p.a -= p.decay;
+      if(p.a<=0){ pts.splice(i,1); continue; }
+      cx.save();
+      cx.globalAlpha = p.a;
+      cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      cx.fillStyle = `rgba(200,146,42,0.28)`;
+      cx.shadowColor = '#c8922a'; cx.shadowBlur = 18;
+      cx.fill();
+      cx.restore();
+    }
+  })();
+})();
+
+/* ── SCROLL PROGRESS BAR ── */
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (window.scrollY / total * 100) + '%';
+});
+
+/* ── CURSOR GLOW ── */
+(function(){
+  const glow = document.getElementById('cursor-glow');
+  let mx=W2=window.innerWidth/2, my=window.innerHeight/2, cx=mx, cy=my;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  function animCursor(){
+    cx += (mx-cx)*0.1; cy += (my-cy)*0.1;
+    glow.style.transform = `translate(${cx-170}px,${cy-170}px)`;
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+})();
+
+/* ── NAV ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── INTERSECTION OBSERVER ── */
+// Assign DOM-order index for reliable stagger
+const allFade = [...document.querySelectorAll('.fade')];
+allFade.forEach((el, i) => el.dataset.fadeIdx = i);
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    if(el.classList.contains('word-reveal')){
+      el.querySelectorAll('.word span').forEach((s, idx) => {
+        s.style.transitionDelay = (idx * .18) + 's';
+      });
+      setTimeout(() => el.classList.add('visible'), 60);
+    } else {
+      // stagger siblings that appear in the same batch (within 40ms of each other)
+      const baseDelay = parseInt(el.dataset.fadeIdx || 0) % 4 * 55;
+      setTimeout(() => el.classList.add('visible'), baseDelay);
+    }
+    io.unobserve(el);
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+allFade.forEach(el => io.observe(el));
+
+/* ── TIMELINE OBSERVER ── */
+const tlIO = new IntersectionObserver((entries) => {
+  entries.forEach((e, idx) => {
+    if(!e.isIntersecting) return;
+    setTimeout(() => e.target.classList.add('visible'), idx * 100);
+    tlIO.unobserve(e.target);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.tl-item').forEach(el => tlIO.observe(el));
+
+/* ── STAT COUNTER ANIMATION ── */
+const statIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    if(!target) return;
+    const duration = 1800;
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(ease * target);
+      el.textContent = val.toLocaleString() + (t >= 1 ? '+' : '');
+      if(t < 1) requestAnimationFrame(tick);
+    };
+    setTimeout(() => requestAnimationFrame(tick), 300);
+    statIO.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-n[data-target]').forEach(el => statIO.observe(el));
+
+/* ── HOLOGRAPHIC TILT ── */
+/* ── ABOUT LANG TOGGLE ── */
+function setLang(lang) {
+  const jp = document.getElementById('about-jp');
+  const en = document.getElementById('about-en');
+  const btnJp = document.getElementById('btn-jp');
+  const btnEn = document.getElementById('btn-en');
+  if(lang === 'en') {
+    jp.classList.add('hidden');
+    en.classList.remove('hidden');
+    btnJp.classList.remove('active');
+    btnEn.classList.add('active');
+  } else {
+    en.classList.add('hidden');
+    jp.classList.remove('hidden');
+    btnEn.classList.remove('active');
+    btnJp.classList.add('active');
+  }
+}
+
+function applyHolo(els, maxDeg) {
+  els.forEach(card => {
+    const shine = document.createElement('div');
+    shine.className = 'card-shine';
+    card.appendChild(shine);
+
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const px = x / r.width;
+      const py = y / r.height;
+      const dx = px - 0.5;
+      const dy = py - 0.5;
+
+      card.classList.remove('holo-reset');
+      card.style.transform = `perspective(700px) rotateX(${-dy * maxDeg * 2}deg) rotateY(${dx * maxDeg * 2}deg) scale3d(1.04,1.04,1.04)`;
+
+      shine.style.backgroundPosition = `${px * 100}% ${py * 100}%`;
+      shine.style.opacity = '1';
+
+      card.style.setProperty('--mx', x + 'px');
+      card.style.setProperty('--my', y + 'px');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.classList.add('holo-reset');
+      card.style.transform = '';
+      shine.style.opacity = '0';
     });
   });
+}
+
+applyHolo(document.querySelectorAll('.card'), 14);
+
+/* ── JOURNEY FLAVOR POPUP ── */
+(function(){
+  const popup = document.getElementById('jc-popup');
+  const pflag = document.getElementById('jc-popup-flag');
+  const pname = document.getElementById('jc-popup-name');
+  const ptext = document.getElementById('jc-popup-text');
+  const pclose = document.getElementById('jc-popup-close');
+  let active = null;
+
+  document.querySelectorAll('.journey-card').forEach(card => {
+    card.addEventListener('click', e => {
+      e.stopPropagation();
+      if(active === card) { close(); return; }
+      if(active) active.classList.remove('active');
+      active = card;
+      card.classList.add('active');
+      pflag.textContent = card.dataset.flag;
+      pname.textContent = card.dataset.name + ' · ' + card.dataset.days;
+      ptext.textContent = card.dataset.flavor;
+      popup.classList.add('active');
+    });
+  });
+
+  pclose.addEventListener('click', close);
+  document.addEventListener('click', close);
+
+  function close(){
+    popup.classList.remove('active');
+    if(active){ active.classList.remove('active'); active = null; }
+  }
+})();
+
+/* ── RPG SECTION JS ── */
+(function(){
+  /* --- Area ticker scroll --- */
+  const ticker = document.getElementById('rpg-ticker');
+  if(ticker){
+    const BASE = '▸ Japan → Thailand → Laos → Vietnam → China → India → Bangladesh → Myanmar → Malaysia → Singapore → Brunei → Indonesia → Philippines → Korea → Taiwan → Hong Kong → Macau → Mexico → USA → Canada ▸ ';
+    ticker.textContent = BASE + BASE;
+    let x = 0;
+    const speed = 0.4;
+    let raf;
+    const loop = () => {
+      x -= speed;
+      // reset when first copy scrolled past (pixel width of BASE text)
+      // approximate: use scrollWidth/2 as the reset point
+      if(-x >= ticker.scrollWidth / 2) x = 0;
+      ticker.style.transform = 'translateX(' + x + 'px)';
+      raf = requestAnimationFrame(loop);
+    };
+    // only animate when RPG section is visible
+    const rpgWrap = document.getElementById('rpg');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){ if(!raf) loop(); }
+        else { cancelAnimationFrame(raf); raf = null; }
+      });
+    }, { threshold: 0.1 });
+    if(rpgWrap) obs.observe(rpgWrap);
+  }
+
+  /* --- Typewriter dialog with click-to-advance --- */
+  const dialogEl = document.getElementById('rpg-dialog-text');
+  if(dialogEl){
+    const pages = [
+      'リアルRPGをやってる。\nフィールドを渡り歩き、\n異国の言葉で民と語らう。',
+      'クエストは、自分で決める。\n目的地も、帰還時期も。\nノーマップで動く。',
+      '経験値は、失敗からしか入らない。\nバスを逃した日の方が、覚えてる。',
+      'セーブポイントはない。\nでも、巻き戻したい日も、ほぼない。',
+      'ステータス画面を開いたことがない。\nでも、レベルは上がってると思う。',
+      'NPCに話しかけると、だいたい飯をおごられる。\nこれがリアルRPGの醍醐味。',
+      'ラスボスがいない。\nだから終わらない。',
+      '異世界が好きだから、リアルで転生した。\n気づいたら、知らない国にいた。',
+      '転生先を、自分で選べる。\nそれだけで、十分すぎる。',
+      '異世界に行くのに、召喚は要らない。\nチケットだけあればいい。'
+    ];
+    let idx = 0;
+    let timer = null;
+    const cursor = '<span class="rpg-cursor"></span>';
+
+    const typeOut = () => {
+      const text = pages[idx];
+      let i = 0;
+      clearTimeout(timer);
+      dialogEl.innerHTML = cursor;
+      const tick = () => {
+        i++;
+        const visible = text.slice(0, i).replace(/\n/g, '<br>');
+        if(i < text.length){
+          dialogEl.innerHTML = visible + cursor;
+          timer = setTimeout(tick, 115);
+        } else {
+          dialogEl.innerHTML = visible + cursor;
+          timer = setTimeout(() => {
+            idx = (idx + 1) % pages.length;
+            typeOut();
+          }, 2200);
+        }
+      };
+      timer = setTimeout(tick, 115);
+    };
+
+    let started = false;
+    const rpgWrap = document.getElementById('rpg');
+    const obs2 = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting && !started){ started = true; typeOut(); }
+      });
+    }, { threshold: 0.3 });
+    if(rpgWrap) obs2.observe(rpgWrap);
+  }
+})();
+
+/* ── RPG WALKER JS ── */
+(function(){
+  const canvas = document.getElementById('rpg-walker-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const S = 5; // scale: 5px per dot
+
+  // Color palette
+  const C = {
+    '.': null,
+    'H': '#1a0a02',  // hair
+    'S': '#f0c090',  // skin
+    'G': '#3a6642',  // green shirt (matches site)
+    'B': '#1e2d40',  // pants
+    'D': '#0d0d0d',  // shoes
+    'K': '#9a6e10',  // backpack (gold)
+    'k': '#c8921a',  // backpack highlight
+  };
+
+  // 8 wide × 13 tall, 4 walk frames
+  const FRAMES = [
+    // Frame 0: right foot forward
+    ['..HHH...',
+     '.HSSSH..',
+     '.HSSSH..',
+     '..GGG.K.',
+     '.GGGGGk.',
+     '.GGGGG..',
+     '.GGGGG..',
+     '..BBBB..',
+     '.BB..BB.',
+     '.BB..B..',
+     'DD......',
+     '.....BB.',
+     '.....DD.'],
+    // Frame 1: passing
+    ['..HHH...',
+     '.HSSSH..',
+     '.HSSSH..',
+     '..GGG.K.',
+     '.GGGGGk.',
+     '.GGGGG..',
+     '.GGGGG..',
+     '..BBBB..',
+     '..BBBB..',
+     '..BB....',
+     '..DDDD..',
+     '........',
+     '........'],
+    // Frame 2: left foot forward
+    ['..HHH...',
+     '.HSSSH..',
+     '.HSSSH..',
+     '..GGG.K.',
+     '.GGGGGk.',
+     '.GGGGG..',
+     '.GGGGG..',
+     '..BBBB..',
+     '.BB..BB.',
+     '....BB..',
+     '....DD..',
+     '.BB.....',
+     '.DD.....'],
+    // Frame 3: passing (mirror of 1)
+    ['..HHH...',
+     '.HSSSH..',
+     '.HSSSH..',
+     '..GGG.K.',
+     '.GGGGGk.',
+     '.GGGGG..',
+     '.GGGGG..',
+     '..BBBB..',
+     '..BBBB..',
+     '..BB....',
+     '..DDDD..',
+     '........',
+     '........'],
+  ];
+
+  const CW = 8, CH = 13;
+  const PW = CW * S, PH = CH * S;
+
+  function drawFrame(f, px, py) {
+    FRAMES[f].forEach((row, r) => {
+      for(let c = 0; c < row.length; c++){
+        const col = C[row[c]];
+        if(!col) continue;
+        ctx.fillStyle = col;
+        ctx.fillRect(px + c * S, py + r * S, S, S);
+      }
+    });
+  }
+
+  let x = -PW;
+  let frame = 0;
+  let lastStep = 0;
+  let lastTs = 0;
+  let running = false;
+  const SPEED = 60;    // px per second
+  const STEP_MS = 160; // ms per frame
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = PH + S * 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function tick(ts) {
+    if(!running) return;
+    const dt = (ts - (lastTs || ts)) / 1000;
+    lastTs = ts;
+
+    x += SPEED * dt;
+    if(x > canvas.width) x = -PW;
+
+    if(ts - lastStep > STEP_MS){ frame = (frame + 1) % 4; lastStep = ts; }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // ground
+    ctx.fillStyle = 'rgba(200,146,42,0.12)';
+    ctx.fillRect(0, PH, canvas.width, 1);
+
+    // faint shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.beginPath();
+    ctx.ellipse(x + PW/2, PH + 1, PW * 0.4, 2, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    drawFrame(frame, Math.round(x), S);
+    requestAnimationFrame(tick);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !running){ running = true; requestAnimationFrame(tick); }
+      else if(!e.isIntersecting){ running = false; }
+    });
+  }, {threshold: 0.1});
+  obs.observe(canvas.closest('#rpg-walker') || canvas);
+})();
+
+/* ── PIXEL TRAVELER (walk left↔right + blink + wave) ── */
+(function(){
+  const canvas = document.getElementById('traveler-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const S = 5;
+  const CW = 12, CH = 14;
+  const PW = CW * S, PH = CH * S;
+
+  const C = {
+    '.': null,
+    'H': '#d4b870', 'h': '#b89840',
+    'S': '#f0c090', 'O': '#222222', 'N': '#e07060',
+    'G': '#3a6642', 'K': '#c8921a', 'k': '#9a6e10',
+    'B': '#1e2d40', 'D': '#111111',
+  };
+
+  const BASE = [
+    '....HHHH....',
+    '...HHHHHH...',
+    '..hHHHHHHh..',
+    '...SSSSSS...',
+    null,           // eyes
+    '..SSSSSSSS..',
+    '...SSNNNSS..',
+    null,           // arms
+    '..GKGGGGkG..',
+    '..GGGGGGGG..',
+    '...GGGGGG...',
+    '...BBBBBB...',
+    null,           // legs
+    '..DD....DD..',
+  ];
+
+  const EYES  = { open: '..SSOOSSOOS.', blink: '..SS--SS--S.' };
+  const ARMS  = { idle: '...GGGGGG...', wave:  'GG.GGGGGG...' };
+  const LEGS  = { a: '..BB....BB..', b: '.BBB...BBB.' }; // slight leg swing
+
+  function drawSprite(eyes, arms, legs, px, dir, bobY) {
+    ctx.save();
+    if(dir < 0) {
+      ctx.translate(px + PW, 0);
+      ctx.scale(-1, 1);
+      px = 0;
+    }
+    BASE.forEach((row, r) => {
+      let actual = row;
+      if(r === 4)  actual = eyes;
+      if(r === 7)  actual = arms;
+      if(r === 12) actual = legs;
+      for(let c = 0; c < actual.length; c++){
+        let ch = actual[c];
+        if(ch === '-') ch = 'S';
+        const col = C[ch];
+        if(!col) continue;
+        ctx.fillStyle = col;
+        ctx.fillRect(px + c * S, r * S + bobY, S, S);
+      }
+    });
+    ctx.restore();
+  }
+
+  function resize() {
+    canvas.width = canvas.offsetWidth || 600;
+    canvas.height = PH + S * 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let x = 20;
+  let dir = 1; // 1=right, -1=left
+  const SPEED = 40; // px/s
+  let start = null, lastTs = 0;
+
+  function tick(ts) {
+    if(!start) start = ts;
+    const dt = (ts - (lastTs || ts)) / 1000;
+    lastTs = ts;
+
+    x += SPEED * dir * dt;
+    if(x + PW > canvas.width - 10) { x = canvas.width - PW - 10; dir = -1; }
+    if(x < 10) { x = 10; dir = 1; }
+
+    const bob  = Math.round(Math.sin((ts - start) / 500) * 2);
+    const t    = (ts - start) % 4000;
+    const eyes = (t >= 1200 && t < 1380) ? EYES.blink : EYES.open;
+    const arms = (t >= 2600 && t < 3500) ? ARMS.wave  : ARMS.idle;
+    const legs = Math.floor((ts - start) / 200) % 2 === 0 ? LEGS.a : LEGS.b;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // ground shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+    ctx.beginPath();
+    ctx.ellipse(x + PW/2, PH + 3, PW * 0.35, 2, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    drawSprite(eyes, arms, legs, Math.round(x), dir, bob + S);
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ── PANDA WALKER JS ── */
+(function(){
+  const canvas = document.getElementById('panda-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const S = 5; // bigger scale = crisper pixels
+
+  const C = {
+    '.': null,
+    'W': '#e8e8e4',  // white body
+    'B': '#111111',  // black
+    'N': '#c47070',  // nose pink
+    'G': '#888888',  // gray shading
+  };
+
+  // 8 wide × 14 tall — classic side-view panda
+  // Head: round white face, two black ears, big black eye patch, pink nose
+  // Body: black with white belly
+  // 4-frame walk cycle
+  const BODY = [
+    '.BB..BB.',  // 0: two black ears
+    'BWWWWWWB',  // 1: white head
+    'BBWWWWWB',  // 2: black eye patch (left = front)
+    'BWBBWWWB',  // 3: eye (B=pupil) + white cheek
+    'BWWWWNWB',  // 4: nose (N) centered
+    '.BWWWWB.',  // 5: lower face
+    '..BBBB..',  // 6: neck
+    '.BWWWWB.',  // 7: white belly
+    'BBWWWWBB',  // 8: body (black sides)
+    'BBWWWWBB',  // 9: body lower
+  ];
+
+  const LEGS = [
+    // frame 0: right foot forward
+    ['.BB..BB.',
+     '.BB..B..',
+     'BB......',
+     '.....BB.'],
+    // frame 1: passing
+    ['..BBBB..',
+     '..BBBB..',
+     '..BBBB..',
+     '........'],
+    // frame 2: left foot forward
+    ['.BB..BB.',
+     '....BB..',
+     '....BB..',
+     '.BB.....'],
+    // frame 3: passing (same as 1)
+    ['..BBBB..',
+     '..BBBB..',
+     '..BBBB..',
+     '........'],
+  ];
+
+  const CW = 8, CH = BODY.length + LEGS[0].length;
+  const PW = CW * S, PH = CH * S;
+
+  function drawFrame(f, px, py) {
+    [...BODY, ...LEGS[f]].forEach((row, r) => {
+      for(let c = 0; c < row.length; c++){
+        const col = C[row[c]];
+        if(!col) continue;
+        ctx.fillStyle = col;
+        ctx.fillRect(px + c * S, py + r * S, S, S);
+      }
+    });
+  }
+
+  let x = -PW;
+  let frame = 0;
+  let lastStep = 0, lastTs = 0;
+  let running = false;
+  const SPEED = 30;
+  const STEP_MS = 220;
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = PH + S * 2;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function tick(ts) {
+    if(!running) return;
+    const dt = (ts - (lastTs || ts)) / 1000;
+    lastTs = ts;
+    x += SPEED * dt;
+    if(x > canvas.width) x = -PW;
+    if(ts - lastStep > STEP_MS){ frame = (frame + 1) % 4; lastStep = ts; }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // ground
+    ctx.fillStyle = 'rgba(200,146,42,0.08)';
+    ctx.fillRect(0, PH, canvas.width, 1);
+
+    // shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.12)';
+    ctx.beginPath();
+    ctx.ellipse(x + PW/2, PH + 2, PW * 0.38, 2, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    drawFrame(frame, Math.round(x), S);
+    requestAnimationFrame(tick);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !running){ running = true; requestAnimationFrame(tick); }
+      else if(!e.isIntersecting){ running = false; }
+    });
+  }, {threshold: 0.1});
+  obs.observe(canvas);
+})();
+
+/* helper: auto-cycle dialog */
+function autoCycleDialog(elId, dialogs, delay){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  let idx = 0, timer;
+  const show = () => {
+    el.innerHTML = dialogs[idx].replace(/\n/g,'<br>');
+    idx = (idx + 1) % dialogs.length;
+    timer = setTimeout(show, delay);
+  };
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ show(); obs.disconnect(); }
+    });
+  }, {threshold:0.3});
+  obs.observe(el.closest('.rpgm-wrap') || el);
+}
+
+/* ── B: WORLD MAP JS (dot grid — Asia-shaped) ── */
+(function(){
+  const grid = document.getElementById('map-grid');
+  if(!grid) return;
+  const COLS = 24, ROWS = 5, TOTAL = COLS * ROWS;
+  // 24×5 grid. col=(lon-58)/3.75, row=(53-lat)/10
+  // Visited: China, India, Bangladesh, Japan, Taiwan, Thailand, Laos, Vietnam, Indonesia
+  const visited = new Set([
+    // Row 0 – N China / Siberia band
+    4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+    // Row 1 – India NW + China + Japan (Honshu+Hokkaido)
+    26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,
+    43,44,45,46,47,
+    // Row 2 – India + S China/HK + Taiwan + Japan W
+    50,51,52,53,54,55,56,57, // India cols 2-9
+    58,59,60,61,62,63,64,65, // S China + Taiwan col 17 (65)
+    68,69,70,                // Japan cols 20-22
+    // Row 3 – S India + SE Asia core + Taiwan
+    74,75,76,77,78,79,80,81, // India S
+    83,84,85,86,87,88,       // Thailand/Laos/Vietnam/HK coast
+    89,                      // Taiwan (col 17)
+    // Row 4 – India tip + SE Asia / Sumatra
+    99,100,101,              // India tip cols 3-5
+    107,108,109,110          // Thailand peninsula + Sumatra
+  ]);
+  for(let i=0; i<TOTAL; i++){
+    const c = document.createElement('div');
+    c.className = 'map-cell' + (visited.has(i) ? ' visited' : '');
+    grid.appendChild(c);
+  }
+  // pulse one visited cell at a time
+  const vArr = [...visited];
+  let vi = 0;
+  let lastActive = null;
+  setInterval(() => {
+    if(lastActive) lastActive.classList.remove('active');
+    const cell = grid.children[vArr[vi % vArr.length]];
+    if(cell){ cell.classList.add('active'); lastActive = cell; }
+    vi++;
+  }, 600);
+
+  autoCycleDialog('map-dialog', [
+    'ワールドマップを開くと、\nまだ行ってない場所の方が多い。',
+    'エンディングを、まだ見ていない。\nたぶん、ない。',
+    '同じフィールドは、二度と同じじゃない。\nだから、戻ってもいい。',
+    'ランダムエンカウントが多い旅が、\n一番おもしろい。'
+  ], 3500);
+})();
+
+/* ── SOUND ENGINE ── */
+const SFX = (function(){
+  let _ctx = null;
+  function ac() {
+    if(!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if(_ctx.state === 'suspended') _ctx.resume();
+    return _ctx;
+  }
+  function tone(freq, dur, type='sine', vol=0.12, freqEnd) {
+    try {
+      const c = ac();
+      const osc = c.createOscillator();
+      const g   = c.createGain();
+      osc.connect(g); g.connect(c.destination);
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, c.currentTime);
+      if(freqEnd != null)
+        osc.frequency.linearRampToValueAtTime(freqEnd, c.currentTime + dur);
+      g.gain.setValueAtTime(vol, c.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + dur);
+      osc.start(c.currentTime);
+      osc.stop(c.currentTime + dur + 0.01);
+    } catch(e){}
+  }
+  // unlock on first user gesture
+  document.addEventListener('click', () => { try { ac(); } catch(e){} }, { once: true });
+
+  return {
+    typeClick() { tone(680 + Math.random()*80, 0.035, 'square', 0.04); },
+    hover()     { tone(620, 0.03, 'sine', 0.07); },
+    select()    { tone(880, 0.06, 'sine', 0.13); },
+    encounter() {
+      // rising arpeggio C5→E5→G5→C6
+      [523,659,784,1047].forEach((f,i) => setTimeout(() => tone(f, 0.14, 'square', 0.10), i*75));
+    },
+    response(idx) {
+      if(idx===0) tone(440, 0.22, 'sine', 0.12, 880);      // まねする — 上昇
+      if(idx===1) tone(220, 0.35, 'sine', 0.09);            // きく — 低くやわらか
+      if(idx===2) {                                          // スマホ — 電子音3連
+        tone(1200, 0.05, 'square', 0.09);
+        setTimeout(()=>tone(800, 0.05,'square',0.09), 60);
+        setTimeout(()=>tone(1000,0.09,'square',0.09),120);
+      }
+      if(idx===3) tone(440, 0.28, 'sine', 0.12, 200);      // にげる — 下降
+    }
+  };
+})();
+
+/* ── B: ENCOUNTER MONSTER JS ── */
+(function(){
+  const canvas = document.getElementById('enc-monster');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2;
+
+  // Thai + Lao + Sanskrit chars — the "creature"
+  const CHARS = [
+    'ก','ข','ง','ช','ฌ','ญ','ณ','ถ','ธ','ภ','ฬ','อ',
+    'ກ','ຂ','ຄ','ງ','ຊ','ຍ','ດ','ຕ','ທ','ນ','ວ','ຮ',
+    'ล','ส','ห','ย','ร','ว','ฮ','ฝ',
+    'अ','आ','इ','ई','उ','ऊ','क','ख','ग','घ','च','छ',
+    'ज','झ','ट','ड','त','थ','द','ध','न','प','ब','भ',
+    'म','य','र','ल','व','श','ष','स','ह',
+  ];
+
+  // Place ~24 chars around blob center with random offsets
+  const parts = Array.from({length: 24}, (_, i) => {
+    const angle = (i / 24) * Math.PI * 2;
+    const r = 36 + Math.random() * 24;
+    return {
+      ch:    CHARS[Math.floor(Math.random() * CHARS.length)],
+      baseX: Math.cos(angle) * r,
+      baseY: Math.sin(angle) * r * 0.65,
+      phase: Math.random() * Math.PI * 2,
+      freq:  0.6 + Math.random() * 0.8,
+      amp:   4 + Math.random() * 6,
+      rot:   Math.random() * Math.PI * 2,
+      rotSpd:(Math.random() - 0.5) * 0.02,
+      size:  11 + Math.random() * 7,
+    };
+  });
+
+  const eyes = [];
+
+  let running = false;
+
+  function draw(ts) {
+    ctx.clearRect(0, 0, W, H);
+    const t = ts / 1000;
+
+    // body glow
+    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 70);
+    grd.addColorStop(0, 'rgba(200,146,42,0.10)');
+    grd.addColorStop(1, 'rgba(200,146,42,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, H);
+
+    // chars
+    parts.forEach(p => {
+      const dx = Math.sin(t * p.freq + p.phase) * p.amp;
+      const dy = Math.cos(t * p.freq * 0.7 + p.phase) * p.amp * 0.6;
+      p.rot += p.rotSpd;
+      const x = cx + p.baseX + dx;
+      const y = cy + p.baseY + dy;
+      const alpha = 0.45 + 0.3 * Math.sin(t * p.freq + p.phase);
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(p.rot);
+      ctx.font = `${p.size}px serif`;
+      ctx.fillStyle = `rgba(200,146,42,${alpha})`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(p.ch, 0, 0);
+      ctx.restore();
+    });
+
+    // eyes — gold, blinking
+    eyes.forEach(e => {
+      const blink = Math.sin(t * 1.3 + e.phase) > 0.92;
+      const ex = cx + e.ox + Math.sin(t * 0.4 + e.phase) * 2;
+      const ey = cy + e.oy + Math.cos(t * 0.5) * 1.5;
+      ctx.save();
+      ctx.shadowColor = 'rgba(200,146,42,0.9)';
+      ctx.shadowBlur = 8;
+      ctx.fillStyle = blink ? 'rgba(200,146,42,0.1)' : 'rgba(220,170,50,0.95)';
+      ctx.beginPath();
+      if(blink){
+        ctx.fillRect(ex - 4, ey, 8, 1);
+      } else {
+        ctx.arc(ex, ey, 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+  }
+
+  function loop(ts) {
+    if(!running) return;
+    draw(ts);
+    requestAnimationFrame(loop);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !running){ running = true; requestAnimationFrame(loop); }
+      else if(!e.isIntersecting){ running = false; }
+    });
+  }, {threshold: 0.1});
+  obs.observe(canvas);
+})();
+
+/* ── B: ENCOUNTER BATTLE JS ── */
+(function(){
+  const textEl = document.getElementById('enc-battle-text');
+  const menu   = document.getElementById('enc-menu');
+  if(!textEl || !menu) return;
+
+  const ENCOUNTER_TEXT = 'あ！　やせいの\nゲンゴが　とびだしてきた！';
+
+  const choices = [
+    { label: 'A：まねる', response: 'はつおんを　まねした。\nつうじたかも　しれない。' },
+    { label: 'B：きく',   response: 'みみを　かたむけた。\nいみは　わからなかった。\nでも、おとは　おぼえた。' },
+    { label: 'C：スマホ', response: 'ほんやくアプリを　あけた。\nでんぱが　なかった。' },
+    { label: 'D：にげる', response: 'にげた。\nでも　つぎの　かどで、\nまた　あらわれた。' },
+  ];
+
+  let locked = false;
+  let twTimer = null;
+
+  function typewrite(text, onDone, withSound=false) {
+    if(twTimer) clearTimeout(twTimer);
+    textEl.innerHTML = '';
+    menu.style.opacity = '0';
+    menu.style.pointerEvents = 'none';
+    let i = 0;
+    const chars = text.split('');
+    function next() {
+      if(i >= chars.length) {
+        if(onDone) onDone();
+        return;
+      }
+      const c = chars[i++];
+      if(c === '\n') {
+        textEl.appendChild(document.createElement('br'));
+      } else {
+        textEl.appendChild(document.createTextNode(c));
+        if(withSound && c !== '　') SFX.typeClick();
+      }
+      twTimer = setTimeout(next, c === '！' || c === '　' ? 120 : 65);
+    }
+    next();
+  }
+
+  function showMenu() {
+    menu.style.opacity = '';
+    menu.style.pointerEvents = '';
+    setArrow(0);
+  }
+
+  function setArrow(activeIdx) {
+    menu.querySelectorAll('.enc-choice').forEach((btn, i) => {
+      btn.textContent = (i === activeIdx ? '▶ ' : '　 ') + choices[i].label;
+      btn.classList.toggle('cursor', i === activeIdx);
+    });
+  }
+
+  function reset() {
+    locked = false;
+    typewrite(ENCOUNTER_TEXT, showMenu, true);
+  }
+
+  // hover sound
+  menu.querySelectorAll('.enc-choice').forEach((btn, idx) => {
+    btn.addEventListener('mouseenter', () => { if(!locked) SFX.hover(); });
+    btn.addEventListener('click', () => {
+      if(locked) return;
+      locked = true;
+      SFX.select();
+      setTimeout(() => SFX.response(idx), 120);
+      setArrow(idx);
+      menu.style.opacity = '0.35';
+      menu.style.pointerEvents = 'none';
+      typewrite(choices[idx].response, () => {
+        setTimeout(reset, 2200);
+      }, true);
+    });
+  });
+
+  // start typing when section enters view
+  const wrap = document.getElementById('rpg-enc');
+  let started = false;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !started){
+        started = true;
+        SFX.encounter();
+        setTimeout(() => typewrite(ENCOUNTER_TEXT, showMenu, true), 320);
+      }
+    });
+  }, {threshold: 0.2});
+  if(wrap) obs.observe(wrap); else typewrite(ENCOUNTER_TEXT, showMenu, true);
+})();
+
+/* ── C: STATUS JS ── */
+(function(){
+  const wrap = document.getElementById('rpg-stat');
+  if(!wrap) return;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        wrap.querySelectorAll('.stat-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.val + '%';
+        });
+        obs.disconnect();
+      }
+    });
+  }, {threshold:0.3});
+  obs.observe(wrap);
+
+  autoCycleDialog('stat-dialog', [
+    '所持金が減ると、創造性が上がる。\nこれはバグじゃないと思う。',
+    '難易度設定は、自分で上げた。\nその方が、おもしろいから。',
+    '拠点を持たないプレイスタイルを選んだ。\n自由度が、跳ね上がった。',
+    '初見殺しが多いフィールドほど、\nクリアしたときの達成感がある。'
+  ], 3500);
+})();
+
+/* ── D: MINIMAP JS ── */
+(function(){
+  const grid = document.getElementById('mini-grid');
+  if(!grid) return;
+  const COLS = 12;
+  const MAP = [
+    1,1,1,1,1,1,1,1,1,1,1,1,
+    1,2,2,2,1,2,2,2,2,2,2,1,
+    1,2,1,2,2,2,1,1,2,1,2,1,
+    1,2,1,2,1,2,2,1,2,2,2,1,
+    1,2,2,2,1,1,2,2,2,1,2,1,
+    1,2,1,2,2,2,2,1,2,2,2,1,
+    1,1,1,1,1,1,1,1,1,1,1,1
+  ];
+  const pathCells = MAP.map((v,i) => v===2 ? i : -1).filter(i => i>=0);
+  let curIdx = 14;
+
+  MAP.forEach((v, i) => {
+    const c = document.createElement('div');
+    c.className = 'mm-cell' + (v===1 ? ' wall' : v===2 ? ' path' : '');
+    if(i === curIdx) c.classList.add('you');
+    grid.appendChild(c);
+  });
+
+  function bfs(start, goal) {
+    const queue = [[start]];
+    const visited = new Set([start]);
+    while(queue.length) {
+      const path = queue.shift();
+      const cur = path[path.length - 1];
+      if(cur === goal) return path;
+      for(const n of [cur-1, cur+1, cur-COLS, cur+COLS]) {
+        if(n >= 0 && n < MAP.length && MAP[n] === 2 && !visited.has(n)) {
+          visited.add(n);
+          queue.push([...path, n]);
+        }
+      }
+    }
+    return null;
+  }
+
+  let running = false;
+
+  function wander() {
+    const target = pathCells[Math.floor(Math.random() * pathCells.length)];
+    if(target === curIdx) { setTimeout(wander, 600); return; }
+    const route = bfs(curIdx, target);
+    if(!route || route.length < 2) { setTimeout(wander, 600); return; }
+    let step = 1;
+    function step_() {
+      if(!running) return;
+      if(step >= route.length) {
+        curIdx = target;
+        setTimeout(wander, 500 + Math.random() * 900);
+        return;
+      }
+      grid.querySelectorAll('.you').forEach(c => c.classList.remove('you'));
+      grid.children[route[step]].classList.add('you');
+      step++;
+      setTimeout(step_, 160);
+    }
+    step_();
+  }
+
+  const wrap = document.getElementById('rpg-mini');
+  let started = false;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !started){ started = true; running = true; wander(); }
+      else if(!e.isIntersecting){ running = false; }
+    });
+  }, {threshold: 0.3});
+  if(wrap) obs.observe(wrap);
+
+  autoCycleDialog('mini-dialog', [
+    '迷子は、バグじゃなくて仕様。',
+    '初期設定で選んだのは、日本語話者。\nそれ以外は、現地で覚えた。',
+    '隠しエリアは、だいたいバスが来ない場所にある。'
+  ], 4000);
+})();
+
+/* ── E: ITEM LOG JS ── */
+(function(){
+  const log = document.getElementById('item-log');
+  if(!log) return;
+  const items = [
+    { tag: 'ヒント入手', text: '地元のおじさん。攻略本より、正確だった。' },
+    { tag: 'スキル発動', text: '移動中に考えたことが、\nだいたい一番いいアイデアだった。' },
+    { tag: 'NPC', text: 'セリフは繰り返さない。\nだから、ちゃんと聞く。' }
+  ];
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'item-entry';
+    div.innerHTML = `<span class="item-tag">${item.tag}</span><span class="item-text">${item.text.replace(/\n/g,'<br>')}</span>`;
+    log.appendChild(div);
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        log.querySelectorAll('.item-entry').forEach((el, i) => {
+          setTimeout(() => el.classList.add('show'), i * 400);
+        });
+        obs.disconnect();
+      }
+    });
+  }, {threshold:0.3});
+  obs.observe(log.closest('.rpgm-wrap') || log);
+})();
+
+/* ── TRAVEL MAP JS ── */
+(function(){
+  const canvas = document.getElementById('tmap-canvas');
+  const replayBtn = document.getElementById('tmap-replay');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 380;
+  canvas.width = W; canvas.height = H;
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function ease(t){return t<.5?2*t*t:-1+(4-2*t)*t;}
+  function dist(a,b){return Math.hypot(b.lon-a.lon,b.lat-a.lat);}
+
+  /* Camera-following projection */
+  let cam={lon:135,lat:30,s:6};
+  function proj(lon,lat){
+    return[W/2+(lon-cam.lon)*cam.s, H/2-(lat-cam.lat)*cam.s];
+  }
+
+  /* Simplified world land polygons */
+  const LANDS = [
+    // Japan Honshu+Kyushu
+    [[130.3,31.2],[131.6,31.5],[131.9,33],[132.5,33.5],[133,33.7],[134.6,35],[135.4,34.7],
+     [136.9,34.8],[137.6,34.7],[138.2,35.1],[139.5,35.5],[139.8,36.5],[140.5,38.3],
+     [141.1,39.6],[141.5,40.9],[140.1,40.8],[139.4,38.5],[137.2,37],[136,35.7],
+     [135.2,35.6],[134.5,35.5],[133.5,34.5],[132.4,33.9],[131,31.9],[130.3,31.2]],
+    // Hokkaido
+    [[141,41],[142,43],[143.5,44],[144.5,44],[145,43.5],[144.5,43],[143,42],[141.5,41.5],[141,41]],
+    // Korea
+    [[126.1,34.7],[127.9,34.9],[128.8,35.1],[129.4,36.5],[129.4,37.5],[127.7,37.7],
+     [126.7,37.7],[126.2,37.3],[126.6,36.4],[126,35],[126.1,34.7]],
+    // Taiwan
+    [[120.1,22],[121.5,22.6],[121.9,24.2],[121.6,25.3],[120.8,25],[120.2,23.5],[120.1,22]],
+    // SE Asia + Indochina
+    [[100.5,5.6],[100.5,8],[100,9.5],[99.5,11],[100,13],[100.1,14],[99.3,14.5],
+     [98.5,15.5],[98,16.5],[98,18],[97.6,19.5],[98.5,20],[100,21],[100.8,22.5],
+     [101.5,22.2],[102.8,22],[103.9,22.5],[106.5,22.9],[107.5,21.5],[107.8,20.5],
+     [108,19.5],[106.8,19],[106.5,17.5],[107.3,16.5],[108.5,15.5],[109,14],
+     [108,12.5],[107,11],[106.5,10.5],[106.8,9.5],[105.5,9],[104.5,10.3],
+     [103.5,10],[102.5,10],[101,6],[100.5,5.6]],
+    // Malay Peninsula
+    [[100.5,5.6],[101.2,2.8],[103.7,1.2],[104,1.4],[103.5,2.5],[102,3.8],[100.5,5.6]],
+    // India
+    [[66.5,23],[68.5,22],[72,20.5],[73,19],[72.8,17],[72.5,15.5],[73.5,14.5],
+     [75,12],[76.5,10],[77.5,8],[79.5,9],[80.5,10],[82,11.5],[80.5,13],
+     [80.2,16.5],[81,19.5],[82.5,21],[85,21.5],[87,21.5],[88.5,22],[90.5,22.5],
+     [91.5,22],[92,24],[91.5,25],[89.5,26],[87,26.5],[84,28],[81,30],
+     [79,31.5],[76.5,31.5],[73.5,32],[70,28],[67.5,25],[66.5,23]],
+    // Sri Lanka
+    [[79.8,7],[80.7,7.5],[81.9,9],[80.5,9.8],[79.8,9],[79.8,7]],
+    // Philippines (Luzon)
+    [[118.5,9.5],[120,10],[122,11.5],[124,11],[123.5,10],[122.5,9.5],
+     [122,8],[121.5,7.5],[120.5,8],[119.5,8.5],[118.5,9.5]],
+    // Borneo
+    [[108.1,0.8],[110.3,1.1],[113.3,1.5],[115.5,2],[117.5,4.2],[118,5.9],
+     [116.5,7.1],[115.3,6.3],[113,4.5],[110.5,3],[108.1,0.8]],
+    // Sumatra
+    [[95.2,5.7],[97.5,4],[99.5,2],[103,0.2],[104.5,0.5],[106,2.5],
+     [102.3,4.5],[100.3,5.6],[96,5.6],[95.2,5.7]],
+    // Java
+    [[105,-7.5],[107,-6.7],[108.5,-6.9],[111,-7],[114,-7.5],[115,-8],
+     [114,-8.3],[110,-7.8],[107,-7.5],[105,-7.5]],
+    // China + Mongolia
+    [[130,42],[128,41],[124,40],[121,40],[120,38],[120,35],[121,32],
+     [121,28],[121,25],[119,23],[117,21],[113,20],[110,20],[110,18],
+     [104,22],[101,22],[98,25],[98,28],[93,28],[89,28],[87,28],[84,28],
+     [80,32],[76,34],[74,37],[73,38],[75,40],[80,44],[83,47],[87,50],
+     [90,50],[95,50],[100,49],[105,48],[110,48],[116,48],[119,50],
+     [123,48],[126,47],[128,47],[134,48],[135,46],[130,42]],
+    // Siberia / Russia Far East
+    [[28,70],[50,73],[70,73],[90,73],[110,71],[130,66],[135,63],[133,58],
+     [130,53],[134,48],[128,47],[126,47],[123,48],[119,50],[116,48],
+     [110,48],[105,48],[100,49],[95,50],[90,50],[87,50],[83,47],[80,44],
+     [75,40],[73,38],[70,38],[66,38],[61.5,40],[55,41],[52,41],[51,47],
+     [49,52],[51,54],[55,55],[64,54],[73,54],[80,51],[83,47]],
+    // Central Asia
+    [[52,41],[55,41],[61.5,40],[66,38],[70,38],[75,40],[80,42.5],[83,47],
+     [80,51],[73,54],[64,54],[55,55],[51,54],[49,52],[51,47],[52,41]],
+    // Arabia
+    [[39,22],[42,20],[45,18.5],[50,16.5],[52,17],[55,20],[57,22],[59,24],
+     [57.5,25],[56.5,26],[55,29],[50,29.5],[47,29.5],[44.5,29.5],[40.5,29],
+     [37,25.5],[37.5,23.5],[39,22]],
+    // Persia/Iran
+    [[44,39.5],[47,39.7],[52.5,40],[54,37.5],[57,37.5],[60,37],[63,36.5],
+     [62,35],[61.5,33],[61,29],[57,22],[56.5,27.5],[51.5,29.5],[47.5,29.5],
+     [46.5,31],[45.5,33.5],[44.5,37.5],[44,39.5]],
+    // Turkey+Caucasus
+    [[26,36.5],[27.5,37],[29.5,36.5],[33,36.5],[36.5,36.5],[39,36.7],
+     [41.5,38.5],[44,39.5],[44.5,39],[43.5,38.5],[40.5,36.5],[36,36],
+     [33.5,35],[30.5,36.5],[27,37.3],[26.5,38.5],[27,40],[28.5,40.8],
+     [32,41.5],[36,42],[40.5,40.5],[41.5,40],[41.5,40.5],[37.5,41.5],
+     [32,42],[28,41],[26.5,40],[26,40.5],[26,36.5]],
+    // Europe (Iberia→France→Germany→Scandinavia)
+    [[-8.5,43.5],[-9.5,39],[-6.5,36.5],[-5,36],[-2.5,36.5],[0,37.5],
+     [1.5,40.5],[3.5,40.5],[3,42],[0,43.5],[-1.5,46.5],[0.5,47.5],
+     [2,50.5],[2.5,51],[3,50],[4.5,49.5],[5.5,49],[7.5,49],[7.5,47.5],
+     [6.5,46.5],[5,45.5],[4,43.5],[3,43],[-2,43.5],[-5.5,43.5],[-8.5,43.5]],
+    // Italy
+    [[7.5,44],[9,44.5],[10.5,43.7],[11.5,42.5],[12.5,41.5],[13.5,40.5],
+     [14.5,40.8],[16,41],[15.8,39.8],[15.5,38.5],[15.5,37.5],[14,38.5],
+     [10,44],[7.5,44]],
+    // Scandinavia
+    [[5,58],[7,55],[9,57],[10,58.5],[11.5,58.5],[12,57],[10.5,55.5],[9.5,55.5],
+     [12.5,60],[5,62],[7,65],[14,69],[28,70.5],[30,70],[28,68],[22,65.5],
+     [22.5,63.5],[25,59.5],[25.5,60.5],[21.5,63.5],[18.5,67],[16.5,69],
+     [12,66],[11.5,63],[5,58]],
+    // UK
+    [[-5.5,50],[-2.5,50],[1.5,51.5],[0,53.5],[-2,55],[-5,58.5],[-6,58],
+     [-5.5,56],[-3.5,51.5],[-5.5,50]],
+    // Africa (simplified)
+    [[-17,15],[-14,10],[-10,5],[0,5],[3,6],[8,4],[10,2],[12,0],[15,-5],
+     [25,-17],[30,-22],[33,-30],[25,-35],[18,-35],[15,-28],[10,-22],[5,-10],
+     [2,-5],[5,4],[8,4],[10,8],[12,14],[15,23],[25,31],[32,31],[38,22],
+     [42,17],[45,12],[42,11],[38,8],[30,3],[25,-5],[20,-5],[10,-1],[5,5],
+     [0,5],[-5,4],[-10,5],[-15,10],[-17,15]],
+    // North America
+    [[-66,44],[-70,47],[-75,45],[-80,43],[-83,45],[-87,45],[-95,43],
+     [-100,43],[-110,43],[-120,39],[-122,37],[-117,32],[-100,19],
+     [-88,16],[-80,25],[-81,30],[-80,35],[-75,35],[-72,41],[-70,42],
+     [-67,47],[-65,50],[-58,52],[-58,58],[-70,65],[-80,65],[-95,62],
+     [-90,58],[-73,60],[-67,62],[-60,63],[-55,58],[-60,47],[-65,47],[-66,44]],
+    // Mexico
+    [[-117,32],[-110,25],[-100,18],[-90,15],[-88,16],[-95,20],
+     [-100,19],[-104,20],[-110,25],[-117,32]],
+  ];
+
+  /* Route — all 93 cities in travel order */
+  const ROUTE = [
+    // Japan N→S
+    {lon:141.35,lat:43.07,city:'Sapporo',country:'Japan'},
+    {lon:141.15,lat:39.70,city:'Morioka',country:'Japan'},
+    {lon:140.10,lat:39.72,city:'Akita',country:'Japan'},
+    {lon:140.37,lat:38.24,city:'Yamagata',country:'Japan'},
+    {lon:140.87,lat:38.27,city:'Sendai',country:'Japan'},
+    {lon:139.70,lat:35.68,city:'Tokyo',country:'Japan'},
+    {lon:138.57,lat:35.66,city:'Kofu',country:'Japan'},
+    {lon:135.50,lat:34.69,city:'Osaka',country:'Japan'},
+    {lon:132.46,lat:34.39,city:'Hiroshima',country:'Japan'},
+    {lon:133.36,lat:34.49,city:'Fukuyama',country:'Japan'},
+    {lon:130.40,lat:33.60,city:'Fukuoka',country:'Japan'},
+    {lon:127.68,lat:26.21,city:'Naha',country:'Japan'},
+    // Korea
+    {lon:129.07,lat:35.10,city:'Busan',country:'Korea'},
+    {lon:129.22,lat:35.85,city:'Gyeongju',country:'Korea'},
+    {lon:126.98,lat:37.57,city:'Seoul',country:'Korea'},
+    {lon:126.71,lat:37.46,city:'Incheon',country:'Korea'},
+    {lon:126.55,lat:33.50,city:'Jeju',country:'Korea'},
+    // Taiwan
+    {lon:121.75,lat:24.70,city:'Yilan',country:'Taiwan'},
+    {lon:121.56,lat:25.04,city:'Taipei',country:'Taiwan'},
+    {lon:121.30,lat:25.00,city:'Taoyuan',country:'Taiwan'},
+    {lon:121.61,lat:23.99,city:'Hualien',country:'Taiwan'},
+    {lon:120.68,lat:24.14,city:'Taichung',country:'Taiwan'},
+    {lon:120.20,lat:22.99,city:'Tainan',country:'Taiwan'},
+    {lon:120.30,lat:22.62,city:'Kaohsiung',country:'Taiwan'},
+    // HK + Macau
+    {lon:113.55,lat:22.19,city:'Macau',country:'Macau'},
+    {lon:114.17,lat:22.32,city:'Hong Kong',country:'Hong Kong'},
+    // China: coast → north → inland → SW
+    {lon:121.47,lat:31.23,city:'Shanghai',country:'China'},
+    {lon:120.07,lat:29.31,city:'Yiwu',country:'China'},
+    {lon:117.19,lat:39.13,city:'Tianjin',country:'China'},
+    {lon:116.40,lat:39.91,city:'Beijing',country:'China'},
+    {lon:108.93,lat:34.27,city:"Xi'an",country:'China'},
+    {lon:104.07,lat:30.67,city:'Chengdu',country:'China'},
+    {lon:100.23,lat:26.87,city:'Lijiang',country:'China'},
+    {lon:100.23,lat:25.60,city:'Dali',country:'China'},
+    {lon:99.70, lat:27.83,city:'Shangri-La',country:'China'},
+    {lon:108.37,lat:22.82,city:'Nanning',country:'China'},
+    {lon:113.26,lat:23.13,city:'Guangzhou',country:'China'},
+    // Vietnam N→S
+    {lon:103.97,lat:22.48,city:'Lao Cai',country:'Vietnam'},
+    {lon:105.85,lat:21.03,city:'Hanoi',country:'Vietnam'},
+    {lon:105.78,lat:19.81,city:'Thanh Hoa',country:'Vietnam'},
+    {lon:105.68,lat:18.67,city:'Vinh',country:'Vietnam'},
+    {lon:108.22,lat:16.07,city:'Da Nang',country:'Vietnam'},
+    {lon:108.33,lat:15.88,city:'Hoi An',country:'Vietnam'},
+    {lon:108.01,lat:14.35,city:'Kon Tum',country:'Vietnam'},
+    {lon:108.01,lat:13.98,city:'Pleiku',country:'Vietnam'},
+    {lon:108.05,lat:12.67,city:'Buon Ma Thuot',country:'Vietnam'},
+    {lon:108.44,lat:11.94,city:'Da Lat',country:'Vietnam'},
+    {lon:108.29,lat:10.93,city:'Mui Ne',country:'Vietnam'},
+    {lon:106.66,lat:10.78,city:'Ho Chi Minh',country:'Vietnam'},
+    // Laos N→S
+    {lon:102.11,lat:21.68,city:'Phongsali',country:'Laos',note:'雲の上の村の近く'},
+    {lon:101.99,lat:20.70,city:'Udomxai',country:'Laos'},
+    {lon:102.14,lat:19.89,city:'Luang Prabang',country:'Laos'},
+    {lon:101.75,lat:19.27,city:'Sayaboury',country:'Laos'},
+    {lon:102.62,lat:17.97,city:'Vientiane',country:'Laos'},
+    {lon:104.98,lat:18.18,city:'Lak Sao',country:'Laos'},
+    {lon:104.80,lat:17.40,city:'Thakhek',country:'Laos'},
+    {lon:106.43,lat:15.73,city:'Salavan',country:'Laos'},
+    {lon:106.23,lat:15.18,city:'Paksong',country:'Laos'},
+    {lon:105.80,lat:15.12,city:'Pakse',country:'Laos'},
+    {lon:107.00,lat:14.80,city:'Attapeu',country:'Laos'},
+    // Thailand N→S
+    {lon:97.97, lat:19.30,city:'Mae Hong Son',country:'Thailand'},
+    {lon:98.99, lat:18.79,city:'Chiang Mai',country:'Thailand'},
+    {lon:102.79,lat:17.41,city:'Udon Thani',country:'Thailand'},
+    {lon:102.83,lat:16.43,city:'Khon Kaen',country:'Thailand'},
+    {lon:102.10,lat:14.98,city:'Nakhon Ratchasima',country:'Thailand'},
+    {lon:100.50,lat:13.75,city:'Bangkok',country:'Thailand'},
+    // Myanmar
+    {lon:99.60,lat:21.30,city:'Kengtung',country:'Myanmar'},
+    {lon:99.88,lat:20.45,city:'Tachileik',country:'Myanmar'},
+    // Malaysia
+    {lon:116.07,lat:5.98, city:'Kota Kinabalu',country:'Malaysia'},
+    {lon:100.33,lat:5.41, city:'George Town',country:'Malaysia'},
+    {lon:101.70,lat:3.14, city:'Kuala Lumpur',country:'Malaysia'},
+    {lon:102.25,lat:2.20, city:'Melaka',country:'Malaysia'},
+    // Singapore
+    {lon:103.82,lat:1.35,city:'Singapore',country:'Singapore'},
+    // Brunei
+    {lon:114.94,lat:4.94,city:'Bandar Seri Begawan',country:'Brunei'},
+    // Indonesia
+    {lon:106.87,lat:-6.20,city:'Jakarta',country:'Indonesia'},
+    // Philippines
+    {lon:120.97,lat:14.60,city:'Manila',country:'Philippines'},
+    {lon:120.28,lat:14.83,city:'Olongapo',country:'Philippines'},
+    // Bangladesh
+    {lon:90.41,lat:23.72,city:'Dhaka',country:'Bangladesh'},
+    {lon:91.98,lat:21.43,city:"Cox's Bazar",country:'Bangladesh'},
+    // India NE→W
+    {lon:95.00,lat:27.48,city:'Dibrugarh',country:'India'},
+    {lon:93.73,lat:25.91,city:'Dimapur',country:'India'},
+    {lon:91.74,lat:26.18,city:'Guwahati',country:'India'},
+    {lon:91.88,lat:25.57,city:'Shillong',country:'India'},
+    {lon:89.57,lat:26.85,city:'Jaigaon',country:'India'},
+    {lon:88.26,lat:27.04,city:'Darjeeling',country:'India'},
+    {lon:88.43,lat:26.71,city:'Siliguri',country:'India'},
+    {lon:88.37,lat:22.57,city:'Kolkata',country:'India'},
+    {lon:82.99,lat:25.32,city:'Varanasi',country:'India'},
+    {lon:75.79,lat:26.93,city:'Jaipur',country:'India'},
+    {lon:77.22,lat:28.64,city:'New Delhi',country:'India'},
+    // Americas
+    {lon:-73.57, lat:45.50,city:'Montréal',country:'Canada'},
+    {lon:-99.13, lat:19.43,city:'Mexico City',country:'Mexico'},
+    {lon:-122.42,lat:37.77,city:'San Francisco',country:'USA'},
+  ];
+
+  /* Build timeline: dwell at each city, then travel to next */
+  const DWELL = 0.38;
+  function travelDur(i){
+    if(i>=ROUTE.length-1) return 0;
+    const d=dist(ROUTE[i],ROUTE[i+1]);
+    return d>130?2.2 : d>70?1.6 : d>30?1.1 : d>12?0.65 : 0.42;
+  }
+  const TL=[];
+  let tlT=0;
+  for(let i=0;i<ROUTE.length;i++){
+    TL.push({type:'dwell',i,start:tlT,end:tlT+DWELL}); tlT+=DWELL;
+    if(i<ROUTE.length-1){
+      const dur=travelDur(i);
+      TL.push({type:'travel',i,start:tlT,end:tlT+dur}); tlT+=dur;
+    }
+  }
+  const TOTAL_DUR=tlT;
+
+  /* Camera scale based on distance to next city — narrowed range for smooth zoom */
+  function camScale(i){
+    if(i>=ROUTE.length-1) return 12;
+    const d=dist(ROUTE[i],ROUTE[i+1]);
+    return d>130?3.0 : d>70?4.5 : d>30?7.0 : d>12?10 : 12;
+  }
+  /* Log-space lerp: feels perceptually uniform for zoom */
+  function lerpScale(a,b,t){ return Math.exp(lerp(Math.log(a),Math.log(b),t)); }
+
+  function drawBase(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#020804'; ctx.fillRect(0,0,W,H);
+    ctx.lineWidth=0.4;
+    for(let la=-20;la<=75;la+=15){
+      const[,y]=proj(0,la); if(y<-5||y>H+5) continue;
+      ctx.strokeStyle=la===0?'rgba(200,146,42,0.09)':'rgba(200,146,42,0.04)';
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    }
+    for(let lo=-180;lo<=180;lo+=30){
+      const[x]=proj(lo,0); if(x<-5||x>W+5) continue;
+      ctx.strokeStyle='rgba(200,146,42,0.04)';
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+    }
+    ctx.lineWidth=0.65;
+    ctx.strokeStyle='rgba(200,146,42,0.28)';
+    ctx.fillStyle='rgba(200,146,42,0.05)';
+    LANDS.forEach(poly=>{
+      ctx.beginPath();
+      poly.forEach(([lo,la],k)=>{
+        const[x,y]=proj(lo,la);
+        k===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      });
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+    });
+  }
+
+  function drawFrame(elapsed){
+    const e=Math.min(elapsed,TOTAL_DUR);
+    let ev=TL[TL.length-1];
+    for(const ev2 of TL){ if(e<=ev2.end){ev=ev2;break;} }
+    const u=ev.end>ev.start ? Math.min(1,(e-ev.start)/(ev.end-ev.start)) : 1;
+    const i=ev.i;
+    const cur=ROUTE[i];
+    const next=i<ROUTE.length-1?ROUTE[i+1]:cur;
+
+    // update camera — smooth log-space zoom, no mid-bounce
+    if(ev.type==='dwell'){
+      cam.lon=cur.lon; cam.lat=cur.lat; cam.s=camScale(i);
+    } else {
+      const eu=ease(u);
+      const s0=camScale(i), s1=camScale(i+1);
+      cam.lon=lerp(cur.lon,next.lon,eu);
+      cam.lat=lerp(cur.lat,next.lat,eu);
+      cam.s=lerpScale(s0,s1,eu);  // direct s0→s1, no intermediate zoom-out
+    }
+
+    drawBase();
+
+    // how many cities are "done"
+    const visitedTo=ev.type==='dwell'?i:(i+1);
+
+    // trail lines for completed legs
+    ctx.lineWidth=0.7; ctx.strokeStyle='rgba(200,146,42,0.16)';
+    for(let k=0;k<visitedTo&&k<ROUTE.length-1;k++){
+      const[x1,y1]=proj(ROUTE[k].lon,ROUTE[k].lat);
+      const[x2,y2]=proj(ROUTE[k+1].lon,ROUTE[k+1].lat);
+      if(Math.max(x1,x2)<-30||Math.min(x1,x2)>W+30) continue;
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
+    }
+    // in-progress travel line
+    if(ev.type==='travel'){
+      const eu2=ease(u);
+      const[x1,y1]=proj(cur.lon,cur.lat);
+      const[x2,y2]=proj(next.lon,next.lat);
+      ctx.lineWidth=1.2; ctx.strokeStyle='rgba(200,146,42,0.55)';
+      ctx.beginPath();ctx.moveTo(x1,y1);
+      ctx.lineTo(lerp(x1,x2,eu2),lerp(y1,y2,eu2));ctx.stroke();
+    }
+
+    // visited dots
+    for(let k=0;k<visitedTo;k++){
+      const[x,y]=proj(ROUTE[k].lon,ROUTE[k].lat);
+      if(x<-10||x>W+10||y<-10||y>H+10) continue;
+      ctx.beginPath();ctx.arc(x,y,1.5,0,Math.PI*2);
+      ctx.fillStyle='rgba(200,146,42,0.38)'; ctx.fill();
+    }
+
+    // current city: pulse ring + dot
+    const[cx,cy]=proj(cur.lon,cur.lat);
+    if(ev.type==='dwell'){
+      const pr=u;
+      ctx.beginPath();ctx.arc(cx,cy,3+pr*6,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(200,146,42,${0.65*(1-pr)})`;
+      ctx.lineWidth=1.5; ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(cx,cy,3.2,0,Math.PI*2);
+    ctx.fillStyle='rgba(220,168,65,0.96)'; ctx.fill();
+
+    // HUD: city label bottom-left
+    ctx.save();
+    ctx.font='bold 15px "Courier New",monospace';
+    ctx.fillStyle='rgba(200,146,42,0.95)';
+    ctx.textAlign='left';
+    ctx.fillText(cur.city,16,H-44);
+    ctx.font='9px "Courier New",monospace';
+    ctx.fillStyle='rgba(200,146,42,0.5)';
+    ctx.fillText(cur.country.toUpperCase(),16,H-26);
+    if(cur.note){
+      ctx.font='italic 8px "Courier New",monospace';
+      ctx.fillStyle='rgba(200,146,42,0.38)';
+      ctx.fillText(cur.note,16,H-11);
+    }
+    // counter top-right
+    ctx.font='10px "Courier New",monospace';
+    ctx.fillStyle='rgba(200,146,42,0.42)';
+    ctx.textAlign='right';
+    ctx.fillText(`${String(i+1).padStart(2,'0')} / ${ROUTE.length}`,W-14,22);
+    ctx.restore();
+  }
+
+  const scrubEl  = document.getElementById('tmap-scrubber');
+  const fillEl   = document.getElementById('tmap-fill');
+  const thumbEl  = document.getElementById('tmap-thumb');
+
+  let rafId=null, startTs=null, currentTime=0, isScrubbing=false;
+
+  function setScrubUI(t){
+    const pct=Math.min(100,t/TOTAL_DUR*100).toFixed(2)+'%';
+    if(fillEl)  fillEl.style.width=pct;
+    if(thumbEl) thumbEl.style.left=pct;
+  }
+
+  function tick(ts){
+    if(!startTs) startTs=ts - currentTime*1000;
+    const elapsed=(ts-startTs)/1000;
+    currentTime=elapsed;
+    drawFrame(elapsed);
+    setScrubUI(elapsed);
+    if(elapsed<TOTAL_DUR){
+      rafId=requestAnimationFrame(tick);
+    } else {
+      currentTime=TOTAL_DUR;
+      drawFrame(TOTAL_DUR);
+      setScrubUI(TOTAL_DUR);
+      if(replayBtn) replayBtn.classList.add('ready');
+      setTimeout(()=>{ if(!isScrubbing) start(); }, 2000);
+    }
+  }
+
+  function resumeFrom(t){
+    if(rafId) cancelAnimationFrame(rafId);
+    currentTime=t;
+    startTs=null;
+    if(replayBtn) replayBtn.classList.remove('ready');
+    rafId=requestAnimationFrame(tick);
+  }
+
+  function start(){ resumeFrom(0); }
+
+  /* Scrubber interaction */
+  function scrubPos(clientX){
+    if(!scrubEl) return 0;
+    const r=scrubEl.getBoundingClientRect();
+    return Math.max(0,Math.min(1,(clientX-r.left)/r.width))*TOTAL_DUR;
+  }
+
+  if(scrubEl){
+    function onScrubStart(clientX){
+      isScrubbing=true;
+      if(rafId){ cancelAnimationFrame(rafId); rafId=null; }
+      if(replayBtn) replayBtn.classList.remove('ready');
+      scrubEl.classList.add('dragging');
+      const t=scrubPos(clientX);
+      currentTime=t;
+      drawFrame(t); setScrubUI(t);
+    }
+    function onScrubMove(clientX){
+      if(!isScrubbing) return;
+      const t=scrubPos(clientX);
+      currentTime=t;
+      drawFrame(t); setScrubUI(t);
+    }
+    function onScrubEnd(){
+      if(!isScrubbing) return;
+      isScrubbing=false;
+      scrubEl.classList.remove('dragging');
+      resumeFrom(currentTime);
+    }
+    scrubEl.addEventListener('mousedown',  e=>{ onScrubStart(e.clientX); e.preventDefault(); });
+    document.addEventListener('mousemove', e=>{ onScrubMove(e.clientX); });
+    document.addEventListener('mouseup',   ()=>{ onScrubEnd(); });
+    scrubEl.addEventListener('touchstart', e=>{ onScrubStart(e.touches[0].clientX); e.preventDefault(); },{passive:false});
+    document.addEventListener('touchmove', e=>{ if(isScrubbing){onScrubMove(e.touches[0].clientX);e.preventDefault();} },{passive:false});
+    document.addEventListener('touchend',  ()=>{ onScrubEnd(); });
+  }
+
+  if(replayBtn) replayBtn.addEventListener('click',start);
+
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ start(); obs.disconnect(); } });
+  },{threshold:0.2});
+  obs.observe(canvas);
+})();
 </script>
 
+<!-- ── THREE.JS GLOBE ── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const wrap   = document.getElementById('globe-wrap');
+  const canvas = document.getElementById('globe3d');
+  const hint   = document.getElementById('globe-hint');
+  if(!wrap || !canvas || typeof THREE === 'undefined') return;
+
+  /* Size */
+  const W = wrap.clientWidth  || 700;
+  const H = wrap.clientHeight || 460;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(44, W/H, 0.1, 500);
+  camera.position.set(0, 0, 6.8);
+  camera.lookAt(0, 0, 0);
+
+  const R = 2;
+  function ll2v(lat, lon, r) {
+    const phi = (90-lat)*Math.PI/180;
+    const th  = (lon+180)*Math.PI/180;
+    return new THREE.Vector3(
+      -r*Math.sin(phi)*Math.cos(th),
+       r*Math.cos(phi),
+       r*Math.sin(phi)*Math.sin(th)
+    );
+  }
+
+  /* Globe group */
+  const globe = new THREE.Group();
+  scene.add(globe);
+
+  /* Core sphere */
+  globe.add(new THREE.Mesh(
+    new THREE.SphereGeometry(R, 64, 64),
+    new THREE.MeshPhongMaterial({ color:0x0d1a0f, emissive:0x040b06, specular:0x1a3020, shininess:10 })
+  ));
+
+  /* Grid lines */
+  const gm = new THREE.LineBasicMaterial({ color:0x1e3825, transparent:true, opacity:.45 });
+  [-60,-30,0,30,60].forEach(lat => {
+    const ps = []; for(let lon=0;lon<=360;lon+=4) ps.push(ll2v(lat,lon,R+.002));
+    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(ps), gm));
+  });
+  for(let lon=0; lon<360; lon+=30) {
+    const ps = []; for(let lat=-90;lat<=90;lat+=4) ps.push(ll2v(lat,lon,R+.002));
+    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(ps), gm));
+  }
+  /* Equator */
+  const ep=[]; for(let lon=0;lon<=360;lon+=3) ep.push(ll2v(0,lon,R+.003));
+  globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(ep),
+    new THREE.LineBasicMaterial({color:0x2a5035,transparent:true,opacity:.7})));
+
+  /* Land outlines [lon, lat] — Asia/Europe (reused from page data) + other continents */
+  const LANDS=[
+    // Japan
+    [[130.3,31.2],[131.6,31.5],[131.9,33],[132.5,33.5],[133,33.7],[134.6,35],[135.4,34.7],
+     [136.9,34.8],[137.6,34.7],[138.2,35.1],[139.5,35.5],[139.8,36.5],[140.5,38.3],
+     [141.1,39.6],[141.5,40.9],[140.1,40.8],[139.4,38.5],[137.2,37],[136,35.7],[135.2,35.6],
+     [134.5,35.5],[133.5,34.5],[132.4,33.9],[131,31.9],[130.3,31.2]],
+    // Korea
+    [[126.1,34.7],[127.9,34.9],[128.8,35.1],[129.4,36.5],[129.4,37.5],[127.7,37.7],
+     [126.7,37.7],[126.2,37.3],[126.6,36.4],[126,35],[126.1,34.7]],
+    // Indochina
+    [[100.5,5.6],[100.5,8],[100,9.5],[99.5,11],[100,13],[100.1,14],[99.3,14.5],[98.5,15.5],
+     [98,16.5],[98,18],[97.6,19.5],[98.5,20],[100,21],[100.8,22.5],[101.5,22.2],[102.8,22],
+     [103.9,22.5],[106.5,22.9],[107.5,21.5],[107.8,20.5],[108,19.5],[106.8,19],[106.5,17.5],
+     [107.3,16.5],[108.5,15.5],[109,14],[108,12.5],[107,11],[106.5,10.5],[106.8,9.5],
+     [105.5,9],[104.5,10.3],[103.5,10],[102.5,10],[101,6],[100.5,5.6]],
+    // India
+    [[66.5,23],[68.5,22],[72,20.5],[73,19],[72.8,17],[72.5,15.5],[73.5,14.5],[75,12],
+     [76.5,10],[77.5,8],[79.5,9],[80.5,10],[82,11.5],[80.5,13],[80.2,16.5],[81,19.5],
+     [82.5,21],[85,21.5],[87,21.5],[88.5,22],[90.5,22.5],[91.5,22],[92,24],[91.5,25],
+     [89.5,26],[87,26.5],[84,28],[81,30],[79,31.5],[76.5,31.5],[73.5,32],[70,28],[67.5,25],[66.5,23]],
+    // W Europe
+    [[-8.5,43.5],[-9.5,39],[-6.5,36.5],[-5,36],[-2.5,36.5],[0,37.5],[1.5,40.5],[3.5,40.5],
+     [3,42],[0,43.5],[-1.5,46.5],[0.5,47.5],[2,50.5],[2.5,51],[3,50],[4.5,49.5],[5.5,49],
+     [7.5,49],[7.5,47.5],[6.5,46.5],[5,45.5],[4,43.5],[3,43],[-2,43.5],[-5.5,43.5],[-8.5,43.5]],
+    // Scandinavia
+    [[5,58],[7,55],[9,57],[10,58.5],[11.5,58.5],[12,57],[10.5,55.5],[12.5,60],[5,62],
+     [7,65],[14,69],[28,70.5],[30,70],[28,68],[22,65.5],[22.5,63.5],[25,59.5],[25.5,60.5],
+     [21.5,63.5],[18.5,67],[16.5,69],[12,66],[11.5,63],[5,58]],
+    // Turkey
+    [[26,36.5],[27.5,37],[29.5,36.5],[33,36.5],[36.5,36.5],[39,36.7],[41.5,38.5],[44,39.5],
+     [44.5,39],[43.5,38.5],[40.5,36.5],[36,36],[33.5,35],[30.5,36.5],[27,37.3],[26.5,38.5],
+     [27,40],[28.5,40.8],[32,41.5],[36,42],[40.5,40.5],[41.5,40],[41.5,40.5],[37.5,41.5],
+     [32,42],[28,41],[26.5,40],[26,40.5],[26,36.5]],
+    // Africa
+    [[-6,35],[0,38],[5,37],[10,38],[15,37],[25,31],[32,31],[35,28],[38,25],[42,20],
+     [43,15],[43,10],[43,4],[41,-2],[40,-10],[35,-18],[32,-22],[28,-25],[25,-28],[20,-32],
+     [18,-33],[16,-35],[15,-30],[12,-25],[10,-15],[8,-3],[8,5],[8,10],[10,15],[15,22],
+     [25,30],[32,31],[15,37],[10,38],[5,37],[0,38],[-6,35]],
+    // Australia
+    [[114,-22],[115,-25],[118,-30],[120,-33],[124,-34],[129,-35],[133,-36],[138,-38],
+     [145,-38],[150,-37],[153,-28],[153,-22],[148,-18],[145,-15],[138,-12],[132,-12],
+     [128,-14],[124,-16],[122,-18],[118,-20],[114,-22]],
+    // North America
+    [[-55,47],[-60,45],[-65,43],[-70,43],[-75,42],[-80,42],[-83,46],[-85,50],[-88,48],
+     [-96,50],[-100,50],[-110,50],[-120,50],[-125,48],[-128,52],[-135,58],[-140,60],
+     [-150,60],[-158,58],[-163,60],[-165,62],[-168,66],[-162,70],[-150,72],[-130,70],
+     [-110,68],[-90,68],[-70,65],[-60,62],[-58,55],[-55,50],[-55,47]],
+    // South America
+    [[-35,-8],[-38,-15],[-40,-20],[-43,-24],[-48,-28],[-52,-33],[-58,-38],[-62,-42],
+     [-65,-47],[-67,-52],[-70,-54],[-72,-50],[-68,-45],[-66,-42],[-68,-38],[-72,-33],
+     [-72,-25],[-70,-18],[-72,-12],[-70,-5],[-72,-2],[-70,2],[-65,1],[-58,5],[-52,5],
+     [-48,0],[-42,-3],[-35,-8]],
+    // E China + Manchuria
+    [[119.8,22],[120.7,24.2],[121.6,25],[121.9,26.8],[120.9,28.5],[121,30],[121.9,30.9],
+     [121.8,31.5],[120,33.7],[119.2,35],[119.8,36.7],[121.4,37.6],[121.4,38.5],[121.2,39.7],
+     [121.8,40.8],[121.2,40.6],[120.1,38.9],[120.6,37.6],[119.6,35.1],[120.4,33.1],
+     [121.3,31.8],[120.6,29.8],[120.8,27],[119.7,25.3],[119.3,23.3],[118,23],[117.5,22],[119.8,22]],
+  ];
+  const landMat = new THREE.LineBasicMaterial({ color:0x3d6845, transparent:true, opacity:.7 });
+  LANDS.forEach(pts => {
+    const verts = pts.map(([lon,lat]) => ll2v(lat, lon, R+.004));
+    verts.push(verts[0].clone()); // close polygon
+    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(verts), landMat));
+  });
+
+  /* Flight route */
+  const WPS=[[35.7,139.7],[31.2,121.5],[17.9,102.6],[13.7,100.5],[28.6,77.1],[35.7,51.4],[41.0,28.9],[48.9,2.35]];
+  const rp=[];
+  for(let i=0;i<WPS.length-1;i++){
+    const a=ll2v(WPS[i][0],WPS[i][1],R);
+    const b=ll2v(WPS[i+1][0],WPS[i+1][1],R);
+    for(let t=0;t<=1;t+=.018){
+      const arc=Math.sin(t*Math.PI)*.14;
+      rp.push(a.clone().lerp(b,t).normalize().multiplyScalar(R+arc));
+    }
+  }
+  globe.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(rp),
+    new THREE.LineBasicMaterial({color:0xe8b84b,transparent:true,opacity:.9})
+  ));
+
+  /* City markers */
+  const cityNames = ['Tokyo','Shanghai','Vientiane','Bangkok','Delhi','Tehran','Istanbul','Paris'];
+  WPS.forEach(([lat,lon], i) => {
+    const pos = ll2v(lat, lon, R+.055);
+    const dot = new THREE.Mesh(
+      new THREE.SphereGeometry(.05, 8, 8),
+      new THREE.MeshBasicMaterial({color: i===0||i===WPS.length-1 ? 0xfffbe8 : 0xe8b84b})
+    );
+    dot.position.copy(pos);
+    globe.add(dot);
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(.08,.115,16),
+      new THREE.MeshBasicMaterial({color:0xe8b84b,transparent:true,opacity:.25,side:THREE.DoubleSide})
+    );
+    ring.position.copy(pos); ring.lookAt(0,0,0);
+    globe.add(ring);
+  });
+
+  /* Atmosphere glow */
+  scene.add(new THREE.Mesh(
+    new THREE.SphereGeometry(R*1.068, 32, 32),
+    new THREE.MeshPhongMaterial({color:0x2d5a3a,transparent:true,opacity:.13,side:THREE.BackSide})
+  ));
+
+  /* Lights */
+  scene.add(new THREE.AmbientLight(0x1a3020, 1.1));
+  const sun = new THREE.DirectionalLight(0xfff5dd, 1.5);
+  sun.position.set(5, 3, 4);
+  scene.add(sun);
+
+  /* Stars */
+  const sp=[];
+  for(let i=0;i<1600;i++){
+    const v=new THREE.Vector3((Math.random()-.5)*200,(Math.random()-.5)*200,(Math.random()-.5)*200);
+    if(v.length()>25) sp.push(v);
+  }
+  scene.add(new THREE.Points(
+    new THREE.BufferGeometry().setFromPoints(sp),
+    new THREE.PointsMaterial({color:0xffffff,size:.2,transparent:true,opacity:.5})
+  ));
+
+  /* Drag interaction */
+  let dragging=false, ox=0, oy=0, userRotY=0, userRotX=0, velX=0, velY=0;
+  wrap.addEventListener('mousedown', e => {
+    dragging=true; ox=e.clientX; oy=e.clientY; velX=velY=0;
+    wrap.style.cursor='grabbing';
+    if(hint) hint.style.opacity='0';
+  });
+  window.addEventListener('mouseup', () => {
+    dragging=false;
+    wrap.style.cursor='grab';
+  });
+  window.addEventListener('mousemove', e => {
+    if(!dragging) return;
+    const dx=e.clientX-ox, dy=e.clientY-oy;
+    velX=dx*.006; velY=dy*.004;
+    userRotY+=velX; userRotX+=velY;
+    userRotX=Math.max(-0.9, Math.min(0.9, userRotX));
+    ox=e.clientX; oy=e.clientY;
+  });
+  /* Touch */
+  wrap.addEventListener('touchstart', e => {
+    const t=e.touches[0]; dragging=true; ox=t.clientX; oy=t.clientY; velX=velY=0;
+    if(hint) hint.style.opacity='0';
+  }, {passive:true});
+  window.addEventListener('touchend', () => { dragging=false; });
+  window.addEventListener('touchmove', e => {
+    if(!dragging) return;
+    const t=e.touches[0];
+    const dx=t.clientX-ox, dy=t.clientY-oy;
+    velX=dx*.006; velY=dy*.004;
+    userRotY+=velX; userRotX+=velY;
+    userRotX=Math.max(-0.9, Math.min(0.9, userRotX));
+    ox=t.clientX; oy=t.clientY;
+  }, {passive:true});
+
+  /* Init rotation at Tokyo */
+  userRotY = -2.1;
+
+  /* Lazy init — only start rendering when section is visible */
+  let running = false;
+  const startIO = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting && !running){ running=true; loop(); }
+  }, { threshold: 0.1 });
+  startIO.observe(wrap);
+
+  let t=0;
+  function loop(){
+    if(!running) return;
+    requestAnimationFrame(loop);
+    t+=.0025;
+    /* Decelerate on release */
+    if(!dragging){ velX*=.92; velY*=.92; userRotY+=velX; userRotX+=velY; }
+    globe.rotation.y = t + userRotY;
+    globe.rotation.x = userRotX;
+    renderer.render(scene, camera);
+  }
+
+  /* Resize */
+  window.addEventListener('resize', () => {
+    const nW=wrap.clientWidth, nH=wrap.clientHeight;
+    renderer.setSize(nW, nH);
+    camera.aspect=nW/nH; camera.updateProjectionMatrix();
+  });
+})();
+</script>
 </body>
 </html>
