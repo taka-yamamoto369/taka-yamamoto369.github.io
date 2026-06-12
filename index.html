@@ -2293,7 +2293,7 @@ footer {
 
 <!-- ── GLOBE ── -->
 <div class="pref-section fade" style="padding:0 5vw 3rem; display:flex; flex-direction:column; align-items:center;">
-  <p class="pref-section-label" style="align-self:flex-start;">VISITED CITIES</p>
+  <p class="pref-section-label" style="align-self:flex-start;">Globe / 足跡</p>
   <div id="globe-wrap" style="width:100%; max-width:560px; height:440px; cursor:grab; position:relative; overflow:hidden;">
     <canvas id="globe3d" style="width:100%; height:100%; display:block;"></canvas>
     <div id="globe-hint" style="position:absolute;bottom:.9rem;left:50%;transform:translateX(-50%);font:10px/1 'Courier New',monospace;color:rgba(200,146,42,0.35);letter-spacing:.12em;pointer-events:none;transition:opacity .6s;">drag to rotate</div>
@@ -2310,11 +2310,6 @@ footer {
 <div style="position:relative;z-index:1;">
   <footer>
     <span class="footer-copy">© Taka Yamamoto — World Wanderer · Language Collector · Vibe Coder</span>
-    <nav class="footer-links">
-      <a href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">Pok Deng</a>
-      <a href="https://app-liart-nine-16.vercel.app" target="_blank">三国志</a>
-      <a href="https://note.com/sozoro_tabi" target="_blank">note</a>
-    </nav>
   </footer>
 </div>
 
@@ -3101,19 +3096,22 @@ allFade.forEach((el, i) => el.dataset.fadeIdx = i);
 
 const io = new IntersectionObserver((entries) => {
   entries.forEach((e) => {
-    if(!e.isIntersecting) return;
     const el = e.target;
     if(el.classList.contains('word-reveal')){
-      el.querySelectorAll('.word span').forEach((s, idx) => {
-        s.style.transitionDelay = (idx * .18) + 's';
-      });
-      setTimeout(() => el.classList.add('visible'), 60);
+      if(e.isIntersecting){
+        el.querySelectorAll('.word span').forEach((s, idx) => {
+          s.style.transitionDelay = (idx * .18) + 's';
+        });
+        setTimeout(() => el.classList.add('visible'), 60);
+      } else {
+        el.classList.remove('visible');
+      }
     } else {
-      // stagger siblings that appear in the same batch (within 40ms of each other)
+      if(!e.isIntersecting) return;
       const baseDelay = parseInt(el.dataset.fadeIdx || 0) % 4 * 55;
       setTimeout(() => el.classList.add('visible'), baseDelay);
+      io.unobserve(el);
     }
-    io.unobserve(el);
   });
 }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
 allFade.forEach(el => io.observe(el));
@@ -3798,7 +3796,10 @@ const SFX = (function(){
         wrap.querySelectorAll('.langdex-fill').forEach(bar => {
           bar.style.width = bar.dataset.val + '%';
         });
-        obs.disconnect();
+      } else {
+        wrap.querySelectorAll('.langdex-fill').forEach(bar => {
+          bar.style.width = '0';
+        });
       }
     });
   }, {threshold:0.3});
@@ -4732,7 +4733,8 @@ const SFX = (function(){
   const obs = new IntersectionObserver(entries => {
     if(entries[0].isIntersecting){
       clip.classList.add('apr-visible');
-      obs.disconnect();
+    } else {
+      clip.classList.remove('apr-visible');
     }
   }, { threshold: 0.12 });
   obs.observe(clip);
@@ -4745,7 +4747,8 @@ const SFX = (function(){
   const obs = new IntersectionObserver(entries => {
     if(entries[0].isIntersecting) {
       container.classList.add('visible');
-      obs.disconnect();
+    } else {
+      container.classList.remove('visible');
     }
   }, { threshold: 0.2 });
   obs.observe(container);
