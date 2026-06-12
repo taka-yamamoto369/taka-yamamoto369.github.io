@@ -445,14 +445,37 @@ nav.scrolled {
   max-width: 860px;
   margin: 0 auto;
 }
+.field-photo-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
 .field-photo {
   width: 100%;
   max-height: 420px;
   object-fit: cover;
   object-position: center;
   display: block;
-  filter: saturate(0.75) brightness(0.88);
-  border-radius: 2px;
+  filter: grayscale(0.6) sepia(0.35) brightness(0.82) contrast(1.05);
+  transition: filter 1.2s ease;
+}
+.field-photo-container:hover .field-photo {
+  filter: grayscale(0.2) sepia(0.2) brightness(0.9) contrast(1.02);
+}
+.field-photo-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
+}
+.field-photo-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(200,146,42,0.06);
+  pointer-events: none;
+  z-index: 1;
 }
 .field-photo-meta {
   display: flex;
@@ -473,6 +496,15 @@ nav.scrolled {
   color: rgba(200,146,42,0.45);
   text-align: right;
   margin: 0;
+}
+.field-photo-wrap.fade {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+}
+.field-photo-wrap.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 .stats-row {
   display: flex;
@@ -1644,7 +1676,9 @@ footer {
 
 <!-- ── FIELD PHOTO ── -->
 <div class="field-photo-wrap fade">
-  <img src="images/banrakthai.jpg" alt="บ้านรักไทย — teaching hill tribe kids" class="field-photo">
+  <div class="field-photo-container">
+    <img src="images/banrakthai.jpg" alt="บ้านรักไทย — teaching hill tribe kids" class="field-photo">
+  </div>
   <div class="field-photo-meta">
     <p class="field-photo-cap">บ้านรักไทย, Mae Hong Son — Thai-Myanmar border</p>
     <p class="field-photo-desc">村人に頼まれて、タイとミャンマーの子どもたちに授業をした。<br>中国系タイ人、シャン族、ワ族、リス族——いろんな民族の子どもが同じ教室にいた。</p>
