@@ -2175,39 +2175,8 @@ footer {
   </div>
 </div>
 
-<!-- ── RPG-STAT: STATUS ── -->
-<div class="rpgm-wrap fade" id="rpg-stat">
-  <div class="rpgm-inner">
-    <div class="rpgm-label">STATUS</div>
-    <div class="stat-bars">
-      <div class="stat-bar-row"><span class="stat-bar-label">旅欲</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="100"></div></div><span class="stat-bar-val">MAX</span></div>
-      <div class="stat-bar-row"><span class="stat-bar-label">好奇心</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="98"></div></div><span class="stat-bar-val">98</span></div>
-      <div class="stat-bar-row"><span class="stat-bar-label">適応力</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="85"></div></div><span class="stat-bar-val">85</span></div>
-      <div class="stat-bar-row"><span class="stat-bar-label">節約力</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="72"></div></div><span class="stat-bar-val">72</span></div>
-      <div class="stat-bar-row"><span class="stat-bar-label">ノーマップ力</span><div class="stat-bar-track"><div class="stat-bar-fill" data-val="90"></div></div><span class="stat-bar-val">90</span></div>
-    </div>
-    <div class="rpgm-dialog" id="stat-dialog"></div>
-  </div>
-</div>
 
-<!-- ── RPG-MINI: MINIMAP ── -->
-<div class="rpgm-wrap fade" id="rpg-mini">
-  <div class="rpgm-inner">
-    <div class="rpgm-label">MINIMAP</div>
-    <div class="minimap-row">
-      <div class="minimap-grid" id="mini-grid"></div>
-      <div class="rpgm-dialog" style="margin-top:0" id="mini-dialog"></div>
-    </div>
-  </div>
-</div>
 
-<!-- ── RPG-ITEM: ITEM LOG ── -->
-<div class="rpgm-wrap fade" id="rpg-item">
-  <div class="rpgm-inner">
-    <div class="rpgm-label">ITEM LOG</div>
-    <div class="item-log" id="item-log"></div>
-  </div>
-</div>
 
 
 <!-- ── RPG-BOSS ── -->
@@ -3785,139 +3754,8 @@ const SFX = (function(){
   if(wrap) obs.observe(wrap); else typewrite(ENCOUNTER_TEXT, showMenu, true);
 })();
 
-/* ── C: STATUS JS ── */
-(function(){
-  const wrap = document.getElementById('rpg-stat');
-  if(!wrap) return;
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting){
-        wrap.querySelectorAll('.stat-bar-fill').forEach(bar => {
-          bar.style.width = bar.dataset.val + '%';
-        });
-        obs.disconnect();
-      }
-    });
-  }, {threshold:0.3});
-  obs.observe(wrap);
 
-  autoCycleDialog('stat-dialog', [
-    '所持金が減ると、創造性が上がる。\nこれはバグじゃないと思う。',
-    '難易度設定は、自分で上げた。\nその方が、おもしろいから。',
-    '拠点を持たないプレイスタイルを選んだ。\n自由度が、跳ね上がった。',
-    '初見殺しが多いフィールドほど、\nクリアしたときの達成感がある。'
-  ], 3500);
-})();
 
-/* ── D: MINIMAP JS ── */
-(function(){
-  const grid = document.getElementById('mini-grid');
-  if(!grid) return;
-  const COLS = 12;
-  const MAP = [
-    1,1,1,1,1,1,1,1,1,1,1,1,
-    1,2,2,2,1,2,2,2,2,2,2,1,
-    1,2,1,2,2,2,1,1,2,1,2,1,
-    1,2,1,2,1,2,2,1,2,2,2,1,
-    1,2,2,2,1,1,2,2,2,1,2,1,
-    1,2,1,2,2,2,2,1,2,2,2,1,
-    1,1,1,1,1,1,1,1,1,1,1,1
-  ];
-  const pathCells = MAP.map((v,i) => v===2 ? i : -1).filter(i => i>=0);
-  let curIdx = 14;
-
-  MAP.forEach((v, i) => {
-    const c = document.createElement('div');
-    c.className = 'mm-cell' + (v===1 ? ' wall' : v===2 ? ' path' : '');
-    if(i === curIdx) c.classList.add('you');
-    grid.appendChild(c);
-  });
-
-  function bfs(start, goal) {
-    const queue = [[start]];
-    const visited = new Set([start]);
-    while(queue.length) {
-      const path = queue.shift();
-      const cur = path[path.length - 1];
-      if(cur === goal) return path;
-      for(const n of [cur-1, cur+1, cur-COLS, cur+COLS]) {
-        if(n >= 0 && n < MAP.length && MAP[n] === 2 && !visited.has(n)) {
-          visited.add(n);
-          queue.push([...path, n]);
-        }
-      }
-    }
-    return null;
-  }
-
-  let running = false;
-
-  function wander() {
-    const target = pathCells[Math.floor(Math.random() * pathCells.length)];
-    if(target === curIdx) { setTimeout(wander, 600); return; }
-    const route = bfs(curIdx, target);
-    if(!route || route.length < 2) { setTimeout(wander, 600); return; }
-    let step = 1;
-    function step_() {
-      if(!running) return;
-      if(step >= route.length) {
-        curIdx = target;
-        setTimeout(wander, 500 + Math.random() * 900);
-        return;
-      }
-      grid.querySelectorAll('.you').forEach(c => c.classList.remove('you'));
-      grid.children[route[step]].classList.add('you');
-      step++;
-      setTimeout(step_, 160);
-    }
-    step_();
-  }
-
-  const wrap = document.getElementById('rpg-mini');
-  let started = false;
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting && !started){ started = true; running = true; wander(); }
-      else if(!e.isIntersecting){ running = false; }
-    });
-  }, {threshold: 0.3});
-  if(wrap) obs.observe(wrap);
-
-  autoCycleDialog('mini-dialog', [
-    '迷子は、バグじゃなくて仕様。',
-    '初期設定で選んだのは、日本語話者。\nそれ以外は、現地で覚えた。',
-    '隠しエリアは、だいたいバスが来ない場所にある。'
-  ], 4000);
-})();
-
-/* ── E: ITEM LOG JS ── */
-(function(){
-  const log = document.getElementById('item-log');
-  if(!log) return;
-  const items = [
-    { tag: 'ヒント入手', text: '地元のおじさん。攻略本より、正確だった。' },
-    { tag: 'スキル発動', text: '移動中に考えたことが、\nだいたい一番いいアイデアだった。' },
-    { tag: 'NPC', text: 'セリフは繰り返さない。\nだから、ちゃんと聞く。' }
-  ];
-  items.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'item-entry';
-    div.innerHTML = `<span class="item-tag">${item.tag}</span><span class="item-text">${item.text.replace(/\n/g,'<br>')}</span>`;
-    log.appendChild(div);
-  });
-
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting){
-        log.querySelectorAll('.item-entry').forEach((el, i) => {
-          setTimeout(() => el.classList.add('show'), i * 400);
-        });
-        obs.disconnect();
-      }
-    });
-  }, {threshold:0.3});
-  obs.observe(log.closest('.rpgm-wrap') || log);
-})();
 
 /* ── LANGDEX JS ── */
 (function(){
