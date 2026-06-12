@@ -465,6 +465,7 @@ nav.scrolled {
   display: block;
   filter: brightness(0.85) saturate(0.8);
   border-radius: 2px;
+  opacity: 0.65;
 }
 .field-photo-container::after {
   content: '';
@@ -1390,6 +1391,70 @@ footer {
   letter-spacing: .3em;
   color: rgba(200,146,42,0.18);
 }
+
+/* ── APPLE PHOTO REVEAL ── */
+.apr-wrap {
+  position: relative; z-index: 1;
+  padding: 10vh 0;
+  overflow: hidden;
+}
+.apr-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5vw;
+}
+.apr-img-clip {
+  overflow: hidden;
+  border-radius: 6px;
+  clip-path: inset(12% 0 12% 0 round 6px);
+  transform: translateY(60px) scale(0.96);
+  opacity: 0;
+  transition:
+    clip-path  1.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform  1.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity    1.0s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, clip-path, opacity;
+}
+.apr-img-clip.apr-visible {
+  clip-path: inset(0% 0 0% 0 round 6px);
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.apr-img {
+  width: 100%;
+  display: block;
+  filter: brightness(0.82) saturate(0.75);
+  opacity: 0.65;
+  transform: scale(1.06);
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.apr-img-clip.apr-visible .apr-img {
+  transform: scale(1);
+}
+.apr-meta {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .8s .4s ease, transform .8s .4s ease;
+}
+.apr-img-clip.apr-visible ~ .apr-meta {
+  opacity: 1;
+  transform: none;
+}
+.apr-loc {
+  font: 10px/1 'Courier New', monospace;
+  letter-spacing: .15em;
+  color: rgba(200,146,42,0.4);
+}
+.apr-caption {
+  font: 11px/1 'Courier New', monospace;
+  letter-spacing: .08em;
+  color: rgba(240,235,224,0.25);
+  font-style: italic;
+}
 </style>
 </head>
 <body>
@@ -1804,6 +1869,19 @@ footer {
 </div>
 
 
+
+<!-- ── APPLE PHOTO REVEAL ── -->
+<div class="apr-wrap">
+  <div class="apr-inner">
+    <div class="apr-img-clip" id="apr-clip">
+      <img src="images/phongsali.jpg" alt="Phongsali, Laos" class="apr-img">
+    </div>
+    <div class="field-photo-meta apr-meta">
+      <p class="field-photo-cap">2023.01 — Phongsali, Laos</p>
+      <p class="field-photo-desc">An Akha village above the clouds. No electricity, no signal. Just mountains, mist, and tin roofs.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ── TIMELINE ── -->
 <div class="section-wrap" id="history">
@@ -2252,6 +2330,8 @@ footer {
     <div id="globe-hint" style="position:absolute;bottom:.9rem;left:50%;transform:translateX(-50%);font:10px/1 'Courier New',monospace;color:rgba(200,146,42,0.35);letter-spacing:.12em;pointer-events:none;transition:opacity .6s;">drag to rotate</div>
   </div>
 </div>
+
+<div class="divider"></div>
 
 <!-- 🐼 panda — ひっそり -->
 <!-- ── ENDING ROLL ── -->
@@ -4805,6 +4885,19 @@ const SFX = (function(){
   document.addEventListener('click', () => {
     document.querySelectorAll('.pref-card.open').forEach(c => c.classList.remove('open'));
   });
+})();
+
+/* ── APPLE PHOTO REVEAL ── */
+(function(){
+  const clip = document.getElementById('apr-clip');
+  if(!clip) return;
+  const obs = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting){
+      clip.classList.add('apr-visible');
+      obs.disconnect();
+    }
+  }, { threshold: 0.12 });
+  obs.observe(clip);
 })();
 
 /* ── FIELD PHOTO REVEAL ── */
