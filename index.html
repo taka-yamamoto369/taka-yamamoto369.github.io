@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Taka Yamamoto</title>
-<meta name="description" content="Software engineer based in San Francisco. 20 countries, 10+ languages collected. Building things at the intersection of code and culture.">
+<meta name="description" content="World Wanderer · Language Collector · Vibe Coder.">
 <!-- OGP -->
 <meta property="og:type"        content="website">
 <meta property="og:url"         content="https://taka-yamamoto369.github.io/">
 <meta property="og:title"       content="Taka Yamamoto">
-<meta property="og:description" content="Software engineer. 20 countries. Language collector.">
+<meta property="og:description" content="World Wanderer · Language Collector · Vibe Coder.">
 <meta property="og:image"       content="https://taka-yamamoto369.github.io/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -17,10 +17,11 @@
 <!-- Twitter Card -->
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="Taka Yamamoto">
-<meta name="twitter:description" content="Software engineer. 20 countries. Language collector.">
+<meta name="twitter:description" content="World Wanderer · Language Collector · Vibe Coder.">
 <meta name="twitter:image"       content="https://taka-yamamoto369.github.io/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DotGothic16&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -114,6 +115,22 @@ nav.scrolled {
 }
 .nav-links a:hover { color: var(--gold2); }
 
+/* ── FIELD INTRO ── */
+#field-intro {
+  width: 100%;
+  background: #020804;
+  line-height: 0;
+  overflow: hidden;
+}
+#field-canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
 /* ── HERO ── */
 .hero {
   position: relative;
@@ -191,7 +208,7 @@ nav.scrolled {
 }
 .hero-byline {
   margin-top: 3rem;
-  display: flex; align-items: center; gap: 1rem;
+  display: flex; flex-direction: column; gap: .45rem;
   opacity: 0; animation: fadeUp .7s 3.5s forwards;
 }
 .hero-name {
@@ -203,6 +220,7 @@ nav.scrolled {
   font-size: 11px; letter-spacing: .1em;
   color: var(--sub);
 }
+
 .scroll-hint {
   position: absolute; bottom: 2.5rem; right: 5vw;
   font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
@@ -299,25 +317,30 @@ nav.scrolled {
 }
 .about-inner {
   max-width: 680px;
-  position: relative;
+  display: flex;
+  gap: 1.5rem;
 }
 .about-toggle {
-  position: absolute;
-  top: 0; right: 0;
-  display: flex; gap: .4rem;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  padding-top: .15rem;
+  flex-shrink: 0;
+  order: 2;
+  margin-left: auto;
 }
 .about-toggle button {
-  font-size: 10px; letter-spacing: .14em;
+  font-size: 10px; letter-spacing: .12em;
   text-transform: uppercase;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--sub);
-  padding: .25rem .75rem;
+  padding: .2rem .55rem;
   border-radius: 2rem;
   cursor: pointer;
   transition: border-color .2s, color .2s;
   font-family: inherit;
+  white-space: nowrap;
 }
 .about-toggle button.active {
   border-color: var(--gold);
@@ -417,6 +440,40 @@ nav.scrolled {
 }
 
 /* ── STATS ROW ── */
+.field-photo-wrap {
+  padding: 0 5vw 2.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.field-photo {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: saturate(0.75) brightness(0.88);
+  border-radius: 2px;
+}
+.field-photo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: .7rem;
+  flex-wrap: wrap;
+}
+.field-photo-cap {
+  font: 10px/1 'Courier New', monospace;
+  letter-spacing: .12em;
+  color: rgba(200,146,42,0.35);
+  white-space: nowrap;
+}
+.field-photo-desc {
+  font: 11px/1.7 'Courier New', monospace;
+  color: rgba(200,146,42,0.45);
+  text-align: right;
+  margin: 0;
+}
 .stats-row {
   display: flex;
   justify-content: center;
@@ -447,18 +504,6 @@ nav.scrolled {
   font-size: 1.5rem; color: var(--line);
 }
 
-/* ── RPG WALKER ── */
-.rpg-walker-wrap {
-  position: relative; z-index: 1;
-  background: rgba(2,6,3,0.7);
-  border-top: 1px solid var(--line);
-  overflow: hidden;
-}
-#rpg-walker-canvas {
-  display: block; width: 100%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-}
 
 /* ── RPG SECTION ── */
 .rpg-wrap {
@@ -501,7 +546,8 @@ nav.scrolled {
   padding: 1.1rem 1.25rem;
   margin-bottom: 1.5rem;
   background: rgba(0,0,0,0.3);
-  min-height: 4.5rem;
+  height: 8rem;
+  overflow: hidden;
   position: relative;
 }
 .rpg-dialog-label {
@@ -619,14 +665,6 @@ nav.scrolled {
 .map-cell.visited { background: rgba(200,146,42,0.35); }
 .map-cell.active  { background: rgba(200,146,42,0.75); box-shadow: 0 0 4px rgba(200,146,42,0.5); }
 
-/* A — SVG map */
-.map-opt-label { font-size:.6rem; color:var(--sub); letter-spacing:.1em; margin:.8rem 0 .3rem; opacity:.65; }
-.map-opt-label:first-child { margin-top:0; }
-.land { fill:rgba(200,146,42,0.04); stroke:rgba(200,146,42,0.2); stroke-width:.5; }
-.visited-c { fill:rgba(200,146,42,0.13); stroke:rgba(200,146,42,0.55); stroke-width:.7; cursor:default; transition:fill .2s; }
-.visited-c:hover { fill:rgba(200,146,42,0.25); }
-.city-dot { fill:var(--gold2); }
-.map-label { font-size:5.5px; fill:rgba(200,146,42,0.45); font-family:monospace; pointer-events:none; }
 
 /* B — ENCOUNTER */
 #rpg-enc { background: rgba(6,3,2,0.7); }
@@ -696,6 +734,17 @@ nav.scrolled {
   font-size: 9px; color: rgba(200,146,42,0.5); min-width: 28px;
 }
 
+/* ── LANGDEX ── */
+#rpg-langdex { background: rgba(2,5,3,0.6); }
+.langdex-row { display:flex; align-items:center; gap:.75rem; margin-bottom:.5rem; }
+.langdex-name { font:10px/1 "Courier New",monospace; color:rgba(240,235,224,0.75); min-width:200px; letter-spacing:.04em; }
+.langdex-lv { font:9px/1 "Courier New",monospace; color:rgba(200,146,42,0.55); min-width:40px; white-space:nowrap; }
+.langdex-track { flex:1; height:6px; border-radius:3px; background:rgba(200,146,42,0.08); border:1px solid rgba(200,146,42,0.15); overflow:hidden; }
+.langdex-fill { height:100%; background:rgba(200,146,42,0.55); border-radius:3px; width:0; transition:width 1.2s ease; }
+.langdex-row.top .langdex-name { color:rgba(240,235,224,0.95); }
+.langdex-row.top .langdex-lv { color:rgba(200,146,42,0.85); }
+.langdex-row.top .langdex-fill { background:rgba(200,146,42,0.8); }
+
 /* D — MINIMAP */
 #rpg-mini { background: rgba(2,4,3,0.65); }
 .minimap-row { display: flex; align-items: flex-start; gap: 1.5rem; }
@@ -729,6 +778,37 @@ nav.scrolled {
   color: rgba(200,146,42,0.65); letter-spacing: .08em; white-space: nowrap;
 }
 .item-text { color: var(--text); line-height: 1.7; }
+
+/* F — BOSS BATTLE */
+#rpg-boss { background: rgba(6,2,2,0.7); }
+.boss-box { border:1px solid rgba(200,146,42,0.35); border-radius:6px; padding:1.5rem 1.7rem; background:rgba(0,0,0,0.4); }
+/* info strip — full-width, stacked: name → HP */
+.boss-info-strip { background:rgba(6,3,2,0.92); padding:1.2rem 1.1rem 1.1rem; display:flex; flex-direction:column; gap:1.1rem; border:1px solid rgba(200,146,42,0.3); border-bottom:none; border-radius:4px 4px 0 0; }
+.boss-info-top { display:flex; align-items:baseline; gap:.35em; margin-top:.25rem; }
+.boss-name-text { font:18px/1.1 "DotGothic16",monospace; color:rgba(255,238,195,0.96); letter-spacing:.08em; text-shadow:0 0 10px rgba(200,80,40,0.45), 0 1px 3px rgba(0,0,0,0.9); }
+.boss-lv-text { font:12px/1 "Courier New",monospace; color:rgba(200,146,42,0.8); letter-spacing:.06em; }
+.boss-hp-row { display:flex; align-items:center; gap:.5rem; width:55%; }
+.boss-hp-label { font:9px/1 "Courier New",monospace; color:rgba(220,80,80,0.55); min-width:24px; }
+.boss-hp-track { flex:1; height:5px; border-radius:2px; background:rgba(220,80,80,0.1); border:1px solid rgba(220,80,80,0.2); overflow:hidden; }
+.boss-hp-fill { height:100%; background:rgba(220,80,80,0.6); border-radius:2px; width:100%; transition:width 2.2s ease-out; }
+.boss-hp-val { font:11px/1 "Courier New",monospace; color:rgba(220,80,80,0.8); white-space:nowrap; }
+/* chaos canvas — full width, tall center stage */
+#boss-chaos { width:100%; height:150px; display:block; background:rgba(4,1,1,0.9); border:1px solid rgba(200,146,42,0.3); border-top:none; border-bottom:none; }
+/* dialog + choices — same border-chain as ENCOUNTER */
+.boss-dialog-text { border:1px solid rgba(200,146,42,0.3); border-top:none; border-bottom:none; background:rgba(6,3,2,0.85); padding:.5rem .8rem; font:12px/1.7 "DotGothic16",monospace; color:var(--text); letter-spacing:.04em; height:5.5rem; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; }
+#boss-choices { border:1px solid rgba(200,146,42,0.3); border-top:1px solid rgba(200,146,42,0.12); background:rgba(6,3,2,0.7); padding:.35rem .6rem; display:grid; grid-template-columns:1fr 1fr; gap:.1rem .4rem; opacity:0; pointer-events:none; transition:opacity .3s; }
+#boss-choices.visible { opacity:1; pointer-events:auto; }
+.boss-choice { font:11px/1.5 "Courier New",monospace; color:rgba(200,146,42,0.65); cursor:pointer; padding:.2rem .3rem; border-radius:3px; transition:color .12s, background .12s; text-align:left; background:none; border:none; white-space:pre; }
+.boss-choice:hover { color:var(--gold2); background:rgba(200,146,42,0.07); }
+.boss-choice.weak { color:rgba(220,80,80,0.6); }
+.boss-choice.weak:hover { color:rgba(220,80,80,0.9); background:rgba(220,80,80,0.06); }
+.boss-choice.selected { opacity:.35; pointer-events:none; }
+#boss-result { border:1px solid rgba(200,146,42,0.3); border-top:none; border-radius:0 0 4px 4px; }
+.boss-replay-btn { font:11px/1 "DotGothic16",monospace; color:rgba(200,146,42,0.75); background:none; border:1px solid rgba(200,146,42,0.3); border-radius:3px; padding:.3rem .8rem; cursor:pointer; letter-spacing:.08em; transition:color .15s,background .15s; }
+.boss-replay-btn:hover { color:rgba(200,146,42,1); background:rgba(200,146,42,0.08); }
+.boss-result-label { font:9px/1 "Courier New",monospace; letter-spacing:.1em; padding:.4rem .6rem; text-align:center; }
+.boss-result-label.victory { color:rgba(100,200,120,0.85); }
+.boss-result-label.defeat { color:rgba(220,80,80,0.75); }
 
 /* ── INTERESTS ── */
 .interests-grid {
@@ -830,24 +910,47 @@ nav.scrolled {
 /* ── TIMELINE ── */
 .timeline-wrap {
   position: relative; z-index: 1;
-  padding: 10vh 5vw;
+  padding: 0 5vw 4rem;
   max-width: 1000px; margin: 0 auto;
 }
+.tl-scroll-wrap {
+  position: relative;
+}
+.tl-scroll-wrap::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 100px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top, #020804 0%, transparent 100%);
+}
+.timeline-scroll {
+  position: relative;
+  max-height: 780px;
+  overflow-y: auto;
+  padding-right: .5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200,146,42,0.2) transparent;
+}
+.timeline-scroll::-webkit-scrollbar { width: 3px; }
+.timeline-scroll::-webkit-scrollbar-track { background: transparent; }
+.timeline-scroll::-webkit-scrollbar-thumb { background: rgba(200,146,42,0.2); border-radius: 2px; }
 .timeline-line {
   position: absolute;
-  top: 0; bottom: 0; left: calc(5vw + 80px);
+  top: -50px; bottom: -50px; left: 80px;
   width: 1px;
-  background: linear-gradient(to bottom, transparent 5%, var(--line) 20%, var(--line) 80%, transparent 95%);
+  background: linear-gradient(to bottom, transparent 0%, var(--line) 12%, var(--line) 88%, transparent 100%);
+  z-index: 1;
 }
 .tl-item {
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 0 3rem;
-  padding: 2.5rem 0;
+  padding: 2rem 0;
   position: relative;
-  opacity: 0; transform: translateX(-14px);
-  transition: opacity .7s cubic-bezier(0.16,1,0.3,1), transform .7s cubic-bezier(0.16,1,0.3,1);
-  will-change: opacity, transform;
+  opacity: 1; transform: none;
 }
 .tl-item.visible { opacity: 1; transform: none; }
 .tl-year {
@@ -1136,6 +1239,45 @@ nav.scrolled {
   color: rgba(200,146,42,1);
 }
 
+/* ── PREFECTURE TRACKER ── */
+.pref-section { margin-top:2.5rem; }
+.pref-section-label { font:.58rem/1 "Courier New",monospace; letter-spacing:.15em; color:var(--sub); opacity:.65; margin-bottom:.9rem; }
+.pref-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:.4rem; }
+.pref-card {
+  padding:.65rem .75rem;
+  border:1px solid rgba(200,146,42,0.1);
+  border-radius:3px;
+  cursor:pointer;
+  background:rgba(2,8,4,0.55);
+  backdrop-filter:blur(2px);
+  transition:border-color .2s, background .2s;
+}
+.pref-card:hover {
+  border-color:rgba(200,146,42,0.32);
+  background:rgba(2,8,4,0.7);
+}
+.pref-card-top { display:flex; align-items:center; gap:.35rem; }
+.pref-card-days { margin-left:auto; font:.55rem/1 "Courier New",monospace; color:rgba(200,146,42,0.4); letter-spacing:.04em; }
+.pref-card-flag { font:.82rem/1 sans-serif; }
+.pref-card-name { font:.6rem/1.3 "Courier New",monospace; color:rgba(200,146,42,0.78); }
+.pref-card-frac { font:.52rem/1 "Courier New",monospace; color:var(--sub); opacity:.6; margin-top:.22rem; }
+.pref-card-bar { height:2px; background:rgba(200,146,42,0.08); margin-top:.38rem; border-radius:1px; overflow:hidden; }
+.pref-card-fill { height:100%; background:rgba(200,146,42,0.45); border-radius:1px; }
+.pref-expand { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+.pref-card:hover .pref-expand { max-height:600px; }
+.pref-expand-inner { padding-top:.55rem; border-top:1px solid rgba(200,146,42,0.1); margin-top:.5rem; }
+.pref-expand-label { font:.48rem/1 "Courier New",monospace; color:rgba(200,146,42,0.4); letter-spacing:.1em; margin-bottom:.3rem; margin-top:.5rem; }
+.pref-expand-label:first-child { margin-top:0; }
+.pref-tags { display:flex; flex-wrap:wrap; gap:.18rem; }
+.pref-tag {
+  font:.44rem/1.3 "Courier New",monospace;
+  color:rgba(200,146,42,0.72);
+  background:rgba(200,146,42,0.06);
+  border:1px solid rgba(200,146,42,0.13);
+  padding:.1rem .25rem;
+  border-radius:2px;
+}
+
 /* ── TRAVEL MAP SCRUBBER ── */
 .tmap-scrubber-wrap {
   padding: 6px 2px 2px;
@@ -1187,6 +1329,49 @@ footer {
   color:var(--sub); text-decoration:none; transition:color .2s;
 }
 .footer-links a:hover { color:var(--gold2); }
+/* ── ENDING ROLL ── */
+#ending-roll {
+  position: relative;
+  overflow: hidden;
+  height: 560px;
+  background: transparent;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+#ending-inner {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  will-change: transform;
+}
+.eroll-country {
+  display: block;
+  margin: 2.8rem 0 .55rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(200,146,42,0.32);
+}
+.eroll-flag { margin-right: .45em; }
+.eroll-cities {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: rgba(230,220,200,0.13);
+  line-height: 2;
+  word-spacing: .2em;
+}
+.eroll-sep { color: rgba(200,146,42,0.18); margin: 0 .5em; }
+.eroll-end {
+  display: block;
+  margin: 3rem 0 1rem;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .3em;
+  color: rgba(200,146,42,0.18);
+}
 </style>
 </head>
 <body>
@@ -1227,9 +1412,9 @@ footer {
 
     <div class="hero-byline">
       <span class="hero-name">Taka Yamamoto</span>
-      <span class="hero-sep">—</span>
-      <span class="hero-roles">Wanderer · Drifter · Roamer</span>
     </div>
+
+
   </div>
   <div class="scroll-hint">Scroll</div>
 </section>
@@ -1237,22 +1422,32 @@ footer {
 <!-- ── MARQUEE ── -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">ラオス / Laos</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">Card Game</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">三国志</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">旅と言葉</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">ป๊อกเด้ง</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">国境を越える</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">Strategy</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">東南アジア / SE Asia</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">ラオス / Laos</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">Card Game</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">三国志</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">旅と言葉</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">ป๊อกเด้ง</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">国境を越える</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">Strategy</span><span class="marquee-sep">◆</span>
-    <span class="marquee-item">東南アジア / SE Asia</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">여행</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Voyage</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">यात्रा</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">たび</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Странствие</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ການເດີນທາງ</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Viaje</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Perjalanan</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Journey</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">เดินทาง</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ভ্রমণ</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">流浪</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Du Lịch</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">여행</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Voyage</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">यात्रा</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">たび</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Странствие</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ການເດີນທາງ</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Viaje</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Perjalanan</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Journey</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">เดินทาง</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">ভ্রমণ</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">流浪</span><span class="marquee-sep">◆</span>
+    <span class="marquee-item">Du Lịch</span><span class="marquee-sep">◆</span>
   </div>
 </div>
 
@@ -1266,6 +1461,10 @@ footer {
         <div class="about-toggle">
           <button id="btn-jp" class="active" onclick="setLang('jp')">JP</button>
           <button id="btn-en" onclick="setLang('en')">EN</button>
+          <button id="btn-zh" onclick="setLang('zh')">中文</button>
+          <button id="btn-th" onclick="setLang('th')">ไทย</button>
+          <button id="btn-vi" onclick="setLang('vi')">VN</button>
+          <button id="btn-es" onclick="setLang('es')">ES</button>
         </div>
 
         <div id="about-jp" class="about-lang">
@@ -1298,13 +1497,15 @@ footer {
         </div>
 
         <div id="about-en" class="about-lang hidden about-en">
-          <blockquote class="pull-quote about-coda" style="margin-bottom:1.5rem;">
-            "Where are you going?"
+          <blockquote class="pull-quote about-coda word-reveal fade">
+            <span class="word"><span>"Where</span></span>
+            <span class="word"><span>are</span></span>
+            <span class="word"><span>you</span></span>
+            <span class="word"><span>going?"</span></span>
           </blockquote>
           <p class="phil-body">
-            <em>"Where are you going?"</em><br>
-            Step into any new town, and a local asks.<br>
-            My answer is always the same — <em>I don't know.</em><br><br>
+            Step into any new town, and a local asks — <em>"Where are you going?"</em><br>
+            My answer is always the same — <em>"I don't know."</em><br><br>
             No destination. No hotel booked.<br>
             I don't even know what I'll eat today.<br>
             Before I knew it, I'd closed the map.<br><br>
@@ -1322,20 +1523,148 @@ footer {
             it still lives somewhere inside me.
           </p>
         </div>
+
+        <div id="about-zh" class="about-lang hidden">
+          <blockquote class="pull-quote about-coda word-reveal fade">
+            <span class="word"><span>"Where</span></span>
+            <span class="word"><span>are</span></span>
+            <span class="word"><span>you</span></span>
+            <span class="word"><span>going?"</span></span>
+          </blockquote>
+          <p class="pull-sub fade">——你要去哪裡？</p>
+          <p class="phil-body">
+            每到一個陌生的城鎮，都有人這樣問。<br>
+            我的答案永遠是 <em>"I don't know"</em>——不知道。<br><br>
+            沒有目的地，沒有預訂的旅館。<br>
+            連今天吃什麼，還沒想好。<br>
+            不知不覺，地圖已經關上了。<br><br>
+            巴士站裡人聲嘈雜，<br>
+            我就朝某個方向走出去。<br><br>
+            迷路。錯過巴士。<br>
+            有時候，一整天什麼都沒進展。<br>
+            沒關係。<br><br>
+            每一次繞遠路，風景就多了一份。<br>
+            每一次搭錯車，就多認識了一個人。<br>
+            每一次沒做功課，就多了一個驚喜。<br><br>
+            旅行越沒效率，就越有意思。<br><br>
+            那天錯過巴士後吃到的路邊攤，<br>
+            至今還留在某處。
+          </p>
+        </div>
+
+        <div id="about-th" class="about-lang hidden">
+          <blockquote class="pull-quote about-coda word-reveal fade">
+            <span class="word"><span>"Where</span></span>
+            <span class="word"><span>are</span></span>
+            <span class="word"><span>you</span></span>
+            <span class="word"><span>going?"</span></span>
+          </blockquote>
+          <p class="pull-sub fade">——ไปไหน？</p>
+          <p class="phil-body">
+            ทุกครั้งที่ถึงเมืองใหม่ ก็มีคนถาม<br>
+            คำตอบของเราเสมอคือ <em>"I don't know"</em> — ไม่รู้<br><br>
+            ไม่มีจุดหมาย ไม่ได้จองที่พัก<br>
+            แม้แต่จะกินอะไรวันนี้ก็ยังไม่รู้<br>
+            แล้วก็รู้ตัวว่าปิดแผนที่ไปแล้ว<br><br>
+            ท่ามกลางเสียงวุ่นวายที่สถานีรถโดยสาร<br>
+            ก็แค่เดินออกไปสักที่หนึ่ง<br><br>
+            หลงทาง พลาดรถโดยสาร<br>
+            บางวันไม่มีอะไรคืบหน้าเลย<br>
+            ก็ได้<br><br>
+            ยิ่งอ้อมมาก ยิ่งเจอวิว<br>
+            ยิ่งขึ้นผิดคัน ยิ่งได้คุยกับคนแปลกหน้า<br>
+            ยิ่งไม่ค้นหา ยิ่งได้รับความประหลาดใจ<br><br>
+            ยิ่งเดินทางแบบไม่มีแผน ยิ่งน่าสนใจ<br><br>
+            แผงลอยที่วันที่พลาดรถนั้น<br>
+            ยังคงอยู่ในความทรงจำที่ไหนสักแห่ง
+          </p>
+        </div>
+
+        <div id="about-vi" class="about-lang hidden">
+          <blockquote class="pull-quote about-coda word-reveal fade">
+            <span class="word"><span>"Where</span></span>
+            <span class="word"><span>are</span></span>
+            <span class="word"><span>you</span></span>
+            <span class="word"><span>going?"</span></span>
+          </blockquote>
+          <p class="pull-sub fade">——Đi đâu vậy?</p>
+          <p class="phil-body">
+            Mỗi lần đến thị trấn mới, lại có người hỏi.<br>
+            Câu trả lời của tôi lúc nào cũng vậy — <em>"I don't know."</em><br><br>
+            Không có điểm đến. Không đặt trước chỗ ở.<br>
+            Ngay cả hôm nay ăn gì cũng chưa biết.<br>
+            Chẳng biết từ lúc nào, tôi đã đóng bản đồ lại.<br><br>
+            Giữa những tiếng ồn ào ở bến xe,<br>
+            tôi cứ bước đi về phía nào đó.<br><br>
+            Lạc đường. Lỡ chuyến xe.<br>
+            Có ngày chẳng tiến được bước nào.<br>
+            Cũng được thôi.<br><br>
+            Mỗi lần đi vòng, lại thêm một khung cảnh.<br>
+            Mỗi lần lên nhầm xe, lại nói chuyện được với một người lạ.<br>
+            Mỗi lần không tìm hiểu trước, lại có thêm điều bất ngờ.<br><br>
+            Hành trình càng kém hiệu quả, càng thú vị.<br><br>
+            Cái quán ăn vỉa hè hôm lỡ xe đó —<br>
+            vẫn còn sống ở đâu đó bên trong tôi.
+          </p>
+        </div>
+
+        <div id="about-es" class="about-lang hidden">
+          <blockquote class="pull-quote about-coda word-reveal fade">
+            <span class="word"><span>"Where</span></span>
+            <span class="word"><span>are</span></span>
+            <span class="word"><span>you</span></span>
+            <span class="word"><span>going?"</span></span>
+          </blockquote>
+          <p class="pull-sub fade">——¿A dónde vas?</p>
+          <p class="phil-body">
+            En cada pueblo nuevo, alguien pregunta.<br>
+            Mi respuesta siempre es la misma — <em>"I don't know."</em><br><br>
+            Sin destino. Sin hotel reservado.<br>
+            Ni siquiera sé qué voy a comer hoy.<br>
+            Sin darme cuenta, cerré el mapa.<br><br>
+            Mientras las voces se mezclan en la terminal de autobuses,<br>
+            simplemente empiezo a caminar. Hacia algún lugar.<br><br>
+            Me pierdo. Pierdo el autobús.<br>
+            Hay días en que nada avanza.<br>
+            Está bien.<br><br>
+            Cada rodeo sumó paisaje.<br>
+            Cada equivocación de ruta sumó una conversación.<br>
+            Cada lugar no investigado sumó una sorpresa.<br><br>
+            Cuanto menos eficiente es el viaje,<br>
+            más interesante se vuelve.<br><br>
+            Ese puesto de comida del día que perdí el autobús —<br>
+            sigue vivo en algún rincón dentro de mí.
+          </p>
+        </div>
+
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ── FIELD PHOTO ── -->
+<div class="field-photo-wrap fade">
+  <img src="images/banrakthai.jpg" alt="บ้านรักไทย — teaching hill tribe kids" class="field-photo">
+  <div class="field-photo-meta">
+    <p class="field-photo-cap">บ้านรักไทย, Mae Hong Son — Thai-Myanmar border</p>
+    <p class="field-photo-desc">村人に頼まれて、タイとミャンマーの子どもたちに授業をした。<br>中国系タイ人、シャン族、ワ族、リス族——いろんな民族の子どもが同じ教室にいた。</p>
   </div>
 </div>
 
 <!-- ── STATS ── -->
 <div class="stats-row fade">
   <div class="stat">
-    <span class="stat-n" data-target="20">0</span>
+    <span class="stat-n" id="stat-countries" data-target="0">0</span>
     <span class="stat-l">Countries</span>
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n" data-target="1617">0</span>
+    <span class="stat-n" id="stat-cities" data-target="0">0</span>
+    <span class="stat-l">Cities</span>
+  </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n" id="stat-days" data-target="0">0</span>
     <span class="stat-l">Days abroad</span>
   </div>
   <div class="stat-sep">—</div>
@@ -1353,6 +1682,26 @@ footer {
     <span class="stat-n" data-target="2">0</span>
     <span class="stat-l">Essays</span>
   </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n">6+</span>
+    <span class="stat-l">Languages</span>
+  </div>
+</div>
+
+<!-- ── AREA CLEAR ── -->
+<div class="pref-section" style="padding:0 5vw 3rem;">
+  <p class="pref-section-label">AREA CLEAR</p>
+  <div class="pref-grid" id="pref-grid"></div>
+</div>
+
+<!-- ── STATEMENT ── -->
+<div class="statement-wrap fade" id="statement">
+  <span class="statement-line"><ruby>酔<rt>よ</rt></ruby>うこと。</span>
+  <span class="statement-line"><ruby>迷<rt>まよ</rt></ruby>うこと。</span>
+  <span class="statement-line"><ruby>彷徨<rt>さまよ</rt></ruby>うこと。</span>
+  <p class="statement-en">Intoxicated. Adrift. Wandering.</p>
+  <p class="statement-sub">あらすじのない旅</p>
 </div>
 
 <!-- ── RPG ── -->
@@ -1361,7 +1710,7 @@ footer {
     <!-- Area ticker -->
     <div class="rpg-area-wrap">
       <div class="rpg-area-label">FIELD MOVE</div>
-      <span class="rpg-area-ticker" id="rpg-ticker">▸ Japan → Thailand → Laos → Vietnam → India → Mexico ▸</span>
+      <span class="rpg-area-ticker" id="rpg-ticker"></span>
     </div>
     <!-- Dialog -->
     <div class="rpg-dialog">
@@ -1373,34 +1722,38 @@ footer {
     <div class="rpg-quests">
       <div class="rpg-q is-done">
         <span class="rpg-q-tag done">DONE</span>
-        <span class="rpg-q-text"><span class="q-jp">国境を越える</span><span class="q-en">Cross a border</span></span>
+        <span class="rpg-q-text"><span class="q-jp">帰りのチケットを持たずに出発する</span><span class="q-en">Leave without a return ticket</span></span>
       </div>
       <div class="rpg-q is-done">
         <span class="rpg-q-tag done">DONE</span>
-        <span class="rpg-q-text"><span class="q-jp">バスを逃す</span><span class="q-en">Miss a bus</span></span>
-      </div>
-      <div class="rpg-q is-done">
-        <span class="rpg-q-tag done">DONE</span>
-        <span class="rpg-q-text"><span class="q-jp">読めない文字のメニューを注文する</span><span class="q-en">Order from a menu I can't read</span></span>
-      </div>
-      <div class="rpg-q is-done">
-        <span class="rpg-q-tag done">DONE</span>
-        <span class="rpg-q-text"><span class="q-jp">地図を閉じる</span><span class="q-en">Close the map</span></span>
+        <span class="rpg-q-text"><span class="q-jp">マップにない道を歩く</span><span class="q-en">Walk a road not on the map</span></span>
       </div>
       <div class="rpg-q is-done">
         <span class="rpg-q-tag done">DONE</span>
         <span class="rpg-q-text"><span class="q-jp">はじめての言語で村人と話す</span><span class="q-en">Talk to a local in a language I just learned</span></span>
       </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">目的地の手前で降りる</span><span class="q-en">Get off one stop early</span></span>
+      </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">国境を越える</span><span class="q-en">Cross a border</span></span>
+      </div>
+      <div class="rpg-q is-done">
+        <span class="rpg-q-tag done">DONE</span>
+        <span class="rpg-q-text"><span class="q-jp">現地の祭りにまぎれ込む</span><span class="q-en">Stumble into a local festival</span></span>
+      </div>
       <div class="rpg-q">
         <span class="rpg-q-tag active">ACTIVE</span>
-        <span class="rpg-q-text"><span class="q-jp">どこに向かってるかを理解する</span><span class="q-en">Figure out where I'm going</span></span>
+        <span class="rpg-q-text"><span class="q-jp">次の町を決める</span><span class="q-en">Decide where to go next</span></span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── JOURNEY ── -->
-<div class="journey-wrap" id="journey">
+<!-- ── JOURNEY (removed) ── -->
+<div class="journey-wrap" id="journey" style="display:none">
   <div class="journey-header">
     <span class="section-label fade" style="margin-bottom:0">Journey / 旅の軌跡</span>
     <span class="journey-hint fade">Tap to explore</span>
@@ -1429,47 +1782,29 @@ footer {
   </div>
 </div>
 
-<!-- Flavor popup -->
-<div class="jc-popup" id="jc-popup">
-  <button class="jc-popup-close" id="jc-popup-close">✕</button>
-  <div class="jc-popup-flag" id="jc-popup-flag"></div>
-  <div class="jc-popup-name" id="jc-popup-name"></div>
-  <p class="jc-popup-text" id="jc-popup-text"></p>
-</div>
 
-<!-- ── STATEMENT ── -->
-<div class="statement-wrap fade" id="statement">
-  <span class="statement-line"><ruby>酔<rt>よ</rt></ruby>うこと。</span>
-  <span class="statement-line"><ruby>迷<rt>まよ</rt></ruby>うこと。</span>
-  <span class="statement-line"><ruby>彷徨<rt>さまよ</rt></ruby>うこと。</span>
-  <p class="statement-en">Intoxicated. Adrift. Wandering.</p>
-  <p class="statement-sub">あらすじのない旅</p>
-</div>
-
-<!-- ── PIXEL TRAVELER ── -->
-<div style="position:relative;z-index:1;border-top:1px solid var(--line);background:rgba(2,5,3,0.3);overflow:hidden;">
-  <canvas id="traveler-canvas" height="80" style="display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges;"></canvas>
-</div>
 
 <!-- ── TIMELINE ── -->
-<div class="section-wrap">
+<div class="section-wrap" id="history">
   <div class="section" style="padding-bottom:0">
     <span class="section-label fade">History / 年表</span>
   </div>
   <div class="timeline-wrap">
+    <div class="tl-scroll-wrap">
     <div class="timeline-line"></div>
+    <div class="timeline-scroll">
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2012</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">インドに、ぶん殴られた。</h3>
-        <p class="tl-desc">高校の友達に誘われてガンジス川へ。いい意味で道を踏み外す。<br><span style="font-size:11px;opacity:.55">A friend dragged me to the Ganges. Got punched by India — in the best way.</span></p>
+        <h3 class="tl-title">インドにぶん殴られた。</h3>
+        <p class="tl-desc">高校の友達に誘われてインドへ。ドロまみれの道で、車もウシも人も三輪タクシーも好き勝手に行き交う。ガンジス川に着く頃には、自分の常識の方が流されていた。<br><span style="font-size:11px;opacity:.55">A high school friend dragged me to India. Muddy roads, cows, rickshaws, people — all doing their own thing. By the time I reached the Ganges, it wasn't the river washing things away. It was me.</span></p>
         <span class="tl-tag">Travel · India</span>
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2013</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1479,7 +1814,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2014</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1489,7 +1824,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2015</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1499,7 +1834,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2016</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1509,7 +1844,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2017</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1519,7 +1854,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2018</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1529,7 +1864,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2019</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1539,7 +1874,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2020</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1549,7 +1884,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2021</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1559,7 +1894,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2022</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1569,7 +1904,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2023</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1579,7 +1914,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2024</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1589,7 +1924,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2025</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1599,7 +1934,7 @@ footer {
       </div>
     </div>
 
-    <div class="tl-item fade">
+    <div class="tl-item">
       <span class="tl-year">2026</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
@@ -1608,6 +1943,40 @@ footer {
         <span class="tl-tag">To be continued</span>
       </div>
     </div>
+    </div><!-- end timeline-scroll -->
+    </div><!-- end tl-scroll-wrap -->
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── RPG-ENC: ENCOUNTER ── -->
+<div class="rpgm-wrap fade" id="rpg-enc">
+  <div class="rpgm-inner">
+    <div class="enc-box">
+      <div class="enc-header">
+        <span class="enc-bang">！</span>
+        <span class="enc-title">ENCOUNTER</span>
+      </div>
+      <div class="enc-battle-ui">
+        <canvas id="enc-monster" width="280" height="130" style="display:block;width:100%;border:1px solid rgba(200,146,42,0.3);border-bottom:none;border-radius:4px 4px 0 0;"></canvas>
+        <div class="enc-battle-text" id="enc-battle-text">未知の言語が現れた！</div>
+        <div class="enc-menu" id="enc-menu">
+          <div class="enc-choice cursor" data-idx="0">▶ A：学習する</div>
+          <div class="enc-choice"        data-idx="1">　 B：話しかける</div>
+          <div class="enc-choice"        data-idx="2">　 C：写真をとる</div>
+          <div class="enc-choice"        data-idx="3">　 D：にげる</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RPG-LANGDEX ── -->
+<div class="rpgm-wrap fade" id="rpg-langdex">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">PARTY / 手持ち言語</div>
+    <div id="langdex-list"></div>
   </div>
 </div>
 
@@ -1697,115 +2066,13 @@ footer {
   </div>
 </div>
 
-<!-- ── RPG WALKER ── -->
-<div class="rpg-walker-wrap" id="rpg-walker">
-  <canvas id="rpg-walker-canvas" height="80"></canvas>
-</div>
 
 <!-- ── RPG-MAP: WORLD MAP ── -->
 <div class="rpgm-wrap fade" id="rpg-map">
   <div class="rpgm-inner">
     <div class="rpgm-label">WORLD MAP</div>
-    <!-- ── Option A: SVG ── -->
-    <div class="map-opt-label">A — SVG</div>
-    <svg id="asia-map-svg" viewBox="0 0 310 278" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;border-radius:3px;overflow:hidden;margin-bottom:.25rem;">
-      <rect width="310" height="278" fill="rgba(2,5,3,0.92)" rx="3"/>
-      <defs>
-        <filter id="mg"><feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <!-- NON-VISITED (dim outlines) -->
-      <!-- Mongolia -->
-      <path class="land" d="M 46,45 L 62,23 L 200,22 L 240,15 L 228,38 L 200,50 L 100,50 L 60,55 Z"/>
-      <!-- North Korea -->
-      <path class="land" d="M 246,59 L 256,56 L 262,63 L 255,74 L 243,76 L 232,77 L 228,68 L 234,61 Z"/>
-      <!-- South Korea -->
-      <path class="land" d="M 232,77 L 243,72 L 250,79 L 245,91 L 231,92 Z"/>
-      <!-- Myanmar -->
-      <path class="land" d="M 113,117 L 128,98 L 141,112 L 142,130 L 134,149 L 127,167 L 118,181 L 107,181 L 100,171 L 100,154 L 107,135 Z"/>
-      <!-- Cambodia -->
-      <path class="land" d="M 133,175 L 150,172 L 155,180 L 151,191 L 139,191 L 131,184 Z"/>
-      <!-- Malaysia peninsula -->
-      <path class="land" d="M 118,213 L 130,208 L 133,218 L 130,231 L 120,233 L 114,224 Z"/>
-      <!-- Philippines – Luzon -->
-      <path class="land" d="M 262,121 L 269,116 L 274,124 L 271,136 L 261,136 Z"/>
-      <!-- VISITED countries -->
-      <!-- China (large, glow) -->
-      <path class="visited-c" filter="url(#mg)" d="M 46,68 L 46,45 L 62,23 L 200,22 L 240,15 L 261,32 L 246,59 L 218,77 L 215,113 L 190,149 L 168,140 L 141,149 L 130,135 L 98,122 L 70,113 Z"/>
-      <!-- India -->
-      <path class="visited-c" filter="url(#mg)" d="M 35,90 L 67,90 L 98,122 L 96,158 L 79,185 L 63,212 L 53,212 L 43,200 L 39,181 L 36,162 L 28,149 Z"/>
-      <!-- Bangladesh -->
-      <path class="visited-c" d="M 98,122 L 113,117 L 122,127 L 120,144 L 108,149 L 98,140 Z"/>
-      <!-- Taiwan -->
-      <path class="visited-c" d="M 209,133 L 218,129 L 222,138 L 218,150 L 209,152 L 205,143 Z"/>
-      <!-- Japan – Honshu -->
-      <path class="visited-c" filter="url(#mg)" d="M 237,104 L 255,97 L 274,89 L 291,72 L 297,72 L 291,80 L 269,98 L 249,106 Z"/>
-      <!-- Japan – Hokkaido -->
-      <path class="visited-c" d="M 279,48 L 299,37 L 310,41 L 305,51 L 280,55 Z"/>
-      <!-- Japan – Kyushu -->
-      <path class="visited-c" d="M 232,107 L 246,101 L 253,110 L 247,120 L 232,117 Z"/>
-      <!-- Thailand (+ peninsula) -->
-      <path class="visited-c" d="M 107,135 L 121,128 L 133,135 L 141,149 L 134,162 L 127,175 L 124,188 L 122,201 L 117,209 L 112,205 L 115,194 L 117,183 L 118,171 L 121,160 L 118,150 Z"/>
-      <!-- Laos -->
-      <path class="visited-c" d="M 141,149 L 158,144 L 165,158 L 164,175 L 157,185 L 142,185 L 133,179 L 134,162 Z"/>
-      <!-- Vietnam -->
-      <path class="visited-c" d="M 158,144 L 172,140 L 177,149 L 176,162 L 172,176 L 165,191 L 157,202 L 148,206 L 145,200 L 150,190 L 155,176 L 152,162 L 149,153 Z"/>
-      <!-- Indonesia – Sumatra -->
-      <path class="visited-c" d="M 118,226 L 139,218 L 158,220 L 171,232 L 175,248 L 168,262 L 151,265 L 131,260 L 116,249 Z"/>
-      <!-- Indonesia – Borneo -->
-      <path class="visited-c" d="M 168,225 L 184,215 L 205,214 L 219,224 L 216,241 L 200,251 L 179,251 L 164,238 Z"/>
-      <!-- Indonesia – Java -->
-      <path class="visited-c" d="M 164,267 L 184,262 L 205,263 L 214,269 L 198,275 L 171,274 Z"/>
-      <!-- City dots -->
-      <circle cx="60" cy="117" r="1.6" class="city-dot"/>
-      <text x="63" y="115" class="map-label">Delhi</text>
-      <circle cx="105" cy="140" r="1.6" class="city-dot"/>
-      <text x="94" y="138" class="map-label">Dhaka</text>
-      <circle cx="190" cy="149" r="1.6" class="city-dot"/>
-      <text x="180" y="147" class="map-label">HK</text>
-      <circle cx="213" cy="135" r="1.6" class="city-dot"/>
-      <text x="216" y="133" class="map-label">台北</text>
-      <circle cx="281" cy="86" r="1.6" class="city-dot"/>
-      <text x="283" y="84" class="map-label">東京</text>
-      <circle cx="143" cy="185" r="1.6" class="city-dot"/>
-      <text x="128" y="183" class="map-label">BKK</text>
-      <circle cx="161" cy="153" r="1.6" class="city-dot"/>
-      <text x="164" y="151" class="map-label">Hanoi</text>
-      <circle cx="151" cy="167" r="1.6" class="city-dot"/>
-      <text x="136" y="165" class="map-label">VTE</text>
-      <circle cx="165" cy="198" r="1.6" class="city-dot"/>
-      <text x="168" y="196" class="map-label">HCMC</text>
-      <circle cx="166" cy="272" r="1.6" class="city-dot"/>
-      <text x="169" y="270" class="map-label">JKT</text>
-      <!-- Sea labels -->
-      <text x="6" y="268" class="map-label" style="opacity:.25">インド洋</text>
-      <text x="245" y="196" class="map-label" style="opacity:.25">太平洋</text>
-    </svg>
-    <!-- ── Option B: Dot grid ── -->
-    <div class="map-opt-label" style="margin-top:.9rem">B — ドット格子</div>
     <div class="map-grid" id="map-grid"></div>
     <div class="rpgm-dialog" id="map-dialog"></div>
-  </div>
-</div>
-
-<!-- ── RPG-ENC: ENCOUNTER ── -->
-<div class="rpgm-wrap fade" id="rpg-enc">
-  <div class="rpgm-inner">
-    <div class="enc-box">
-      <div class="enc-header">
-        <span class="enc-bang">！</span>
-        <span class="enc-title">ENCOUNTER</span>
-      </div>
-      <div class="enc-battle-ui">
-        <canvas id="enc-monster" width="280" height="130" style="display:block;width:100%;border:1px solid rgba(200,146,42,0.3);border-bottom:none;border-radius:4px 4px 0 0;"></canvas>
-        <div class="enc-battle-text" id="enc-battle-text">未知の言語が現れた！</div>
-        <div class="enc-menu" id="enc-menu">
-          <div class="enc-choice cursor" data-idx="0">▶ A：学習する</div>
-          <div class="enc-choice"        data-idx="1">　 B：話しかける</div>
-          <div class="enc-choice"        data-idx="2">　 C：写真をとる</div>
-          <div class="enc-choice"        data-idx="3">　 D：にげる</div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1840,6 +2107,38 @@ footer {
   <div class="rpgm-inner">
     <div class="rpgm-label">ITEM LOG</div>
     <div class="item-log" id="item-log"></div>
+  </div>
+</div>
+
+
+<!-- ── RPG-BOSS ── -->
+<div class="rpgm-wrap fade" id="rpg-boss">
+  <div class="rpgm-inner">
+    <div class="boss-box">
+      <div class="enc-header">
+        <span class="enc-bang">！</span>
+        <span class="enc-title">BOSS BATTLE</span>
+      </div>
+      <div class="boss-info-strip">
+        <div class="boss-info-top">
+          <span class="boss-name-text">インドの客引きニキ</span>
+          <span class="boss-lv-text"> : Lv.999</span>
+        </div>
+        <div class="boss-hp-row">
+          <span class="boss-hp-label">HP :</span>
+          <div class="boss-hp-track"><div class="boss-hp-fill" id="boss-hp-fill"></div></div>
+          <span class="boss-hp-val" id="boss-hp-val">₹3000</span>
+        </div>
+      </div>
+      <canvas id="boss-chaos" width="400" height="110"></canvas>
+      <div class="boss-dialog-text" id="boss-dialog-text"></div>
+      <div id="boss-choices">
+        <button class="boss-choice" data-idx="0">　 A：</button>
+        <button class="boss-choice" data-idx="1">　 B：</button>
+        <button class="boss-choice" data-idx="2">　 C：</button>
+        <button class="boss-choice" data-idx="3">　 D：</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1901,40 +2200,15 @@ footer {
 
 <div class="divider"></div>
 
-<!-- ── PLAYGROUND ── -->
-<div class="section-wrap" id="playground">
-  <div class="section" style="padding-bottom:2rem;">
-    <div class="section-header fade">
-      <p class="section-label" style="margin-bottom:0">お遊び / Playground</p>
-    </div>
-    <p class="fade" style="font-size:clamp(13px,1.5vw,15px);color:var(--sub);line-height:1.8;max-width:480px;margin-bottom:3rem;">
-      東京からパリまでの旅路を3Dで。<br>
-      ドラッグして回してみてください。<br>
-      <span style="font-size:11px;opacity:.5">The Tokyo → Paris route, in three dimensions. Drag to spin.</span>
-    </p>
-    <div id="globe-wrap" class="fade" style="
-      position:relative;
-      width:100%; max-width:700px;
-      height:clamp(320px,50vw,520px);
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      cursor:grab;
-    ">
-      <canvas id="globe3d" style="display:block;width:100%;height:100%;"></canvas>
-      <div style="position:absolute;top:16px;left:20px;pointer-events:none;">
-        <p style="font-size:10px;letter-spacing:.22em;color:rgba(200,146,42,.55);text-transform:uppercase;">Tokyo → Paris</p>
-      </div>
-      <div id="globe-hint" style="position:absolute;bottom:16px;right:18px;font-size:9px;letter-spacing:.18em;color:rgba(200,146,42,.35);text-transform:uppercase;pointer-events:none;transition:opacity .4s;">drag to rotate</div>
-    </div>
-  </div>
-</div>
+
+<!-- ── FIELD INTRO ── -->
+<section id="field-intro">
+  <canvas id="field-canvas"></canvas>
+</section>
 
 <!-- ── TRAVEL MAP ── -->
 <section class="section fade" id="travel-map" style="padding:5rem 5vw;">
-  <p class="sec-label">VISITED CITIES</p>
-  <h2 class="sec-title" style="margin-bottom:.5rem;">行った場所</h2>
-  <p class="sec-sub" style="margin-bottom:0;">20 countries · 93 cities</p>
+  <span class="section-label fade" style="margin-bottom:1.5rem;">Journey / 旅の軌跡</span>
   <div class="tmap-wrap">
     <canvas id="tmap-canvas" height="380"></canvas>
     <div class="tmap-scrubber-wrap" id="tmap-scrubber">
@@ -1949,14 +2223,23 @@ footer {
 
 <div class="divider"></div>
 
-<!-- 🐼 panda — ひっそり -->
-<div style="position:relative;z-index:1;overflow:hidden;background:rgba(2,5,3,0.4);border-top:1px solid var(--line);">
-  <canvas id="panda-canvas" height="64" style="display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges;"></canvas>
+<!-- ── GLOBE ── -->
+<div class="pref-section fade" style="padding:0 5vw 3rem; display:flex; flex-direction:column; align-items:center;">
+  <p class="pref-section-label" style="align-self:flex-start;">VISITED CITIES</p>
+  <div id="globe-wrap" style="width:100%; max-width:560px; height:440px; cursor:grab; position:relative; overflow:hidden;">
+    <canvas id="globe3d" style="width:100%; height:100%; display:block;"></canvas>
+    <div id="globe-hint" style="position:absolute;bottom:.9rem;left:50%;transform:translateX(-50%);font:10px/1 'Courier New',monospace;color:rgba(200,146,42,0.35);letter-spacing:.12em;pointer-events:none;transition:opacity .6s;">drag to rotate</div>
+  </div>
 </div>
+
+<!-- 🐼 panda — ひっそり -->
+<!-- ── ENDING ROLL ── -->
+<section id="ending-roll"><div id="ending-inner"></div></section>
+
 
 <div style="position:relative;z-index:1;">
   <footer>
-    <span class="footer-copy">© Taka Yamamoto · 旅人 · ゲーム制作者 · 書き手</span>
+    <span class="footer-copy">© Taka Yamamoto — World Wanderer · Language Collector · Vibe Coder</span>
     <nav class="footer-links">
       <a href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">Pok Deng</a>
       <a href="https://app-liart-nine-16.vercel.app" target="_blank">三国志</a>
@@ -1966,6 +2249,170 @@ footer {
 </div>
 
 <script>
+/* ── FIELD INTRO ── */
+(function(){
+  'use strict';
+  const canvas = document.getElementById('field-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const W=800, H=480, TS=32;
+  canvas.width=W; canvas.height=H;
+
+  // Palette — gold/dark, no gameboy green
+  const BG='#020804', PATH='#2b1f09', PATH2='#382910',
+        GR='#0d1b0f',  GR2='#152c17',
+        TG='#192f16',  TGT='#2e5228',
+        TR='#0a160c',  TRT='#1f4620',
+        GOLD='#c8922a',GOLDB='#7a5518',WHT='#f0ebe0';
+
+  // Column layout: 0=tree 1=tallgrass 2=grass 3=path (25 cols × 32 = 800px)
+  // Path cols 9-15, center = x400
+  const CM=[0,0,0,1,2,2,2,2,2,3,3,3,3,3,3,3,2,2,2,2,1,0,0,0,0];
+
+  function rnd(x,y){ const v=Math.sin(x*127.1+y*311.7)*43758.5; return v-Math.floor(v); }
+
+  function drawTile(col, sx, sy, wr, t){
+    const tp=CM[col]|0, n=rnd(col,wr);
+    if(tp===3){
+      ctx.fillStyle=n<0.1?PATH2:PATH; ctx.fillRect(sx,sy,TS,TS);
+      if(n<0.05){ctx.fillStyle=PATH2;ctx.fillRect(sx+4,sy+7,10,2);}
+      if(n>0.92){ctx.fillStyle=PATH2;ctx.fillRect(sx+7,sy+19,7,2);}
+    } else if(tp===2){
+      ctx.fillStyle=n<0.2?GR2:GR; ctx.fillRect(sx,sy,TS,TS);
+      if(n>0.87){  // tiny gold flower
+        ctx.fillStyle=GOLD;
+        ctx.fillRect(sx+11,sy+9,2,1); ctx.fillRect(sx+10,sy+10,4,1);
+        ctx.fillRect(sx+11,sy+11,2,1); ctx.fillRect(sx+12,sy+9,1,4);
+        ctx.fillStyle='#e8b84b'; ctx.fillRect(sx+11,sy+10,2,2);
+      } else if(n>0.72){
+        ctx.fillStyle=GR2;
+        ctx.fillRect(sx+5,sy+4,2,7); ctx.fillRect(sx+14,sy+6,2,6);
+      }
+    } else if(tp===1){
+      ctx.fillStyle=TG; ctx.fillRect(sx,sy,TS,TS);
+      const sw=Math.sin(t*2.2+col*0.8)*1.8|0;
+      ctx.fillStyle=TGT;
+      for(let b=0;b<3;b++){
+        const bx=sx+3+b*9+sw, bh=8+(n*5|0);
+        ctx.fillRect(bx,sy+3,3,bh); ctx.fillRect(bx+1,sy+1,1,4);
+      }
+    } else {
+      ctx.fillStyle=TR; ctx.fillRect(sx,sy,TS,TS);
+      if(n>0.3){
+        ctx.fillStyle=TRT;
+        ctx.fillRect(sx+4,sy+2,TS-8,TS-6); ctx.fillRect(sx+2,sy+6,TS-4,TS-12);
+        ctx.fillStyle='#0b1a0d'; ctx.fillRect(sx+12,sy+TS-8,5,8);
+      }
+    }
+  }
+
+  // Character: top-down RPG sprite, cy = feet level
+  function drawChar(cx, cy, frame){
+    const f=frame%4;
+    // shadow
+    ctx.fillStyle='rgba(0,0,0,0.22)';
+    ctx.beginPath(); ctx.ellipse(cx,cy,10,4,0,0,Math.PI*2); ctx.fill();
+    // legs (alternate per frame)
+    const lly=f===1?-4:(f===3?3:0), rly=f===1?3:(f===3?-4:0);
+    ctx.fillStyle='#2a2010';
+    ctx.fillRect(cx-9,cy-12+lly,5,12); ctx.fillRect(cx+4,cy-12+rly,5,12);
+    ctx.fillStyle='#1a1208';
+    ctx.fillRect(cx-10,cy+lly,6,4); ctx.fillRect(cx+4,cy+rly,6,4);
+    // backpack
+    ctx.fillStyle='#3d2f14'; ctx.fillRect(cx+7,cy-27,8,14);
+    ctx.fillStyle='#4a3a1a'; ctx.fillRect(cx+8,cy-25,5,7);
+    // body
+    ctx.fillStyle='#243d28'; ctx.fillRect(cx-9,cy-27,18,16);
+    // head
+    ctx.fillStyle=GOLD; ctx.fillRect(cx-7,cy-42,14,15);
+    // hair
+    ctx.fillStyle='#3a2010';
+    ctx.fillRect(cx-7,cy-42,14,5); ctx.fillRect(cx-7,cy-42,3,9); ctx.fillRect(cx+4,cy-42,3,7);
+    // eyes
+    ctx.fillStyle='#0d0600';
+    ctx.fillRect(cx-4,cy-33,2,3); ctx.fillRect(cx+2,cy-33,2,3);
+    // neck
+    ctx.fillStyle=GOLD; ctx.fillRect(cx-3,cy-27,6,3);
+  }
+
+  // Poetry lines (typewriter, loop-aware)
+  const POEM=[
+    {t:2.5,  text:'道に迷ったら、'},
+    {t:5.5,  text:'景色がはじまった。'},
+    {t:9.8,  text:'地図を閉じたら、'},
+    {t:12.8, text:'世界がひろがった。'},
+  ];
+  const LOOP_DUR=19;
+
+  function drawPoetry(lt){
+    ctx.save();
+    ctx.textAlign='center';
+    ctx.font='22px "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif';
+    POEM.forEach((l,i)=>{
+      const age=lt-l.t; if(age<0) return;
+      const chars=Math.min(l.text.length,Math.floor(age/0.055));
+      if(!chars) return;
+      const nxt=POEM[i+1]?POEM[i+1].t:99;
+      let a=Math.min(1,age/0.35);
+      if(lt>nxt+2.2) a=Math.max(0,1-(lt-nxt-2.2)/1.3);
+      if(a<=0) return;
+      const py=H-96+i*35;
+      ctx.fillStyle=`rgba(2,8,4,${a*0.6})`; ctx.fillRect(W/2-170,py-24,340,32);
+      ctx.fillStyle=`rgba(240,235,224,${a*0.95})`; ctx.fillText(l.text.slice(0,chars),W/2,py);
+    });
+    ctx.restore();
+  }
+
+  // Scroll hint
+  function drawHint(lt){
+    if(lt<15) return;
+    const a=Math.min(1,(lt-15)/1.5)*Math.abs(Math.sin(lt*2))*0.45;
+    ctx.save(); ctx.globalAlpha=a; ctx.textAlign='center';
+    ctx.font='10px monospace'; ctx.fillStyle=WHT;
+    ctx.fillText('↓  SCROLL  ↓',W/2,H-12); ctx.restore();
+  }
+
+  // Edge vignette + fade-in
+  function drawVignette(lt){
+    const fi=Math.max(0,1-lt/1.0);
+    if(fi>0){ctx.fillStyle=`rgba(2,8,4,${fi})`;ctx.fillRect(0,0,W,H);}
+    const g=ctx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,H*0.72);
+    g.addColorStop(0,'rgba(2,8,4,0)'); g.addColorStop(1,'rgba(2,8,4,0.7)');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  }
+
+  let t0=null, charTick=0, lastCharMs=0;
+  const SCROLL_SPD=38, CHAR_X=400, CHAR_Y=H*0.58|0;
+
+  function tick(ts){
+    if(!t0) t0=ts;
+    const elapsed=(ts-t0)/1000;
+    const lt=elapsed%LOOP_DUR;
+    const scroll=elapsed*SCROLL_SPD;
+    const pxOff=scroll%TS, rowOff=Math.floor(scroll/TS)|0;
+    if(ts-lastCharMs>130){charTick++;lastCharMs=ts;}
+
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+
+    // draw world tiles
+    for(let r=-1;r<=(H/TS|0)+1;r++){
+      const screenY=r*TS-pxOff;
+      for(let c=0;c<CM.length;c++)
+        drawTile(c, c*TS, screenY, r+rowOff, elapsed);
+    }
+
+    drawChar(CHAR_X, CHAR_Y, charTick);
+    drawVignette(lt);
+    drawPoetry(lt);
+    drawHint(lt);
+
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+})();
+
 /* ══════════════════════════════════════════════
    WORLD MAP FLIGHT ROUTE ANIMATION
    Tokyo → Vientiane → Paris → Space
@@ -2342,9 +2789,9 @@ footer {
       const u=ease(pAfterPre/INTRO_DUR);
       cam.lon=WP[0].lon; cam.lat=WP[0].lat;
       cam.s=lerp(80,CAM_KF[0].s,u);
-    } else if(!inSpace||spRaw<0.17){
+    } else if(!inSpace||spRaw<0.08){
       if(!inSpace){const{camTarget}=stateAt(fp);cam.lon=camTarget.lon;cam.lat=camTarget.lat;cam.s=camTarget.s;}
-      else{const u=ease(spRaw/0.17),c=CAM_KF[CAM_KF.length-1];cam.lon=lerp(c.lon,-105.0,u);cam.lat=lerp(c.lat,28.0,u);cam.s=lerp(c.s,3.2,u);}
+      else{const u=ease(spRaw/0.08),c=CAM_KF[CAM_KF.length-1];cam.lon=lerp(c.lon,-105.0,u);cam.lat=lerp(c.lat,28.0,u);cam.s=lerp(c.s,3.2,u);}
     }
 
     ctx.clearRect(0,0,W,H);
@@ -2383,24 +2830,24 @@ footer {
       /* ── FLIGHT ── */
       drawStars(0.07,ts); drawGrid(); drawLands(0.11);
       const{pos,seg}=stateAt(fp);
-      if(seg!==lastSeg){if(seg<WP.length)PULSES.push({lon:WP[seg].lon,lat:WP[seg].lat,r:3,a:0.85});lastSeg=seg;}
+      if(seg!==lastSeg){if(seg<WP.length&&WP[seg].label)PULSES.push({lon:WP[seg].lon,lat:WP[seg].lat,r:3,a:0.85});lastSeg=seg;}
       TRAIL.push({lon:pos.lon,lat:pos.lat}); if(TRAIL.length>65)TRAIL.shift();
       drawRouteGhost(); drawCompletedRoute(fp); drawTrail();
       drawPlane(pos.lon,pos.lat); drawCities(seg); drawPulses();
 
-    } else if(spRaw<0.17){
+    } else if(spRaw<0.08){
       drawStars(starAlpha,ts); drawGrid(); drawLands(0.17);
       drawCompletedRoute(TOTAL); drawCities(WP.length-1);
-    } else if(spRaw<0.25){
+    } else if(spRaw<0.14){
       drawStars(starAlpha,ts); drawGrid(); drawLands(0.17);
       drawCompletedRoute(TOTAL);
-      const blackA=ease((spRaw-0.17)/0.08);
+      const blackA=ease((spRaw-0.08)/0.06);
       ctx.fillStyle=`rgba(11,17,13,${blackA})`; ctx.fillRect(0,0,W,H);
     } else if(spRaw<0.88){
-      const globeT=(spRaw-0.25)/0.63, fadeIn=spRaw<0.30?ease((spRaw-0.25)/0.05):1.0;
+      const globeT=(spRaw-0.14)/0.74, fadeIn=spRaw<0.19?ease((spRaw-0.14)/0.05):1.0;
       const globeCLon=lerp(-110,130,ease(globeT));  // Americas → Asia: full route visible
       drawStars(starAlpha,ts); drawGlobe(globeCLon,28,fadeIn);   // showRoute=true (default)
-      if(spRaw<0.30){ctx.fillStyle=`rgba(11,17,13,${1-fadeIn})`;ctx.fillRect(0,0,W,H);}
+      if(spRaw<0.19){ctx.fillStyle=`rgba(11,17,13,${1-fadeIn})`;ctx.fillRect(0,0,W,H);}
     } else {
       const fadeA=ease((spRaw-0.88)/0.12);
       drawStars(starAlpha*(1-fadeA),ts); drawGlobe(130,28,1-fadeA);
@@ -2412,6 +2859,9 @@ footer {
 
   function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
   window.addEventListener('resize',resize); resize(); initStars(); requestAnimationFrame(tick);
+
+  /* Expose cities for 3D globe */
+  window._GLOBE_CITIES = WP.filter(wp => wp.label && wp.lon > -175);
 })();
 
 /* ── CLICK PARTICLES ── */
@@ -2476,6 +2926,96 @@ window.addEventListener('scroll', () => {
     requestAnimationFrame(animCursor);
   }
   animCursor();
+})();
+
+/* ══════════════════════════════════════════════
+   MASTER TRAVEL DATA
+   ここだけ更新すれば Stats・AREA CLEAR・エンドロールが全て自動で連動します。
+
+   各エントリ:
+     flag   : 国旗絵文字
+     total  : 州/県の総数 (AREA CLEARのゲージ計算に使用)
+     unit   : 単位名 (prefectures / provinces / states ...)
+     days   : 滞在日数 ('Xd' 形式 or 'Origin')
+     areas  : 訪問した州/県のリスト (AREA CLEAR カード)
+     cities : 訪問した都市のリスト (エンドロール & Cities カウント)
+   ══════════════════════════════════════════════ */
+const TRAVEL_DATA = {
+  'Japan':      {flag:'🇯🇵', total:47, unit:'prefectures', days:'Origin',
+    areas:  ['Hokkaido','Iwate','Akita','Yamagata','Miyagi','Tokyo','Yamanashi','Osaka','Hiroshima','Fukuoka','Okinawa'],
+    cities: ['Sapporo','Morioka','Akita','Yamagata','Sendai','Tokyo','Kofu','Osaka','Hiroshima','Fukuyama','Fukuoka','Naha']},
+  'Korea':      {flag:'🇰🇷', total:17, unit:'provinces', days:'16d',
+    areas:  ['Busan','North Gyeongsang','Seoul','Incheon','Jeju'],
+    cities: ['Busan','Gyeongju','Seoul','Incheon','Jeju']},
+  'Taiwan':     {flag:'🇹🇼', total:22, unit:'counties/cities', days:'75d',
+    areas:  ['Yilan','Taipei','Taoyuan','Hualien','Taichung','Tainan','Kaohsiung'],
+    cities: ['Yilan','Taipei','Taoyuan','Hualien','Taichung','Tainan','Kaohsiung']},
+  'China':      {flag:'🇨🇳', total:34, unit:'provinces', days:'289d',
+    areas:  ['Shanghai','Zhejiang','Tianjin','Beijing','Shaanxi','Sichuan','Yunnan','Guangxi','Guangdong'],
+    cities: ['Shanghai','Yiwu','Tianjin','Beijing',"Xi'an",'Chengdu','Lijiang','Dali','Shangri-La','Nanning','Guangzhou']},
+  'Hong Kong':  {flag:'🇭🇰', total:18, unit:'districts', days:'64d',
+    areas:  ['Kowloon City'],
+    cities: ['Hong Kong']},
+  'Macau':      {flag:'🇲🇴', total:7,  unit:'parishes', days:'3d',
+    areas:  ['Santo António'],
+    cities: ['Macau']},
+  'Vietnam':    {flag:'🇻🇳', total:63, unit:'provinces', days:'124d',
+    areas:  ['Lào Cai','Hanoi','Thanh Hóa','Nghệ An','Da Nang','Quảng Nam','Kon Tum','Gia Lai','Đắk Lắk','Lâm Đồng','Bình Thuận','Ho Chi Minh City'],
+    cities: ['Lao Cai','Hanoi','Thanh Hoa','Vinh','Da Nang','Hoi An','Kon Tum','Pleiku','Buon Ma Thuot','Da Lat','Mui Ne','Ho Chi Minh']},
+  'Laos':       {flag:'🇱🇦', total:18, unit:'provinces', days:'173d',
+    areas:  ['Phongsali','Oudomxay','Luang Prabang','Sainyabuli','Vientiane','Bolikhamsai','Khammouane','Salavan','Champasak','Attapeu'],
+    cities: ['Phongsali','Udomxai','Luang Prabang','Sayaboury','Vientiane','Lak Sao','Thakhek','Salavan','Paksong','Pakse','Attapeu']},
+  'Thailand':   {flag:'🇹🇭', total:77, unit:'provinces', days:'395d',
+    areas:  ['Mae Hong Son','Chiang Mai','Udon Thani','Khon Kaen','Nakhon Ratchasima','Bangkok'],
+    cities: ['Mae Hong Son','Chiang Mai','Udon Thani','Khon Kaen','Nakhon Ratchasima','Bangkok']},
+  'Myanmar':    {flag:'🇲🇲', total:14, unit:'states/regions', days:'5d',
+    areas:  ['Shan'],
+    cities: ['Kengtung','Tachileik']},
+  'Malaysia':   {flag:'🇲🇾', total:16, unit:'states', days:'36d',
+    areas:  ['Sabah','Penang','Kuala Lumpur','Malacca'],
+    cities: ['Kota Kinabalu','George Town','Kuala Lumpur','Melaka']},
+  'Singapore':  {flag:'🇸🇬', total:5,  unit:'regions', days:'6d',
+    areas:  ['Central','East'],
+    cities: ['Singapore']},
+  'Brunei':     {flag:'🇧🇳', total:4,  unit:'districts', days:'2d',
+    areas:  ['Brunei-Muara'],
+    cities: ['Bandar Seri Begawan']},
+  'Indonesia':  {flag:'🇮🇩', total:38, unit:'provinces', days:'15d',
+    areas:  ['Jakarta'],
+    cities: ['Jakarta']},
+  'Philippines':{flag:'🇵🇭', total:82, unit:'provinces', days:'36d',
+    areas:  ['Metro Manila','Zambales'],
+    cities: ['Manila','Olongapo']},
+  'Bangladesh': {flag:'🇧🇩', total:8,  unit:'divisions', days:'33d',
+    areas:  ['Dhaka','Chittagong'],
+    cities: ['Dhaka',"Cox's Bazar"]},
+  'India':      {flag:'🇮🇳', total:36, unit:'states/UTs', days:'42d',
+    areas:  ['Assam','Nagaland','Meghalaya','West Bengal','Uttar Pradesh','Rajasthan','Delhi'],
+    cities: ['Dibrugarh','Dimapur','Guwahati','Shillong','Jaigaon','Darjeeling','Siliguri','Kolkata','Varanasi','Jaipur','New Delhi']},
+  'Canada':     {flag:'🇨🇦', total:13, unit:'provinces', days:'3d',
+    areas:  ['Quebec'],
+    cities: ['Montréal']},
+  'Mexico':     {flag:'🇲🇽', total:32, unit:'states', days:'75d',
+    areas:  ['Mexico City'],
+    cities: ['Mexico City']},
+  'USA':        {flag:'🇺🇸', total:50, unit:'states', days:'225d',
+    areas:  ['California'],
+    cities: ['San Francisco']},
+};
+
+/* ── STATS: auto-compute from TRAVEL_DATA ── */
+(function(){
+  const vals = Object.values(TRAVEL_DATA);
+  const countries = vals.length;
+  const cities    = vals.reduce((s, d) => s + d.cities.length, 0);
+  const days      = vals.reduce((s, d) => {
+    const m = String(d.days).match(/(\d+)d/);
+    return s + (m ? parseInt(m[1]) : 0);
+  }, 0);
+  const set = (id, n) => { const el = document.getElementById(id); if(el) el.dataset.target = n; };
+  set('stat-countries', countries);
+  set('stat-cities',    cities);
+  set('stat-days',      days);
 })();
 
 /* ── NAV ── */
@@ -2543,20 +3083,24 @@ document.querySelectorAll('.stat-n[data-target]').forEach(el => statIO.observe(e
 /* ── HOLOGRAPHIC TILT ── */
 /* ── ABOUT LANG TOGGLE ── */
 function setLang(lang) {
-  const jp = document.getElementById('about-jp');
-  const en = document.getElementById('about-en');
-  const btnJp = document.getElementById('btn-jp');
-  const btnEn = document.getElementById('btn-en');
-  if(lang === 'en') {
-    jp.classList.add('hidden');
-    en.classList.remove('hidden');
-    btnJp.classList.remove('active');
-    btnEn.classList.add('active');
-  } else {
-    en.classList.add('hidden');
-    jp.classList.remove('hidden');
-    btnEn.classList.remove('active');
-    btnJp.classList.add('active');
+  const langs = ['jp','en','zh','th','vi','es'];
+  langs.forEach(l => {
+    const el = document.getElementById('about-' + l);
+    const btn = document.getElementById('btn-' + l);
+    if(el) el.classList.toggle('hidden', l !== lang);
+    if(btn) btn.classList.toggle('active', l === lang);
+  });
+  /* Re-trigger word-reveal on the newly shown tab */
+  const active = document.getElementById('about-' + lang);
+  if(active) {
+    const wr = active.querySelector('.word-reveal');
+    if(wr) {
+      wr.classList.remove('visible');
+      wr.querySelectorAll('.word span').forEach((s, idx) => {
+        s.style.transitionDelay = (idx * .18) + 's';
+      });
+      setTimeout(() => wr.classList.add('visible'), 60);
+    }
   }
 }
 
@@ -2598,6 +3142,7 @@ applyHolo(document.querySelectorAll('.card'), 14);
 /* ── JOURNEY FLAVOR POPUP ── */
 (function(){
   const popup = document.getElementById('jc-popup');
+  if(!popup) return;
   const pflag = document.getElementById('jc-popup-flag');
   const pname = document.getElementById('jc-popup-name');
   const ptext = document.getElementById('jc-popup-text');
@@ -2632,7 +3177,7 @@ applyHolo(document.querySelectorAll('.card'), 14);
   /* --- Area ticker scroll --- */
   const ticker = document.getElementById('rpg-ticker');
   if(ticker){
-    const BASE = '▸ Japan → Thailand → Laos → Vietnam → China → India → Bangladesh → Myanmar → Malaysia → Singapore → Brunei → Indonesia → Philippines → Korea → Taiwan → Hong Kong → Macau → Mexico → USA → Canada ▸ ';
+    const BASE = '▸ ' + Object.keys(TRAVEL_DATA).join(' → ') + ' ▸ ';
     ticker.textContent = BASE + BASE;
     let x = 0;
     const speed = 0.4;
@@ -2660,16 +3205,12 @@ applyHolo(document.querySelectorAll('.card'), 14);
   const dialogEl = document.getElementById('rpg-dialog-text');
   if(dialogEl){
     const pages = [
-      'リアルRPGをやってる。\nフィールドを渡り歩き、\n異国の言葉で民と語らう。',
+      'リアルRPGをやってる。\nフィールドを渡り歩き、\n異国のコトバで語らう。',
       'クエストは、自分で決める。\n目的地も、帰還時期も。\nノーマップで動く。',
-      '経験値は、失敗からしか入らない。\nバスを逃した日の方が、覚えてる。',
-      'セーブポイントはない。\nでも、巻き戻したい日も、ほぼない。',
-      'ステータス画面を開いたことがない。\nでも、レベルは上がってると思う。',
-      'NPCに話しかけると、だいたい飯をおごられる。\nこれがリアルRPGの醍醐味。',
-      'ラスボスがいない。\nだから終わらない。',
-      '異世界が好きだから、リアルで転生した。\n気づいたら、知らない国にいた。',
-      '転生先を、自分で選べる。\nそれだけで、十分すぎる。',
-      '異世界に行くのに、召喚は要らない。\nチケットだけあればいい。'
+      'NPCに話しかけると、\n酒をもらえることがある。\nこれがリアルRPGの醍醐味。',
+      '異世界が好きだから、\nリアルで転移した。\n気づいたら、知らない町にいた。',
+      '召喚は要らない。\nチケットだけあればいい。',
+      'ラスボスがいない。\nだから終わらない。'
     ];
     let idx = 0;
     let timer = null;
@@ -2708,256 +3249,12 @@ applyHolo(document.querySelectorAll('.card'), 14);
   }
 })();
 
-/* ── RPG WALKER JS ── */
-(function(){
-  const canvas = document.getElementById('rpg-walker-canvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const S = 5; // scale: 5px per dot
 
-  // Color palette
-  const C = {
-    '.': null,
-    'H': '#1a0a02',  // hair
-    'S': '#f0c090',  // skin
-    'G': '#3a6642',  // green shirt (matches site)
-    'B': '#1e2d40',  // pants
-    'D': '#0d0d0d',  // shoes
-    'K': '#9a6e10',  // backpack (gold)
-    'k': '#c8921a',  // backpack highlight
-  };
-
-  // 8 wide × 13 tall, 4 walk frames
-  const FRAMES = [
-    // Frame 0: right foot forward
-    ['..HHH...',
-     '.HSSSH..',
-     '.HSSSH..',
-     '..GGG.K.',
-     '.GGGGGk.',
-     '.GGGGG..',
-     '.GGGGG..',
-     '..BBBB..',
-     '.BB..BB.',
-     '.BB..B..',
-     'DD......',
-     '.....BB.',
-     '.....DD.'],
-    // Frame 1: passing
-    ['..HHH...',
-     '.HSSSH..',
-     '.HSSSH..',
-     '..GGG.K.',
-     '.GGGGGk.',
-     '.GGGGG..',
-     '.GGGGG..',
-     '..BBBB..',
-     '..BBBB..',
-     '..BB....',
-     '..DDDD..',
-     '........',
-     '........'],
-    // Frame 2: left foot forward
-    ['..HHH...',
-     '.HSSSH..',
-     '.HSSSH..',
-     '..GGG.K.',
-     '.GGGGGk.',
-     '.GGGGG..',
-     '.GGGGG..',
-     '..BBBB..',
-     '.BB..BB.',
-     '....BB..',
-     '....DD..',
-     '.BB.....',
-     '.DD.....'],
-    // Frame 3: passing (mirror of 1)
-    ['..HHH...',
-     '.HSSSH..',
-     '.HSSSH..',
-     '..GGG.K.',
-     '.GGGGGk.',
-     '.GGGGG..',
-     '.GGGGG..',
-     '..BBBB..',
-     '..BBBB..',
-     '..BB....',
-     '..DDDD..',
-     '........',
-     '........'],
-  ];
-
-  const CW = 8, CH = 13;
-  const PW = CW * S, PH = CH * S;
-
-  function drawFrame(f, px, py) {
-    FRAMES[f].forEach((row, r) => {
-      for(let c = 0; c < row.length; c++){
-        const col = C[row[c]];
-        if(!col) continue;
-        ctx.fillStyle = col;
-        ctx.fillRect(px + c * S, py + r * S, S, S);
-      }
-    });
-  }
-
-  let x = -PW;
-  let frame = 0;
-  let lastStep = 0;
-  let lastTs = 0;
-  let running = false;
-  const SPEED = 60;    // px per second
-  const STEP_MS = 160; // ms per frame
-
-  function resize() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = PH + S * 2;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function tick(ts) {
-    if(!running) return;
-    const dt = (ts - (lastTs || ts)) / 1000;
-    lastTs = ts;
-
-    x += SPEED * dt;
-    if(x > canvas.width) x = -PW;
-
-    if(ts - lastStep > STEP_MS){ frame = (frame + 1) % 4; lastStep = ts; }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // ground
-    ctx.fillStyle = 'rgba(200,146,42,0.12)';
-    ctx.fillRect(0, PH, canvas.width, 1);
-
-    // faint shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.2)';
-    ctx.beginPath();
-    ctx.ellipse(x + PW/2, PH + 1, PW * 0.4, 2, 0, 0, Math.PI*2);
-    ctx.fill();
-
-    drawFrame(frame, Math.round(x), S);
-    requestAnimationFrame(tick);
-  }
-
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting && !running){ running = true; requestAnimationFrame(tick); }
-      else if(!e.isIntersecting){ running = false; }
-    });
-  }, {threshold: 0.1});
-  obs.observe(canvas.closest('#rpg-walker') || canvas);
-})();
-
-/* ── PIXEL TRAVELER (walk left↔right + blink + wave) ── */
-(function(){
-  const canvas = document.getElementById('traveler-canvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const S = 5;
-  const CW = 12, CH = 14;
-  const PW = CW * S, PH = CH * S;
-
-  const C = {
-    '.': null,
-    'H': '#d4b870', 'h': '#b89840',
-    'S': '#f0c090', 'O': '#222222', 'N': '#e07060',
-    'G': '#3a6642', 'K': '#c8921a', 'k': '#9a6e10',
-    'B': '#1e2d40', 'D': '#111111',
-  };
-
-  const BASE = [
-    '....HHHH....',
-    '...HHHHHH...',
-    '..hHHHHHHh..',
-    '...SSSSSS...',
-    null,           // eyes
-    '..SSSSSSSS..',
-    '...SSNNNSS..',
-    null,           // arms
-    '..GKGGGGkG..',
-    '..GGGGGGGG..',
-    '...GGGGGG...',
-    '...BBBBBB...',
-    null,           // legs
-    '..DD....DD..',
-  ];
-
-  const EYES  = { open: '..SSOOSSOOS.', blink: '..SS--SS--S.' };
-  const ARMS  = { idle: '...GGGGGG...', wave:  'GG.GGGGGG...' };
-  const LEGS  = { a: '..BB....BB..', b: '.BBB...BBB.' }; // slight leg swing
-
-  function drawSprite(eyes, arms, legs, px, dir, bobY) {
-    ctx.save();
-    if(dir < 0) {
-      ctx.translate(px + PW, 0);
-      ctx.scale(-1, 1);
-      px = 0;
-    }
-    BASE.forEach((row, r) => {
-      let actual = row;
-      if(r === 4)  actual = eyes;
-      if(r === 7)  actual = arms;
-      if(r === 12) actual = legs;
-      for(let c = 0; c < actual.length; c++){
-        let ch = actual[c];
-        if(ch === '-') ch = 'S';
-        const col = C[ch];
-        if(!col) continue;
-        ctx.fillStyle = col;
-        ctx.fillRect(px + c * S, r * S + bobY, S, S);
-      }
-    });
-    ctx.restore();
-  }
-
-  function resize() {
-    canvas.width = canvas.offsetWidth || 600;
-    canvas.height = PH + S * 2;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  let x = 20;
-  let dir = 1; // 1=right, -1=left
-  const SPEED = 40; // px/s
-  let start = null, lastTs = 0;
-
-  function tick(ts) {
-    if(!start) start = ts;
-    const dt = (ts - (lastTs || ts)) / 1000;
-    lastTs = ts;
-
-    x += SPEED * dir * dt;
-    if(x + PW > canvas.width - 10) { x = canvas.width - PW - 10; dir = -1; }
-    if(x < 10) { x = 10; dir = 1; }
-
-    const bob  = Math.round(Math.sin((ts - start) / 500) * 2);
-    const t    = (ts - start) % 4000;
-    const eyes = (t >= 1200 && t < 1380) ? EYES.blink : EYES.open;
-    const arms = (t >= 2600 && t < 3500) ? ARMS.wave  : ARMS.idle;
-    const legs = Math.floor((ts - start) / 200) % 2 === 0 ? LEGS.a : LEGS.b;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // ground shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    ctx.beginPath();
-    ctx.ellipse(x + PW/2, PH + 3, PW * 0.35, 2, 0, 0, Math.PI*2);
-    ctx.fill();
-
-    drawSprite(eyes, arms, legs, Math.round(x), dir, bob + S);
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
 
 /* ── PANDA WALKER JS ── */
 (function(){
   const canvas = document.getElementById('panda-canvas');
-  if(!canvas) return;
+  if(!canvas) return; // removed
   const ctx = canvas.getContext('2d');
   const S = 5; // bigger scale = crisper pixels
 
@@ -3181,6 +3478,11 @@ const SFX = (function(){
         setTimeout(()=>tone(1000,0.09,'square',0.09),120);
       }
       if(idx===3) tone(440, 0.28, 'sine', 0.12, 200);      // にげる — 下降
+    },
+    dmgHit() {
+      // RPG hit: sharp attack + descending thud
+      tone(520, 0.04, 'square', 0.13);
+      setTimeout(() => tone(320, 0.28, 'square', 0.10, 80), 30);
     }
   };
 })();
@@ -3296,13 +3598,13 @@ const SFX = (function(){
   const menu   = document.getElementById('enc-menu');
   if(!textEl || !menu) return;
 
-  const ENCOUNTER_TEXT = 'あ！　やせいの\nゲンゴが　とびだしてきた！';
+  const ENCOUNTER_TEXT = 'あ！　やせいの\nコトバが　とびだしてきた！';
 
   const choices = [
     { label: 'A：まねる', response: 'はつおんを　まねした。\nつうじたかも　しれない。' },
-    { label: 'B：きく',   response: 'みみを　かたむけた。\nいみは　わからなかった。\nでも、おとは　おぼえた。' },
+    { label: 'B：きく',   response: 'みみを　かたむけた。\nいみは　わからなかった。' },
     { label: 'C：スマホ', response: 'ほんやくアプリを　あけた。\nでんぱが　なかった。' },
-    { label: 'D：にげる', response: 'にげた。\nでも　つぎの　かどで、\nまた　あらわれた。' },
+    { label: 'D：にげる', response: 'にげられない！\nコトバは　おいかけてくる。' },
   ];
 
   let locked = false;
@@ -3516,6 +3818,384 @@ const SFX = (function(){
   obs.observe(log.closest('.rpgm-wrap') || log);
 })();
 
+/* ── LANGDEX JS ── */
+(function(){
+  const wrap = document.getElementById('rpg-langdex');
+  const list = document.getElementById('langdex-list');
+  if(!wrap || !list) return;
+
+  const LANGS = [
+    ['Japanese / 日本語',       97],
+    ['English / 英語',          89],
+    ['Mandarin / 中国語',       88],
+    ['Thai / タイ語',           69],
+    ['Lao / ラオス語',          64],
+    ['Vietnamese / ベトナム語', 59],
+    ['Spanish / スペイン語',    49],
+    ['Cantonese / 広東語',      31],
+    ['Korean / 韓国語',         24],
+    ['Russian / ロシア語',      17],
+    ['Indonesian / インドネシア語', 9],
+    ['Malay / マレー語',         9],
+    ['Hindi / ヒンディー語',     5],
+    ['Bengali / ベンガル語',     5],
+    ['French / フランス語',      4],
+    ['Tagalog / タガログ語',     3],
+    ['Arabic / アラビア語',      2],
+    ['Burmese / ビルマ語',       1],
+  ];
+
+  list.innerHTML = LANGS.map(([name, val], i) =>
+    `<div class="langdex-row${i < 3 ? ' top' : ''}">`+
+      `<span class="langdex-name">${name}</span>`+
+      `<span class="langdex-lv">Lv.${String(val).padStart(2,' ')}</span>`+
+      `<div class="langdex-track"><div class="langdex-fill" data-val="${val}"></div></div>`+
+    `</div>`
+  ).join('');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        wrap.querySelectorAll('.langdex-fill').forEach(bar => {
+          bar.style.width = bar.dataset.val + '%';
+        });
+        obs.disconnect();
+      }
+    });
+  }, {threshold:0.3});
+  obs.observe(wrap);
+})();
+
+/* ── BOSS CHAOS CANVAS JS ── */
+(function(){
+  const canvas = document.getElementById('boss-chaos');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth  || 400;
+    canvas.height = canvas.offsetHeight || 110;
+  }
+  resize();
+  const W = () => canvas.width, H = () => canvas.height;
+
+  const WORDS = [
+    'भाई','रुपया','अरे',
+    'My Brother!','SPECIAL DISCOUNT!','FREE','NICE',
+    'CHAI?','चाय？',
+    'MY FRIEND','Very very cheap','Very Nice',
+    'NO PROBLEM','₹','!!','BEST DEAL',
+    'Japanese?',
+    'COME COME!','BEST HOTEL!','NO COMMISSION!',
+  ];
+
+  const COUNT = 9;
+  const particles = Array.from({length: COUNT}, () => makeParticle(true));
+
+  function makeParticle(immediate) {
+    const w = WORDS[Math.floor(Math.random() * WORDS.length)];
+    const isHindi  = /[अ-ॿ]/.test(w);
+    const isSymbol = w === '₹' || w === '!!';
+    const cw = W(), ch = H();
+    return {
+      word:  w,
+      x:     10 + Math.random() * (cw - 20),
+      y:     8  + Math.random() * (ch - 16),
+      alpha: immediate ? Math.random() * 0.6 : 0,
+      target: 0.4 + Math.random() * 0.3,
+      state: immediate ? (Math.random() > 0.5 ? 'hold' : 'in') : 'in',
+      holdTime: 0,
+      holdMax:  80 + Math.random() * 100,
+      speed:  0.010 + Math.random() * 0.014,
+      vx:    (Math.random() - 0.5) * 0.12,
+      vy:    (Math.random() - 0.5) * 0.08,
+      size:  isSymbol ? 20 + Math.random() * 12
+           : isHindi  ? 15 + Math.random() * 9
+                      : 12 + Math.random() * 8,
+      hue: isSymbol ? [255,200,60] : isHindi ? [220,100,60] : [200,146,42],
+    };
+  }
+
+  function draw(ts) {
+    const cw = W(), ch = H();
+    ctx.clearRect(0, 0, cw, ch);
+
+    particles.forEach((p, i) => {
+      if(p.state === 'in') {
+        p.alpha += p.speed;
+        if(p.alpha >= p.target) { p.alpha = p.target; p.state = 'hold'; p.holdTime = 0; }
+      } else if(p.state === 'hold') {
+        p.holdTime++;
+        p.alpha = p.target + Math.sin(ts / 700 + i) * 0.06;
+        if(p.holdTime > p.holdMax) p.state = 'out';
+      } else if(p.state === 'out') {
+        p.alpha -= p.speed * 1.2;
+        if(p.alpha <= 0) { particles[i] = makeParticle(false); return; }
+      }
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 4 || p.x > cw - 4) p.vx *= -1;
+      if(p.y < 4 || p.y > ch - 4) p.vy *= -1;
+
+      const [r,g,b] = p.hue;
+      ctx.font = `${p.size}px "Courier New",serif`;
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.max(0, p.alpha)})`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(p.word, p.x, p.y);
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+})();
+
+/* ── BOSS BATTLE JS ── */
+(function(){
+  const wrap = document.getElementById('rpg-boss');
+  if(!wrap) return;
+
+  const MAX_HP = 3000;
+  const MIN_HP = 750; // HP=0 threshold
+  let currentHP   = MAX_HP;
+  let priceHist   = [3000];
+  let roundIdx    = 0;
+  let locked      = false;
+  let triggered   = false;
+  let twTimer     = null;
+
+  // Round data: each round has 4 choices
+  // dmg: HP reduction; isDefeat/isVictory: end conditions; isWeak: red styling
+  const ROUNDS = [
+    { // Round 0 — first contact
+      choices: [
+        { label:'A：「₹3000は高い。もっと安くなる？」', dmg:500,
+          reply:'ん？　たかい？\nじゃあ　₹2500！\nフリーコーヒーも　つけるよ！' },
+        { label:'B：「隣の宿は₹1500だったよ」', dmg:1500, isWeak:true,
+          reply:'……わかった。\nじゃあ　₹1500でどうだ？\nラストプライスだ！' },
+        { label:'C：「ちょっと考える……」', dmg:100,
+          reply:'うちのホテルが　このあたりで　ベストだよ？\nこのチャンス　のがしていいのかい？' },
+        { label:'D：チェックイン', dmg:0, isDefeat:true,
+          reply:'ベリーナイス！\nペイメント　プリーズ！　₹3000！' },
+      ]
+    },
+    { // Round 1 — mid negotiation
+      choices: [
+        { label:'A：「まだ高い」', dmg:300,
+          reply:'わかった！\nフリーブレックファストも　つける！\nこれでどうだ？' },
+        { label:'B：「もう一軒　確認してくる」', dmg:600, isWeak:true,
+          reply:'まってくれ！！\nどこにいくんだ！！\nわかった　わかった！\nもっと　まけるよ！' },
+        { label:'C：「₹750にしてくれ」', dmg:400,
+          reply:'₹750！？　それは　ムリだよ！\n……ブラザーは　いくらなら　いいんだ？　言ってくれ。' },
+        { label:'D：「もういい、やめる」', dmg:700, isWeak:true,
+          reply:'まってくれ！！　まってくれ！！\nわかった！　もっと　まける！\nいくらなら　いいんだい？！' },
+      ]
+    },
+    { // Round 2 — final
+      choices: [
+        { label:'A：電卓で「750」と　うちつづける', dmg:9999, isVictory:true, price:750,
+          reply:'……　わかった。\n₹750で　いい。\nはやく　チェックインしてくれ。' },
+        { label:'B：「₹900は　どう？」', dmg:9999, isVictory:true, price:900,
+          reply:'₹900！　センキュー！\nナイスゲストだ！' },
+        { label:'C：「もう　いくらでも　いいや」', dmg:0, isDefeat:true,
+          reply:'ベリーナイス！\nペイメント　プリーズ！　₹3000！' },
+        { label:'D：となりの　ホテルにする', dmg:9999, isVictory:true, price:750,
+          reply:'まって！！　₹750！！\n₹750で　いい！！！\nマイブラザー！！！' },
+      ]
+    },
+  ];
+
+  const INTRO = 'ヘイ！　マイブラザー！　とまるところを　さがしているのかい？\nうちのホテルは　ベリーベリーナイスだよ。\nジャパンからきてくれたから　スペシャルプライス　₹3000！';
+
+  /* ── helpers ── */
+  const dialogEl  = () => document.getElementById('boss-dialog-text');
+  const hpFillEl  = () => document.getElementById('boss-hp-fill');
+  const hpValEl   = () => document.getElementById('boss-hp-val');
+  const choicesEl = () => document.getElementById('boss-choices');
+
+  function snapPrice(hp) {
+    const pts = [3000,2500,2000,1700,1500,1200,1000,800,750];
+    return pts.find(p => p <= hp) || 750;
+  }
+
+  function renderHP(hp) {
+    const fill = hpFillEl(), val = hpValEl();
+    if(!fill || !val) return;
+    fill.style.width = Math.max(0, (hp - MIN_HP) / (MAX_HP - MIN_HP) * 100).toFixed(1) + '%';
+    val.textContent  = '₹' + hp;
+  }
+
+  function renderPrices() { /* prices display removed */ }
+
+  function typewrite(text, cb) {
+    const el = dialogEl(); if(!el) return;
+    if(twTimer) clearTimeout(twTimer);
+    el.innerHTML = '';
+    let i = 0;
+    const chars = text.split('');
+    function next() {
+      if(i >= chars.length) { if(cb) cb(); return; }
+      const c = chars[i++];
+      if(c === '\n') el.appendChild(document.createElement('br'));
+      else el.appendChild(document.createTextNode(c));
+      if(c !== '　') SFX.typeClick();
+      twTimer = setTimeout(next, c === '！' || c === '。' || c === '…' ? 130 : 55);
+    }
+    next();
+  }
+
+  function showMenu() {
+    const round = ROUNDS[roundIdx];
+    if(!round) return;
+    const ch = choicesEl(); if(!ch) return;
+    ch.querySelectorAll('.boss-choice').forEach((btn, i) => {
+      const c = round.choices[i];
+      btn.textContent = (i === 0 ? '▶ ' : '　 ') + c.label;
+      btn.className = 'boss-choice' + (c.isWeak ? ' weak' : '');
+      btn.dataset.idx = i;
+    });
+    ch.classList.add('visible');
+    locked = false;
+  }
+
+  function hideMenu() {
+    const ch = choicesEl(); if(ch) ch.classList.remove('visible');
+  }
+
+  function handleChoice(idx) {
+    if(locked) return;
+    locked = true;
+    SFX.select();
+
+    const round  = ROUNDS[roundIdx];
+    const choice = round.choices[idx];
+
+    // dim all buttons
+    choicesEl().querySelectorAll('.boss-choice').forEach((b, i) => {
+      b.classList.add('selected');
+      if(i === idx) b.classList.remove('selected'); // keep picked one briefly
+    });
+
+    setTimeout(() => {
+      hideMenu();
+      if(choice.isDefeat) {
+        // defeat: no HP change
+        typewrite(choice.reply, () => {
+          setTimeout(() => showEnding(false), 1500);
+        });
+        return;
+      }
+      if(choice.isVictory) {
+        const finalPrice = choice.price ?? snapPrice(currentHP);
+        currentHP = finalPrice;
+        SFX.dmgHit();
+        renderHP(currentHP);
+        if(priceHist[priceHist.length-1] !== currentHP) {
+          priceHist.push(currentHP);
+          renderPrices();
+        }
+        if(choice.isWeak) SFX.response(0); else SFX.response(1);
+        typewrite(choice.reply, () => {
+          setTimeout(() => showEnding(true, finalPrice), 1500);
+        });
+        return;
+      }
+
+      // normal damage
+      const newHP = Math.max(750, currentHP - choice.dmg);
+      currentHP = snapPrice(newHP);
+      if(priceHist[priceHist.length-1] !== currentHP) {
+        priceHist.push(currentHP);
+      }
+      SFX.dmgHit();
+      renderHP(currentHP);
+      renderPrices();
+      if(choice.isWeak) {
+        SFX.response(0); // rising — big hit
+        // flash HP red momentarily
+        const fill = hpFillEl();
+        if(fill) { fill.style.background='rgba(255,80,80,0.9)'; setTimeout(()=>fill.style.background='',600); }
+      } else {
+        SFX.response(1);
+      }
+
+      typewrite(choice.reply, () => {
+        roundIdx++;
+        if(roundIdx >= ROUNDS.length) {
+          setTimeout(() => showEnding(true, snapPrice(currentHP)), 1500);
+        } else {
+          setTimeout(showMenu, 900);
+        }
+      });
+    }, 250);
+  }
+
+  function showEnding(isVictory, finalPrice) {
+    const ch = choicesEl(); if(!ch) return;
+    // show replay button only
+    ch.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:.4rem 0">
+      <button class="boss-replay-btn" onclick="resetBoss()">▶ REPLAY</button>
+    </div>`;
+    ch.classList.add('visible');
+
+    if(isVictory) {
+      const exp = 1015 - finalPrice;
+      SFX.encounter();
+      typewrite(
+        `インドの客引きニキは　こうさんした！\n${exp}の　けいけんちを　もらった！`,
+        null
+      );
+    } else {
+      typewrite('ゲームオーバー\n₹3000の　やどに　とまることに　なった……', null);
+    }
+  }
+
+  window.resetBoss = function resetBoss() {
+    currentHP = MAX_HP;
+    priceHist = [3000];
+    roundIdx  = 0;
+    locked    = false;
+    renderHP(MAX_HP);
+    // restore buttons
+    const ch = choicesEl();
+    if(ch) {
+      ch.classList.remove('visible');
+      ch.innerHTML =
+        '<button class="boss-choice" data-idx="0">　 A：</button>' +
+        '<button class="boss-choice" data-idx="1">　 B：</button>' +
+        '<button class="boss-choice" data-idx="2">　 C：</button>' +
+        '<button class="boss-choice" data-idx="3">　 D：</button>';
+      initListeners();
+    }
+    setTimeout(() => typewrite(INTRO, () => setTimeout(showMenu, 600)), 200);
+  }
+
+  // attach listeners (called on init and after reset)
+  function initListeners() {
+    const ch = choicesEl(); if(!ch) return;
+    ch.querySelectorAll('.boss-choice').forEach(btn => {
+      btn.addEventListener('mouseenter', () => { if(!locked) SFX.hover(); });
+      btn.addEventListener('click', () => handleChoice(parseInt(btn.dataset.idx)));
+    });
+  }
+  initListeners();
+
+  function startBoss() {
+    renderHP(MAX_HP);
+    SFX.encounter();
+    setTimeout(() => typewrite(INTRO, () => setTimeout(showMenu, 600)), 400);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting && !triggered) {
+      triggered = true;
+      obs.disconnect();
+      startBoss();
+    }
+  }, {threshold: 0.25});
+  obs.observe(wrap);
+})();
+
 /* ── TRAVEL MAP JS ── */
 (function(){
   const canvas = document.getElementById('tmap-canvas');
@@ -3536,111 +4216,181 @@ const SFX = (function(){
   }
 
   /* Simplified world land polygons */
-  const LANDS = [
-    // Japan Honshu+Kyushu
-    [[130.3,31.2],[131.6,31.5],[131.9,33],[132.5,33.5],[133,33.7],[134.6,35],[135.4,34.7],
-     [136.9,34.8],[137.6,34.7],[138.2,35.1],[139.5,35.5],[139.8,36.5],[140.5,38.3],
-     [141.1,39.6],[141.5,40.9],[140.1,40.8],[139.4,38.5],[137.2,37],[136,35.7],
-     [135.2,35.6],[134.5,35.5],[133.5,34.5],[132.4,33.9],[131,31.9],[130.3,31.2]],
-    // Hokkaido
-    [[141,41],[142,43],[143.5,44],[144.5,44],[145,43.5],[144.5,43],[143,42],[141.5,41.5],[141,41]],
-    // Korea
-    [[126.1,34.7],[127.9,34.9],[128.8,35.1],[129.4,36.5],[129.4,37.5],[127.7,37.7],
-     [126.7,37.7],[126.2,37.3],[126.6,36.4],[126,35],[126.1,34.7]],
-    // Taiwan
-    [[120.1,22],[121.5,22.6],[121.9,24.2],[121.6,25.3],[120.8,25],[120.2,23.5],[120.1,22]],
-    // SE Asia + Indochina
-    [[100.5,5.6],[100.5,8],[100,9.5],[99.5,11],[100,13],[100.1,14],[99.3,14.5],
-     [98.5,15.5],[98,16.5],[98,18],[97.6,19.5],[98.5,20],[100,21],[100.8,22.5],
-     [101.5,22.2],[102.8,22],[103.9,22.5],[106.5,22.9],[107.5,21.5],[107.8,20.5],
-     [108,19.5],[106.8,19],[106.5,17.5],[107.3,16.5],[108.5,15.5],[109,14],
-     [108,12.5],[107,11],[106.5,10.5],[106.8,9.5],[105.5,9],[104.5,10.3],
-     [103.5,10],[102.5,10],[101,6],[100.5,5.6]],
-    // Malay Peninsula
-    [[100.5,5.6],[101.2,2.8],[103.7,1.2],[104,1.4],[103.5,2.5],[102,3.8],[100.5,5.6]],
-    // India
-    [[66.5,23],[68.5,22],[72,20.5],[73,19],[72.8,17],[72.5,15.5],[73.5,14.5],
-     [75,12],[76.5,10],[77.5,8],[79.5,9],[80.5,10],[82,11.5],[80.5,13],
-     [80.2,16.5],[81,19.5],[82.5,21],[85,21.5],[87,21.5],[88.5,22],[90.5,22.5],
-     [91.5,22],[92,24],[91.5,25],[89.5,26],[87,26.5],[84,28],[81,30],
-     [79,31.5],[76.5,31.5],[73.5,32],[70,28],[67.5,25],[66.5,23]],
-    // Sri Lanka
+  const LANDS_UNUSED = true; // removed — constellation style
+  if(false){ const LANDS = [
+    // ── Japan: Honshu ──
+    [[130.9,33.9],[131.3,33.8],[131.7,34.0],[132.1,33.9],[132.5,33.7],
+     [133.0,33.8],[133.4,33.8],[133.8,33.7],[134.2,33.5],[134.6,33.5],
+     [135.0,33.7],[135.2,34.1],[135.5,34.7],[135.4,34.9],[135.7,34.7],
+     [136.2,34.7],[136.7,34.6],[137.1,34.7],[137.4,34.7],[137.7,34.8],
+     [138.1,35.0],[138.3,35.2],[138.7,35.1],[139.0,35.1],[139.5,35.2],
+     [139.8,35.5],[140.0,35.6],[140.3,35.7],[140.8,35.4],[141.0,36.0],
+     [141.2,37.0],[141.2,38.3],[141.4,39.1],[141.6,39.7],[141.8,40.5],
+     [141.5,41.1],[141.3,41.5],[140.9,41.2],[140.5,40.7],[140.0,40.5],
+     [139.7,39.5],[139.5,38.5],[139.0,38.0],[138.5,37.5],[138.0,37.2],
+     [137.5,37.0],[137.1,37.3],[136.9,37.1],[136.5,36.8],[136.2,36.3],
+     [135.4,36.0],[134.7,35.6],[134.2,35.5],[133.7,35.2],[133.2,35.1],
+     [132.6,35.0],[132.0,34.8],[131.5,34.3],[131.2,34.0],[130.9,33.9]],
+    // ── Japan: Shikoku ──
+    [[133.0,33.5],[133.5,33.7],[134.0,34.1],[134.5,34.1],[135.0,33.9],
+     [134.9,33.4],[134.5,33.1],[133.8,32.9],[133.0,33.2],[133.0,33.5]],
+    // ── Japan: Kyushu ──
+    [[130.2,31.1],[130.7,31.4],[131.2,31.6],[131.5,31.9],[132.0,32.4],
+     [132.4,32.9],[132.6,33.3],[132.2,33.5],[131.6,33.5],[130.9,33.1],
+     [130.3,32.5],[130.0,31.9],[130.2,31.1]],
+    // ── Japan: Hokkaido ──
+    [[141.1,41.3],[141.5,41.8],[141.8,42.5],[142.2,43.1],[142.7,43.5],
+     [143.2,43.8],[143.8,44.2],[144.5,44.2],[145.2,44.0],[145.8,43.8],
+     [145.4,43.2],[144.5,43.0],[143.5,42.8],[142.5,42.0],[141.8,41.6],
+     [141.1,41.3]],
+    // ── Japan: Okinawa ──
+    [[126.5,26.0],[127.0,26.2],[127.7,26.3],[128.3,26.6],[128.3,26.4],
+     [127.5,26.1],[126.8,25.9],[126.5,26.0]],
+    // ── Korea ──
+    [[124.8,37.8],[125.2,37.5],[125.7,37.1],[126.1,36.7],[126.2,36.2],
+     [126.5,35.9],[126.6,35.4],[127.0,35.0],[127.5,34.9],[128.0,34.9],
+     [128.5,35.0],[129.1,35.5],[129.5,36.3],[129.5,37.0],[129.4,37.5],
+     [129.0,38.0],[128.5,38.4],[128.0,38.2],[127.5,37.8],[127.0,37.7],
+     [126.7,37.7],[126.2,37.3],[125.7,36.8],[125.4,36.4],[125.2,37.0],
+     [124.8,37.8]],
+    // ── Taiwan ──
+    [[120.6,22.0],[121.0,22.1],[121.5,22.5],[121.9,23.1],[122.0,23.8],
+     [121.9,24.3],[121.7,24.8],[121.5,25.1],[121.0,25.1],[120.7,24.8],
+     [120.3,24.0],[120.1,23.0],[120.3,22.5],[120.6,22.0]],
+    // ── Hainan ──
+    [[109.0,19.2],[109.5,19.0],[110.0,19.2],[110.5,19.7],[110.5,20.2],
+     [110.0,20.3],[109.5,20.1],[109.0,19.8],[109.0,19.2]],
+    // ── China + Mongolia ──
+    [[114.2,22.2],[115.0,22.7],[116.0,23.2],[117.0,23.5],[118.0,24.5],
+     [119.0,25.5],[119.5,26.5],[120.0,27.5],[120.8,28.5],[121.0,28.8],
+     [121.5,30.0],[121.9,30.9],[121.9,31.5],[121.2,31.8],[121.0,32.3],
+     [120.5,33.0],[120.0,33.5],[119.5,34.2],[119.5,35.0],[120.2,36.0],
+     [121.2,37.0],[121.5,37.5],[121.5,38.5],[121.0,39.5],[121.5,40.5],
+     [122.0,41.5],[123.5,41.5],[124.5,40.5],[126.0,40.0],[127.0,42.0],
+     [128.5,43.0],[130.5,44.5],[128.5,46.5],[126.0,47.0],[123.0,48.0],
+     [120.0,49.5],[116.0,48.5],[113.0,48.0],[110.0,48.0],[107.0,47.5],
+     [105.0,48.0],[100.5,49.5],[95.0,50.0],[90.0,50.0],[87.0,49.0],
+     [83.0,47.0],[80.0,44.0],[76.0,40.0],[74.0,38.5],[76.5,34.0],
+     [79.0,31.5],[81.0,30.0],[84.0,28.0],[87.0,28.0],[89.0,28.5],
+     [91.5,27.5],[95.0,27.0],[97.5,24.5],[98.5,23.5],[99.0,22.0],
+     [100.5,21.5],[104.0,22.5],[106.5,22.5],[108.0,21.0],[109.5,20.0],
+     [110.0,20.5],[112.0,21.5],[113.5,22.0],[114.2,22.2]],
+    // ── SE Asia / Indochina ──
+    [[100.5,5.6],[100.5,6.5],[100.5,8.0],[100.0,9.0],[99.5,9.8],
+     [99.5,11.0],[99.8,12.0],[99.8,13.0],[100.0,14.0],[99.3,14.5],
+     [98.8,15.0],[98.5,15.5],[98.0,16.5],[98.0,17.5],[97.5,18.5],
+     [97.5,19.5],[97.8,20.0],[98.0,20.5],[98.5,21.0],[99.0,22.0],
+     [100.5,21.5],[101.5,22.2],[102.8,22.0],[103.9,22.5],[104.5,22.7],
+     [106.5,22.9],[107.0,22.0],[107.5,21.5],[107.8,20.5],[108.0,19.5],
+     [107.0,19.0],[106.8,19.0],[106.5,17.5],[107.3,16.5],[108.0,16.0],
+     [108.5,15.5],[109.0,14.0],[108.5,13.5],[108.0,12.5],[107.5,11.5],
+     [107.0,11.0],[106.8,10.5],[106.5,10.5],[106.8,9.5],[106.5,9.0],
+     [105.5,9.0],[105.0,9.5],[104.5,10.3],[104.0,10.5],[103.5,10.0],
+     [103.0,9.0],[102.5,8.5],[102.0,7.5],[101.5,6.5],[101.0,6.0],
+     [100.5,5.6]],
+    // ── Malay Peninsula ──
+    [[100.5,5.6],[101.0,5.0],[101.5,4.5],[102.0,4.0],[102.5,3.5],
+     [103.0,2.8],[103.5,2.0],[103.7,1.2],[104.0,1.4],[104.3,2.0],
+     [103.8,2.8],[103.3,3.2],[102.5,4.0],[101.8,4.5],[101.0,5.0],
+     [100.5,5.6]],
+    // ── India ──
+    [[66.5,23],[68.5,22],[70.5,21],[72.0,20.5],[73.0,19],[72.8,17],
+     [72.5,15.5],[73.5,14.5],[74.5,13],[75,12],[76.5,10],[77.5,8],
+     [78.5,8.5],[79.5,9],[80.5,10],[81.5,11],[82,11.5],[80.5,13],
+     [80.2,16.5],[81,19.5],[82.5,21],[85,21.5],[87,21.5],[88.5,22],
+     [90.5,22.5],[91.5,22],[92,24],[91.5,25],[89.5,26],[87,26.5],
+     [84,28],[81,30],[79,31.5],[76.5,31.5],[74.5,31],[73.5,32],
+     [71,28],[70,26],[67.5,25],[66.5,23]],
+    // ── Sri Lanka ──
     [[79.8,7],[80.7,7.5],[81.9,9],[80.5,9.8],[79.8,9],[79.8,7]],
-    // Philippines (Luzon)
-    [[118.5,9.5],[120,10],[122,11.5],[124,11],[123.5,10],[122.5,9.5],
-     [122,8],[121.5,7.5],[120.5,8],[119.5,8.5],[118.5,9.5]],
-    // Borneo
-    [[108.1,0.8],[110.3,1.1],[113.3,1.5],[115.5,2],[117.5,4.2],[118,5.9],
-     [116.5,7.1],[115.3,6.3],[113,4.5],[110.5,3],[108.1,0.8]],
-    // Sumatra
-    [[95.2,5.7],[97.5,4],[99.5,2],[103,0.2],[104.5,0.5],[106,2.5],
-     [102.3,4.5],[100.3,5.6],[96,5.6],[95.2,5.7]],
-    // Java
-    [[105,-7.5],[107,-6.7],[108.5,-6.9],[111,-7],[114,-7.5],[115,-8],
-     [114,-8.3],[110,-7.8],[107,-7.5],[105,-7.5]],
-    // China + Mongolia
-    [[130,42],[128,41],[124,40],[121,40],[120,38],[120,35],[121,32],
-     [121,28],[121,25],[119,23],[117,21],[113,20],[110,20],[110,18],
-     [104,22],[101,22],[98,25],[98,28],[93,28],[89,28],[87,28],[84,28],
-     [80,32],[76,34],[74,37],[73,38],[75,40],[80,44],[83,47],[87,50],
-     [90,50],[95,50],[100,49],[105,48],[110,48],[116,48],[119,50],
-     [123,48],[126,47],[128,47],[134,48],[135,46],[130,42]],
-    // Siberia / Russia Far East
+    // ── Philippines: Luzon ──
+    [[118.5,9.5],[119.2,10.0],[119.8,10.5],[120.5,10.8],[121.0,11.2],
+     [121.5,11.5],[122.2,11.5],[123.5,11.0],[124.0,11.0],[124.5,10.5],
+     [124.0,10.0],[123.5,9.5],[122.5,9.0],[122.0,8.5],[121.5,7.5],
+     [120.8,8.0],[120.2,8.5],[119.5,8.5],[118.8,9.0],[118.5,9.5]],
+    // ── Philippines: Mindanao ──
+    [[123.0,7.8],[123.5,7.5],[124.0,8.0],[125.0,8.5],[125.8,8.5],
+     [126.2,8.0],[127.0,7.5],[127.0,6.5],[126.5,6.0],[125.5,6.0],
+     [125.0,7.0],[124.0,7.5],[123.0,7.0],[122.2,7.0],[122.0,7.5],
+     [122.5,8.0],[123.0,7.8]],
+    // ── Borneo ──
+    [[108.1,0.8],[110.3,1.1],[112.0,1.3],[113.3,1.5],[115.5,2.0],
+     [116.5,3.5],[117.5,4.2],[118.0,5.9],[117.5,6.5],[116.5,7.1],
+     [115.8,6.8],[115.3,6.3],[114.5,5.5],[113.0,4.5],[111.5,3.5],
+     [110.5,3.0],[109.0,1.8],[108.1,0.8]],
+    // ── Sumatra ──
+    [[95.2,5.7],[97.0,4.5],[97.5,4.0],[99.5,2.0],[101.0,1.0],
+     [103.0,0.2],[104.5,0.5],[105.5,1.5],[106.0,2.5],[104.5,3.5],
+     [102.3,4.5],[100.3,5.6],[98.5,5.8],[96.5,5.6],[95.2,5.7]],
+    // ── Java ──
+    [[105.0,-7.5],[107.0,-6.7],[108.5,-6.9],[110.0,-7.0],[111.0,-7.2],
+     [112.0,-7.5],[113.5,-7.8],[114.5,-8.0],[115.0,-8.2],[114.5,-8.5],
+     [112.5,-8.0],[110.5,-7.8],[108.0,-7.5],[106.5,-7.2],[105.0,-7.5]],
+    // ── Siberia / Russia Far East ──
     [[28,70],[50,73],[70,73],[90,73],[110,71],[130,66],[135,63],[133,58],
      [130,53],[134,48],[128,47],[126,47],[123,48],[119,50],[116,48],
      [110,48],[105,48],[100,49],[95,50],[90,50],[87,50],[83,47],[80,44],
      [75,40],[73,38],[70,38],[66,38],[61.5,40],[55,41],[52,41],[51,47],
      [49,52],[51,54],[55,55],[64,54],[73,54],[80,51],[83,47]],
-    // Central Asia
+    // ── Central Asia ──
     [[52,41],[55,41],[61.5,40],[66,38],[70,38],[75,40],[80,42.5],[83,47],
      [80,51],[73,54],[64,54],[55,55],[51,54],[49,52],[51,47],[52,41]],
-    // Arabia
+    // ── Arabia ──
     [[39,22],[42,20],[45,18.5],[50,16.5],[52,17],[55,20],[57,22],[59,24],
      [57.5,25],[56.5,26],[55,29],[50,29.5],[47,29.5],[44.5,29.5],[40.5,29],
      [37,25.5],[37.5,23.5],[39,22]],
-    // Persia/Iran
+    // ── Persia/Iran ──
     [[44,39.5],[47,39.7],[52.5,40],[54,37.5],[57,37.5],[60,37],[63,36.5],
      [62,35],[61.5,33],[61,29],[57,22],[56.5,27.5],[51.5,29.5],[47.5,29.5],
      [46.5,31],[45.5,33.5],[44.5,37.5],[44,39.5]],
-    // Turkey+Caucasus
+    // ── Turkey+Caucasus ──
     [[26,36.5],[27.5,37],[29.5,36.5],[33,36.5],[36.5,36.5],[39,36.7],
      [41.5,38.5],[44,39.5],[44.5,39],[43.5,38.5],[40.5,36.5],[36,36],
      [33.5,35],[30.5,36.5],[27,37.3],[26.5,38.5],[27,40],[28.5,40.8],
      [32,41.5],[36,42],[40.5,40.5],[41.5,40],[41.5,40.5],[37.5,41.5],
      [32,42],[28,41],[26.5,40],[26,40.5],[26,36.5]],
-    // Europe (Iberia→France→Germany→Scandinavia)
+    // ── Europe ──
     [[-8.5,43.5],[-9.5,39],[-6.5,36.5],[-5,36],[-2.5,36.5],[0,37.5],
      [1.5,40.5],[3.5,40.5],[3,42],[0,43.5],[-1.5,46.5],[0.5,47.5],
      [2,50.5],[2.5,51],[3,50],[4.5,49.5],[5.5,49],[7.5,49],[7.5,47.5],
      [6.5,46.5],[5,45.5],[4,43.5],[3,43],[-2,43.5],[-5.5,43.5],[-8.5,43.5]],
-    // Italy
+    // ── Italy ──
     [[7.5,44],[9,44.5],[10.5,43.7],[11.5,42.5],[12.5,41.5],[13.5,40.5],
      [14.5,40.8],[16,41],[15.8,39.8],[15.5,38.5],[15.5,37.5],[14,38.5],
      [10,44],[7.5,44]],
-    // Scandinavia
+    // ── Scandinavia ──
     [[5,58],[7,55],[9,57],[10,58.5],[11.5,58.5],[12,57],[10.5,55.5],[9.5,55.5],
      [12.5,60],[5,62],[7,65],[14,69],[28,70.5],[30,70],[28,68],[22,65.5],
      [22.5,63.5],[25,59.5],[25.5,60.5],[21.5,63.5],[18.5,67],[16.5,69],
      [12,66],[11.5,63],[5,58]],
-    // UK
+    // ── UK ──
     [[-5.5,50],[-2.5,50],[1.5,51.5],[0,53.5],[-2,55],[-5,58.5],[-6,58],
      [-5.5,56],[-3.5,51.5],[-5.5,50]],
-    // Africa (simplified)
+    // ── Africa ──
     [[-17,15],[-14,10],[-10,5],[0,5],[3,6],[8,4],[10,2],[12,0],[15,-5],
      [25,-17],[30,-22],[33,-30],[25,-35],[18,-35],[15,-28],[10,-22],[5,-10],
      [2,-5],[5,4],[8,4],[10,8],[12,14],[15,23],[25,31],[32,31],[38,22],
      [42,17],[45,12],[42,11],[38,8],[30,3],[25,-5],[20,-5],[10,-1],[5,5],
      [0,5],[-5,4],[-10,5],[-15,10],[-17,15]],
-    // North America
+    // ── North America ──
     [[-66,44],[-70,47],[-75,45],[-80,43],[-83,45],[-87,45],[-95,43],
      [-100,43],[-110,43],[-120,39],[-122,37],[-117,32],[-100,19],
      [-88,16],[-80,25],[-81,30],[-80,35],[-75,35],[-72,41],[-70,42],
      [-67,47],[-65,50],[-58,52],[-58,58],[-70,65],[-80,65],[-95,62],
      [-90,58],[-73,60],[-67,62],[-60,63],[-55,58],[-60,47],[-65,47],[-66,44]],
-    // Mexico
+    // ── Mexico ──
     [[-117,32],[-110,25],[-100,18],[-90,15],[-88,16],[-95,20],
      [-100,19],[-104,20],[-110,25],[-117,32]],
-  ];
+    // ── South America ──
+    [[-35,-8],[-38,-15],[-40,-20],[-43,-24],[-48,-28],[-52,-33],[-58,-38],
+     [-62,-42],[-65,-47],[-67,-52],[-70,-54],[-72,-50],[-68,-45],[-66,-42],
+     [-68,-38],[-72,-33],[-72,-25],[-70,-18],[-72,-12],[-70,-5],[-72,-2],
+     [-70,2],[-65,1],[-58,5],[-52,5],[-48,0],[-42,-3],[-35,-8]],
+    // ── Australia ──
+    [[114,-22],[115,-25],[118,-30],[120,-33],[124,-34],[129,-35],[133,-36],
+     [138,-38],[145,-38],[150,-37],[153,-28],[153,-22],[148,-18],[145,-15],
+     [138,-12],[132,-12],[128,-14],[124,-16],[122,-18],[118,-20],[114,-22]],
+  ]; }
 
   /* Route — all 93 cities in travel order */
   const ROUTE = [
@@ -3785,29 +4535,44 @@ const SFX = (function(){
 
   function drawBase(){
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#020804'; ctx.fillRect(0,0,W,H);
-    ctx.lineWidth=0.4;
-    for(let la=-20;la<=75;la+=15){
-      const[,y]=proj(0,la); if(y<-5||y>H+5) continue;
-      ctx.strokeStyle=la===0?'rgba(200,146,42,0.09)':'rgba(200,146,42,0.04)';
-      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    ctx.fillStyle='rgba(2,8,4,0.45)'; ctx.fillRect(0,0,W,H);
+
+    // Fine grid — 10° lines, 30° lines brighter
+    for(let la=-40;la<=80;la+=10){
+      const[,y]=proj(0,la); if(y<-4||y>H+4) continue;
+      const maj=la%30===0, eq=la===0;
+      ctx.lineWidth=eq?0.6:0.3;
+      ctx.strokeStyle=eq?'rgba(200,146,42,0.13)':maj?'rgba(200,146,42,0.07)':'rgba(200,146,42,0.03)';
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
     }
-    for(let lo=-180;lo<=180;lo+=30){
-      const[x]=proj(lo,0); if(x<-5||x>W+5) continue;
-      ctx.strokeStyle='rgba(200,146,42,0.04)';
-      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+    for(let lo=-180;lo<=180;lo+=10){
+      const[x]=proj(lo,0); if(x<-4||x>W+4) continue;
+      const maj=lo%30===0;
+      ctx.lineWidth=0.3;
+      ctx.strokeStyle=maj?'rgba(200,146,42,0.07)':'rgba(200,146,42,0.03)';
+      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
     }
-    ctx.lineWidth=0.65;
-    ctx.strokeStyle='rgba(200,146,42,0.28)';
-    ctx.fillStyle='rgba(200,146,42,0.05)';
-    LANDS.forEach(poly=>{
-      ctx.beginPath();
-      poly.forEach(([lo,la],k)=>{
+
+    // Cross-ticks at 30° intersections
+    ctx.strokeStyle='rgba(200,146,42,0.18)';
+    ctx.lineWidth=0.6;
+    for(let la=-30;la<=60;la+=30){
+      for(let lo=-150;lo<=180;lo+=30){
         const[x,y]=proj(lo,la);
-        k===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-      });
-      ctx.closePath(); ctx.fill(); ctx.stroke();
-    });
+        if(x<0||x>W||y<0||y>H) continue;
+        const s=3;
+        ctx.beginPath(); ctx.moveTo(x-s,y); ctx.lineTo(x+s,y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x,y-s); ctx.lineTo(x,y+s); ctx.stroke();
+      }
+    }
+
+    // Equator label
+    ctx.save();
+    ctx.font='7px "Courier New",monospace';
+    ctx.fillStyle='rgba(200,146,42,0.15)';
+    ctx.textAlign='left';
+    const[,ey]=proj(0,0); if(ey>4&&ey<H-4) ctx.fillText('EQ',4,ey-3);
+    ctx.restore();
   }
 
   function drawFrame(elapsed){
@@ -3836,41 +4601,55 @@ const SFX = (function(){
     const visitedTo=ev.type==='dwell'?i:(i+1);
 
     // trail lines for completed legs
-    ctx.lineWidth=0.7; ctx.strokeStyle='rgba(200,146,42,0.16)';
+    ctx.lineWidth=0.8; ctx.strokeStyle='rgba(200,146,42,0.22)';
     for(let k=0;k<visitedTo&&k<ROUTE.length-1;k++){
       const[x1,y1]=proj(ROUTE[k].lon,ROUTE[k].lat);
       const[x2,y2]=proj(ROUTE[k+1].lon,ROUTE[k+1].lat);
       if(Math.max(x1,x2)<-30||Math.min(x1,x2)>W+30) continue;
       ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();
     }
-    // in-progress travel line
+    // in-progress travel line (bright leading edge)
     if(ev.type==='travel'){
       const eu2=ease(u);
       const[x1,y1]=proj(cur.lon,cur.lat);
       const[x2,y2]=proj(next.lon,next.lat);
-      ctx.lineWidth=1.2; ctx.strokeStyle='rgba(200,146,42,0.55)';
-      ctx.beginPath();ctx.moveTo(x1,y1);
-      ctx.lineTo(lerp(x1,x2,eu2),lerp(y1,y2,eu2));ctx.stroke();
+      const tx=lerp(x1,x2,eu2), ty=lerp(y1,y2,eu2);
+      // soft glow
+      ctx.lineWidth=3; ctx.strokeStyle='rgba(200,146,42,0.12)';
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(tx,ty);ctx.stroke();
+      // crisp line
+      ctx.lineWidth=1.2; ctx.strokeStyle='rgba(200,146,42,0.7)';
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(tx,ty);ctx.stroke();
     }
 
-    // visited dots
+    // visited dots — soft glow + core
     for(let k=0;k<visitedTo;k++){
       const[x,y]=proj(ROUTE[k].lon,ROUTE[k].lat);
       if(x<-10||x>W+10||y<-10||y>H+10) continue;
-      ctx.beginPath();ctx.arc(x,y,1.5,0,Math.PI*2);
-      ctx.fillStyle='rgba(200,146,42,0.38)'; ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);
+      ctx.fillStyle='rgba(200,146,42,0.06)'; ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,1.6,0,Math.PI*2);
+      ctx.fillStyle='rgba(200,146,42,0.5)'; ctx.fill();
     }
 
-    // current city: pulse ring + dot
+    // current city: dual pulse rings + bright dot
     const[cx,cy]=proj(cur.lon,cur.lat);
     if(ev.type==='dwell'){
       const pr=u;
-      ctx.beginPath();ctx.arc(cx,cy,3+pr*6,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(200,146,42,${0.65*(1-pr)})`;
-      ctx.lineWidth=1.5; ctx.stroke();
+      // outer ring fades out
+      ctx.beginPath();ctx.arc(cx,cy,4+pr*9,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(200,146,42,${0.5*(1-pr)})`;
+      ctx.lineWidth=1; ctx.stroke();
+      // inner ring
+      ctx.beginPath();ctx.arc(cx,cy,3+pr*4,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(220,168,65,${0.8*(1-pr*0.5)})`;
+      ctx.lineWidth=1.2; ctx.stroke();
     }
+    // dot glow
+    ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);
+    ctx.fillStyle='rgba(200,146,42,0.08)'; ctx.fill();
     ctx.beginPath();ctx.arc(cx,cy,3.2,0,Math.PI*2);
-    ctx.fillStyle='rgba(220,168,65,0.96)'; ctx.fill();
+    ctx.fillStyle='rgba(220,168,65,0.97)'; ctx.fill();
 
     // HUD: city label bottom-left
     ctx.save();
@@ -3977,10 +4756,99 @@ const SFX = (function(){
   },{threshold:0.2});
   obs.observe(canvas);
 })();
+
+/* ── PREFECTURE TRACKER ── */
+(function(){
+  const grid = document.getElementById('pref-grid');
+  if(!grid) return;
+
+  const parseDays = d => { if(String(d) === 'Origin') return Infinity; const m = String(d).match(/(\d+)d/); return m ? parseInt(m[1]) : 0; };
+  const sorted = Object.entries(TRAVEL_DATA).sort(([,a],[,b]) => parseDays(b.days) - parseDays(a.days));
+
+  sorted.forEach(([country, d]) => {
+    const pct = (d.areas.length / d.total * 100).toFixed(1);
+    const card = document.createElement('div');
+    card.className = 'pref-card';
+    card.innerHTML =
+      `<div class="pref-card-top"><span class="pref-card-flag">${d.flag}</span><span class="pref-card-name">${country}</span><span class="pref-card-days">${String(d.days).replace(/^(\d+)d$/, '$1 days')}</span></div>`+
+      `<div class="pref-card-frac">${d.areas.length} / ${d.total} ${d.unit}</div>`+
+      `<div class="pref-card-bar"><div class="pref-card-fill" style="width:${pct}%"></div></div>`+
+      `<div class="pref-expand"><div class="pref-expand-inner">`+
+        `<div class="pref-tags">${d.areas.map(p=>`<span class="pref-tag">${p}</span>`).join('')}</div>`+
+      `</div></div>`;
+
+    card.addEventListener('click', e => { e.stopPropagation(); card.classList.toggle('open'); });
+    grid.appendChild(card);
+  });
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.pref-card.open').forEach(c => c.classList.remove('open'));
+  });
+})();
+
+/* ── ENDING ROLL ── */
+(function(){
+  const inner = document.getElementById('ending-inner');
+  if (!inner) return;
+
+  const parseDays = d => { if(String(d) === 'Origin') return Infinity; const m = String(d).match(/(\d+)d/); return m ? parseInt(m[1]) : 0; };
+  const sorted = Object.entries(TRAVEL_DATA).sort(([,a],[,b]) => parseDays(b.days) - parseDays(a.days));
+
+  let html = '';
+  sorted.forEach(([country, d]) => {
+    const cityStr = d.cities.map(c => `<span>${c}</span>`).join('<span class="eroll-sep">·</span>');
+    html += `<span class="eroll-country"><span class="eroll-flag">${d.flag}</span>${country.toUpperCase()}</span>`;
+    html += `<div class="eroll-cities">${cityStr}</div>`;
+  });
+  html += `<span class="eroll-end">— END —</span>`;
+  inner.innerHTML = html;
+
+  const section = document.getElementById('ending-roll');
+  const containerH = section.offsetHeight;
+  const contentH = inner.scrollHeight;
+  const totalDist = containerH + contentH;
+  const speed = 90; // px/s
+  const duration = totalDist / speed;
+
+  let startY = containerH;
+  let raf = null;
+  let startTime = null;
+  let running = false;
+
+  function tick(ts) {
+    if (!startTime) startTime = ts;
+    const elapsed = (ts - startTime) / 1000;
+    const progress = elapsed / duration;
+    if (progress >= 1) { startTime = ts; }
+    const y = startY - totalDist * (progress % 1);
+    inner.style.transform = `translateY(${y}px)`;
+    if (running) raf = requestAnimationFrame(tick);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    raf = requestAnimationFrame(tick);
+  }
+  function pause() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = null;
+    startTime = null; // resume from current position next time
+  }
+
+  // Pause on first load; start when visible
+  inner.style.transform = `translateY(${startY}px)`;
+
+  const obs = new IntersectionObserver(entries => {
+    entries[0].isIntersecting ? start() : pause();
+  }, { threshold: 0.05 });
+  obs.observe(section);
+})();
+
 </script>
 
 <!-- ── THREE.JS GLOBE ── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
   const wrap   = document.getElementById('globe-wrap');
@@ -4090,52 +4958,96 @@ const SFX = (function(){
      [-65,-47],[-67,-52],[-70,-54],[-72,-50],[-68,-45],[-66,-42],[-68,-38],[-72,-33],
      [-72,-25],[-70,-18],[-72,-12],[-70,-5],[-72,-2],[-70,2],[-65,1],[-58,5],[-52,5],
      [-48,0],[-42,-3],[-35,-8]],
-    // E China + Manchuria
+    // E China + Manchuria  [idx 11 — visited]
     [[119.8,22],[120.7,24.2],[121.6,25],[121.9,26.8],[120.9,28.5],[121,30],[121.9,30.9],
      [121.8,31.5],[120,33.7],[119.2,35],[119.8,36.7],[121.4,37.6],[121.4,38.5],[121.2,39.7],
      [121.8,40.8],[121.2,40.6],[120.1,38.9],[120.6,37.6],[119.6,35.1],[120.4,33.1],
      [121.3,31.8],[120.6,29.8],[120.8,27],[119.7,25.3],[119.3,23.3],[118,23],[117.5,22],[119.8,22]],
+    // Taiwan  [idx 12 — visited]
+    [[120.1,22],[121.5,22.6],[121.9,24.2],[121.6,25.3],[120.8,25],[120.2,23.5],[120.1,22]],
+    // Philippines (Luzon)  [idx 13 — visited]
+    [[118.5,9.5],[119.2,10],[119.8,10.5],[120.5,10.8],[121,11.2],[121.5,11.5],[122.2,11.5],
+     [123.5,11],[124,11],[124.5,10.5],[124,10],[123.5,9.5],[122.5,9],[122,8.5],[121.5,7.5],
+     [120.8,8],[120.2,8.5],[119.5,8.5],[118.8,9],[118.5,9.5]],
+    // Borneo (Malaysia/Brunei/Indonesia)  [idx 14 — visited]
+    [[108.1,0.8],[110.3,1.1],[113.3,1.5],[115.5,2],[117.5,4.2],[118,5.9],[116.5,7.1],
+     [115.3,6.3],[113,4.5],[110.5,3],[108.1,0.8]],
   ];
-  const landMat = new THREE.LineBasicMaterial({ color:0x3d6845, transparent:true, opacity:.7 });
-  LANDS.forEach(pts => {
+  /* Visited indices: Japan(0), Korea(1), Indochina(2), India(3),
+     N.America(9), E.China(11), Taiwan(12), Philippines(13), Borneo(14) */
+  const VISITED_IDX = new Set([0,1,2,3,9,11,12,13,14]);
+  const visitedMat = new THREE.LineBasicMaterial({ color:0xe8b84b, transparent:true, opacity:.72 });
+  const dimMat     = new THREE.LineBasicMaterial({ color:0x2a4030, transparent:true, opacity:.22 });
+  LANDS.forEach((pts, i) => {
     const verts = pts.map(([lon,lat]) => ll2v(lat, lon, R+.004));
-    verts.push(verts[0].clone()); // close polygon
-    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(verts), landMat));
+    verts.push(verts[0].clone());
+    globe.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(verts),
+      VISITED_IDX.has(i) ? visitedMat : dimMat));
   });
 
-  /* Flight route */
-  const WPS=[[35.7,139.7],[31.2,121.5],[17.9,102.6],[13.7,100.5],[28.6,77.1],[35.7,51.4],[41.0,28.9],[48.9,2.35]];
-  const rp=[];
-  for(let i=0;i<WPS.length-1;i++){
-    const a=ll2v(WPS[i][0],WPS[i][1],R);
-    const b=ll2v(WPS[i+1][0],WPS[i+1][1],R);
-    for(let t=0;t<=1;t+=.018){
-      const arc=Math.sin(t*Math.PI)*.14;
-      rp.push(a.clone().lerp(b,t).normalize().multiplyScalar(R+arc));
-    }
-  }
-  globe.add(new THREE.Line(
-    new THREE.BufferGeometry().setFromPoints(rp),
-    new THREE.LineBasicMaterial({color:0xe8b84b,transparent:true,opacity:.9})
-  ));
+  /* Cities from bg flight animation */
+  const CITIES = window._GLOBE_CITIES || [];
 
-  /* City markers */
-  const cityNames = ['Tokyo','Shanghai','Vientiane','Bangkok','Delhi','Tehran','Istanbul','Paris'];
-  WPS.forEach(([lat,lon], i) => {
-    const pos = ll2v(lat, lon, R+.055);
+  /* Arc lines between cities in travel order */
+  for(let i=1; i<CITIES.length; i++){
+    const a = ll2v(CITIES[i-1].lat, CITIES[i-1].lon, R);
+    const b = ll2v(CITIES[i].lat,   CITIES[i].lon,   R);
+    const pts = [];
+    for(let t=0; t<=1; t+=.02){
+      pts.push(a.clone().lerp(b,t).normalize().multiplyScalar(R + Math.sin(t*Math.PI)*.18));
+    }
+    globe.add(new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(pts),
+      new THREE.LineBasicMaterial({color:0xe8b84b, transparent:true, opacity:.35})
+    ));
+  }
+
+  /* City dots (pickable for hover) */
+  const dotMeshes = [];
+  CITIES.forEach((city, i) => {
+    const pos = ll2v(city.lat, city.lon, R+.06);
     const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(.05, 8, 8),
-      new THREE.MeshBasicMaterial({color: i===0||i===WPS.length-1 ? 0xfffbe8 : 0xe8b84b})
+      new THREE.SphereGeometry(.048, 8, 8),
+      new THREE.MeshBasicMaterial({color: i===0 ? 0xfffbe8 : 0xe8b84b})
     );
     dot.position.copy(pos);
+    dot.userData = {label: city.label};
     globe.add(dot);
+    dotMeshes.push(dot);
     const ring = new THREE.Mesh(
-      new THREE.RingGeometry(.08,.115,16),
-      new THREE.MeshBasicMaterial({color:0xe8b84b,transparent:true,opacity:.25,side:THREE.DoubleSide})
+      new THREE.RingGeometry(.075,.108,16),
+      new THREE.MeshBasicMaterial({color:0xe8b84b, transparent:true, opacity:.22, side:THREE.DoubleSide})
     );
     ring.position.copy(pos); ring.lookAt(0,0,0);
     globe.add(ring);
   });
+
+  /* Hover label */
+  const lbl = document.createElement('div');
+  lbl.style.cssText = 'position:absolute;pointer-events:none;display:none;font:10px/1 "Courier New",monospace;color:rgba(232,184,75,.9);letter-spacing:.08em;background:rgba(6,3,2,.75);padding:3px 8px;border-radius:2px;border:1px solid rgba(200,146,42,.25);';
+  wrap.appendChild(lbl);
+  const raycaster = new THREE.Raycaster();
+  raycaster.params.Mesh = {threshold:.05};
+  const mouse = new THREE.Vector2();
+  wrap.addEventListener('mousemove', e => {
+    if(dragging) return;
+    const r = wrap.getBoundingClientRect();
+    mouse.x = ((e.clientX-r.left)/r.width)*2-1;
+    mouse.y = -((e.clientY-r.top)/r.height)*2+1;
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObjects(dotMeshes);
+    if(hits.length && hits[0].object.userData.label){
+      lbl.textContent = hits[0].object.userData.label;
+      lbl.style.display = 'block';
+      lbl.style.left = (e.clientX-r.left+14)+'px';
+      lbl.style.top  = (e.clientY-r.top-8)+'px';
+      wrap.style.cursor = 'pointer';
+    } else {
+      lbl.style.display = 'none';
+      wrap.style.cursor = 'grab';
+    }
+  });
+  wrap.addEventListener('mouseleave', () => { lbl.style.display='none'; });
 
   /* Atmosphere glow */
   scene.add(new THREE.Mesh(
