@@ -565,8 +565,7 @@ nav.scrolled {
   padding: 1.1rem 1.25rem;
   margin-bottom: 1.5rem;
   background: rgba(0,0,0,0.3);
-  height: 8rem;
-  overflow: hidden;
+  min-height: 6rem;
   position: relative;
 }
 .rpg-dialog-label {
@@ -1084,6 +1083,14 @@ nav.scrolled {
   border-radius: 18px;
   overflow: hidden;
 }
+.card-grid-sm {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.card-grid-sm .card-image { height: 40px; }
+.card-grid-sm .card-body  { padding: .9rem 1.2rem 1.2rem; gap: .3rem; }
+.card-grid-sm .card-title { font-size: clamp(1rem, 2vw, 1.3rem); }
+.card-grid-sm .card-desc  { font-size: 11.5px; line-height: 1.5; }
+.card-grid-sm .card-meta  { margin-bottom: .2rem; }
 .card {
   background: var(--card);
   text-decoration: none; color: inherit;
@@ -1133,6 +1140,8 @@ nav.scrolled {
 .ci-sangoku .card-image-bg  { background: linear-gradient(135deg,#080f08 0%,#183018 40%,#4a7a2a 100%); }
 .ci-laos .card-image-bg     { background: linear-gradient(135deg,#080f08 0%,#203820 40%,#7a9a4a 100%); }
 .ci-rainbow .card-image-bg  { background: linear-gradient(135deg,#08080f 0%,#182038 40%,#2a4a8a 100%); }
+.ci-lang .card-image-bg     { background: linear-gradient(135deg,#0f0808 0%,#3a1830 40%,#8a3a6a 100%); }
+.ci-kotoba .card-image-bg   { background: linear-gradient(135deg,#080c08 0%,#1a2e18 40%,#4a7a3a 100%); }
 
 .card-image-label {
   position: absolute; z-index: 2;
@@ -2087,22 +2096,7 @@ footer {
     <div class="section-header fade">
       <p class="section-label" style="margin-bottom:0">Games / ゲーム</p>
     </div>
-    <div class="card-grid">
-      <a class="card ci-pokdeng fade" href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">
-        <div class="card-image">
-          <div class="card-image-bg"></div>
-          <span class="card-image-label">Interactive · Browser</span>
-        </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span class="card-num">01</span>
-            <span class="card-tag">Card Game</span>
-          </div>
-          <h2 class="card-title">ป๊อกเด้ง<br>ポークデン</h2>
-          <p class="card-desc">タイのカードゲーム。ベットして、引いて、ディーラーに勝て。<br><span style="font-size:11px;opacity:.6">Thai card game — bet, draw, beat the dealer.</span></p>
-          <span class="card-link">Play now →</span>
-        </div>
-      </a>
+    <div class="card-grid card-grid-sm">
       <a class="card ci-sangoku fade" href="https://app-liart-nine-16.vercel.app" target="_blank">
         <div class="card-image">
           <div class="card-image-bg"></div>
@@ -2110,11 +2104,26 @@ footer {
         </div>
         <div class="card-body">
           <div class="card-meta">
-            <span class="card-num">02</span>
-            <span class="card-tag">Strategy</span>
+            <span class="card-num">01</span>
+            <span class="card-tag">Strategy · WIP（開発中）</span>
           </div>
-          <h2 class="card-title">三国志<br>ゲーム</h2>
-          <p class="card-desc">Vercelで公開中の三国志シミュレーション。<br><span style="font-size:11px;opacity:.6">Three Kingdoms strategy sim, hosted on Vercel.</span></p>
+          <h2 class="card-title">三國志<br>パンダ（仮）</h2>
+          <p class="card-desc">金の竹を食べたパンダが覚醒。曹操も孔明も、こいつを想定してなかった。<br><span style="font-size:11px;opacity:.6">A panda awakens in ancient China. Nobody saw this coming.</span></p>
+          <span class="card-link">Play now →</span>
+        </div>
+      </a>
+      <a class="card ci-pokdeng fade" href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Interactive · Browser</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">02</span>
+            <span class="card-tag">Card Game</span>
+          </div>
+          <h2 class="card-title">ป๊อกเด้ง<br>Pok Deng</h2>
+          <p class="card-desc">タイ版バカラ。タイの田舎に行くなら必修。まずここで練習しよう。（誰狙い？）<br><span style="font-size:11px;opacity:.6">Thai Baccarat. Essential before any upcountry trip.</span></p>
           <span class="card-link">Play now →</span>
         </div>
       </a>
@@ -2124,13 +2133,20 @@ footer {
 
 <div class="divider"></div>
 
+<!-- ── FIELD INTRO ── -->
+<section id="field-intro">
+  <canvas id="field-canvas"></canvas>
+</section>
+
+<div class="divider"></div>
+
 <!-- ── WRITING ── -->
 <div class="section-wrap" id="writing">
   <div class="section">
     <div class="section-header fade">
       <p class="section-label" style="margin-bottom:0">Writing / エッセイ</p>
     </div>
-    <div class="card-grid">
+    <div class="card-grid card-grid-sm">
       <a class="card ci-laos fade" href="https://note.com/sozoro_tabi/n/n906641afa4ad" target="_blank">
         <div class="card-image">
           <div class="card-image-bg"></div>
@@ -2161,23 +2177,39 @@ footer {
           <span class="card-link">Read on note →</span>
         </div>
       </a>
+      <a class="card ci-kotoba fade" href="https://note.com/sozoro_tabi/n/n8ee2a3199c7b" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Essay · note.com</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">03</span>
+            <span class="card-tag">Essay · Laos</span>
+          </div>
+          <h2 class="card-title">言葉が世界の<br>解像度を上げる</h2>
+          <p class="card-desc">ラオスの畑でカエルに出会い、「分かる」は「分ける」から来ると気づく。言葉が世界の見え方を変える。<br><span style="font-size:11px;opacity:.6">Language sharpens the resolution of the world.</span></p>
+          <span class="card-link">Read on note →</span>
+        </div>
+      </a>
+      <a class="card ci-lang fade" href="https://note.com/sozoro_tabi/n/n341fe133986d" target="_blank">
+        <div class="card-image">
+          <div class="card-image-bg"></div>
+          <span class="card-image-label">Essay · note.com</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-num">04</span>
+            <span class="card-tag">Essay · Language</span>
+          </div>
+          <h2 class="card-title">カエサルとシーザーは<br>同一人物？</h2>
+          <p class="card-desc">同じ綴り "Caesar" なのに発音が違う理由。英語の「C」の謎を言語学的に解説。<br><span style="font-size:11px;opacity:.6">Why "Caesar" sounds different in Latin and English.</span></p>
+          <span class="card-link">Read on note →</span>
+        </div>
+      </a>
     </div>
   </div>
 </div>
-
-
-<!-- ── RPG-MAP: WORLD MAP ── -->
-<div class="rpgm-wrap fade" id="rpg-map">
-  <div class="rpgm-inner">
-    <div class="rpgm-label">WORLD MAP</div>
-    <div class="map-grid" id="map-grid"></div>
-    <div class="rpgm-dialog" id="map-dialog"></div>
-  </div>
-</div>
-
-
-
-
 
 <!-- ── RPG-BOSS ── -->
 <div class="rpgm-wrap fade" id="rpg-boss">
@@ -2209,6 +2241,19 @@ footer {
     </div>
   </div>
 </div>
+
+<!-- ── RPG-MAP: WORLD MAP ── -->
+<div class="rpgm-wrap fade" id="rpg-map">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">WORLD MAP</div>
+    <div class="map-grid" id="map-grid"></div>
+    <div class="rpgm-dialog" id="map-dialog"></div>
+  </div>
+</div>
+
+
+
+
 
 <!-- ── INTERESTS ── -->
 <div class="section-wrap" id="interests">
@@ -2269,11 +2314,6 @@ footer {
 <div class="divider"></div>
 
 
-<!-- ── FIELD INTRO ── -->
-<section id="field-intro">
-  <canvas id="field-canvas"></canvas>
-</section>
-
 <!-- ── TRAVEL MAP ── -->
 <section class="section fade" id="travel-map" style="padding:5rem 5vw;">
   <span class="section-label fade" style="margin-bottom:1.5rem;">Journey / 旅の軌跡</span>
@@ -2297,6 +2337,21 @@ footer {
   <div id="globe-wrap" style="width:100%; max-width:560px; height:440px; cursor:grab; position:relative; overflow:hidden;">
     <canvas id="globe3d" style="width:100%; height:100%; display:block;"></canvas>
     <div id="globe-hint" style="position:absolute;bottom:.9rem;left:50%;transform:translateX(-50%);font:10px/1 'Courier New',monospace;color:rgba(200,146,42,0.35);letter-spacing:.12em;pointer-events:none;transition:opacity .6s;">drag to rotate</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── FIELD PHOTO: CUERNAVACA ── -->
+<div class="apr-wrap">
+  <div class="apr-inner">
+    <div class="apr-img-clip" id="apr-clip-mx">
+      <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="apr-img">
+    </div>
+    <div class="field-photo-meta apr-meta">
+      <p class="field-photo-cap">2019.07 — Cuernavaca, Mexico</p>
+      <p class="field-photo-desc">Got invited by the taco spot waiter. "We're doing paintball this weekend — you in?" Said yes without thinking twice.</p>
+    </div>
   </div>
 </div>
 
@@ -2403,10 +2458,10 @@ footer {
 
   // Poetry lines (typewriter, loop-aware)
   const POEM=[
-    {t:2.5,  text:'道に迷ったら、'},
-    {t:5.5,  text:'景色がはじまった。'},
-    {t:9.8,  text:'地図を閉じたら、'},
-    {t:12.8, text:'世界がひろがった。'},
+    {t:2.5,  text:'あるいた。　まよった。'},
+    {t:5.5,  text:'それが　たびに　なった。'},
+    {t:9.8,  text:'まちがえた　みちが'},
+    {t:12.8, text:'ただしかった。'},
   ];
   const LOOP_DUR=19;
 
@@ -2422,7 +2477,7 @@ footer {
       let a=Math.min(1,age/0.35);
       if(lt>nxt+2.2) a=Math.max(0,1-(lt-nxt-2.2)/1.3);
       if(a<=0) return;
-      const py=H-96+i*35;
+      const py=H-158+i*38;
       ctx.fillStyle=`rgba(2,8,4,${a*0.6})`; ctx.fillRect(W/2-170,py-24,340,32);
       ctx.fillStyle=`rgba(240,235,224,${a*0.95})`; ctx.fillText(l.text.slice(0,chars),W/2,py);
     });
@@ -3273,12 +3328,8 @@ applyHolo(document.querySelectorAll('.card'), 14);
   const dialogEl = document.getElementById('rpg-dialog-text');
   if(dialogEl){
     const pages = [
-      'リアルRPGをやってる。\nフィールドを渡り歩き、\n異国のコトバで語らう。',
-      'クエストは、自分で決める。\n目的地も、帰還時期も。\nノーマップで動く。',
-      'NPCに話しかけると、\n酒をもらえることがある。\nこれがリアルRPGの醍醐味。',
-      '異世界が好きだから、\nリアルで転移した。\n気づいたら、知らない町にいた。',
-      '召喚は要らない。\nチケットだけあればいい。',
-      'ラスボスがいない。\nだから終わらない。'
+      'あるいた。　まよった。\nそれが　たびに　なった。',
+      'まちがえた　みちが\nただしかった。'
     ];
     let idx = 0;
     let timer = null;
@@ -4729,6 +4780,20 @@ const SFX = (function(){
 /* ── APPLE PHOTO REVEAL ── */
 (function(){
   const clip = document.getElementById('apr-clip');
+  if(!clip) return;
+  const obs = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting){
+      clip.classList.add('apr-visible');
+    } else {
+      clip.classList.remove('apr-visible');
+    }
+  }, { threshold: 0.12 });
+  obs.observe(clip);
+})();
+
+/* ── APPLE PHOTO REVEAL: CUERNAVACA ── */
+(function(){
+  const clip = document.getElementById('apr-clip-mx');
   if(!clip) return;
   const obs = new IntersectionObserver(entries => {
     if(entries[0].isIntersecting){
