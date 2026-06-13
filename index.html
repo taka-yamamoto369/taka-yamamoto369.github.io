@@ -1603,15 +1603,6 @@ footer {
             バスを逃したあの日の屋台、<br>
             まだずっとどこかにある。
           </p>
-          <audio id="audio-01" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
-          <div class="music-inline fade">
-            <button class="music-inline-btn" id="play-01" onclick="togglePlay('audio-01','play-01','seek-01','time-01')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-01','seek-01')">
-              <div class="music-seekbar" id="seek-01"></div>
-            </div>
-            <span class="music-time" id="time-01">0:00</span>
-            <span class="music-inline-title">Khaen no Koi (Mapless Mix)</span>
-          </div>
         </div>
 
         <div id="about-en" class="about-lang hidden about-en">
@@ -1918,19 +1909,6 @@ footer {
   </div>
 </div>
 
-<!-- ── MUSIC 02 ── -->
-<div style="display:flex; justify-content:center; padding: 1.2rem 0 .4rem;">
-  <audio id="audio-02" src="/audio/Where You Going.mp3" preload="none"></audio>
-  <div class="music-inline fade">
-    <button class="music-inline-btn" id="play-02" onclick="togglePlay('audio-02','play-02','seek-02','time-02')" aria-label="Play">▶</button>
-    <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-02','seek-02')">
-      <div class="music-seekbar" id="seek-02"></div>
-    </div>
-    <span class="music-time" id="time-02">0:00</span>
-    <span class="music-inline-title">Where You Going</span>
-  </div>
-</div>
-
 <!-- ── TIMELINE ── -->
 <div class="section-wrap" id="history">
   <div class="section" style="padding-bottom:0">
@@ -2151,7 +2129,7 @@ footer {
           <span class="card-link">Play now →</span>
         </div>
       </a>
-      <a class="card ci-pokdeng fade" href="https://taka-yamamoto369.github.io/pok-deng/" target="_blank">
+      <a class="card ci-pokdeng fade" href="https://taka-yamamoto369.github.io/pok-deng.html" target="_blank">
         <div class="card-image">
           <div class="card-image-bg"></div>
           <span class="card-image-label">Interactive · Browser</span>
@@ -2352,6 +2330,44 @@ footer {
           </div>
         </div>
       </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── SNS ── -->
+<div class="section-wrap" id="sns">
+  <div class="section">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">SNS</p>
+    </div>
+    <div class="card-grid card-grid-sm">
+
+      <a class="card fade" href="https://www.instagram.com/taka__yamamoto/" target="_blank"
+         style="text-decoration:none;">
+        <div class="card-image">
+          <div class="card-image-bg" style="background:linear-gradient(135deg,#18080a 0%,#3a1020 40%,#8a3050 100%)"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Instagram</div>
+          <div class="card-title">@taka__yamamoto</div>
+          <div class="card-desc">旅先で撮りためた写真。計画してない景色ばかり。</div>
+          <span class="card-link">→ Instagram</span>
+        </div>
+      </a>
+
+      <a class="card fade" href="https://www.instagram.com/nekoventures/" target="_blank"
+         style="text-decoration:none;">
+        <div class="card-image">
+          <div class="card-image-bg" style="background:linear-gradient(135deg,#080f18 0%,#102030 40%,#304878 100%)"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Instagram</div>
+          <div class="card-title">@nekoventures</div>
+          <div class="card-desc">AIで生成した猫が、僕の旅したルートを巡る動画アカウント。</div>
+          <span class="card-link">→ Instagram</span>
+        </div>
+      </a>
 
     </div>
   </div>
@@ -3257,7 +3273,7 @@ function fmtTime(s) {
   const sec = Math.floor(s % 60);
   return m + ':' + (sec < 10 ? '0' : '') + sec;
 }
-const AUDIO_START = { 'audio-01': 113, 'audio-02': 52 };
+const AUDIO_START = { 'audio-01': 113, 'audio-02': 52, 'audio-c1': 113, 'audio-c2': 52 };
 
 function togglePlay(audioId, btnId, seekId, timeId) {
   const audio = document.getElementById(audioId);
