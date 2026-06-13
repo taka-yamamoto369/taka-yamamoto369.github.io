@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ป๊อกเด้ง (ポークデン)</title>
+<style>
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f5f7;
+    --color-background-warning: #fff8e6;
+    --color-background-success: #e6f4ea;
+    --color-background-info: #e8f4fd;
+    --color-border-tertiary: #d2d2d7;
+    --color-text-primary: #1d1d1f;
+    --color-text-secondary: #6e6e73;
+    --color-text-warning: #a05c00;
+    --color-text-success: #1a7a3a;
+    --color-text-info: #1a6a9a;
+    --color-text-danger: #c0392b;
+    --border-radius-lg: 16px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-sans);
+    background: #1c1c1e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .page-title {
+    color: #f5f5f7;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: .05em;
+    margin-bottom: 1rem;
+    opacity: .6;
+  }
+
+  #pd {
+    font-family: var(--font-sans);
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.35);
+  }
+
+  .hdr { display:flex; justify-content:space-between; align-items:center; padding-bottom:.75rem; border-bottom:.5px solid var(--color-border-tertiary); margin-bottom:1rem }
+  .th { font-size:15px; font-weight:500 }
+  .jp { font-size:11px; color:var(--color-text-secondary); font-weight:400 }
+  .zone { margin:.5rem 0 }
+  .zlabel { font-size:11px; color:var(--color-text-secondary); text-align:center; margin-bottom:.4rem; letter-spacing:.05em }
+  .cards { display:flex; gap:7px; justify-content:center; min-height:86px; align-items:center; flex-wrap:wrap }
+  .card { width:54px; height:80px; border-radius:6px; background:#fff; border:.5px solid #ccc; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px }
+  .card.back { background:#1a4a8a; border-color:#0d2e6e }
+  .badges { display:flex; gap:5px; flex-wrap:wrap; justify-content:center; margin-top:5px; min-height:22px }
+  .bdg { border-radius:4px; padding:2px 7px; font-size:12px; font-weight:500 }
+  .b-g { background:var(--color-background-primary); color:var(--color-text-secondary) }
+  .b-w { background:var(--color-background-warning); color:var(--color-text-warning) }
+  .b-s { background:var(--color-background-success); color:var(--color-text-success) }
+  .b-q { background:var(--color-background-info); color:var(--color-text-info) }
+  .score-hide { color:transparent; user-select:text; cursor:text }
+  .score-hide::selection { color:#333 }
+  .div { height:.5px; background:var(--color-border-tertiary); margin:.75rem 0 }
+  .mid { text-align:center; margin:.4rem 0 }
+  .chips { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin:.4rem 0 }
+  .chip { width:52px; height:52px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; border:2.5px dashed; user-select:none; transition:transform .1s; gap:0 }
+  .chip:hover { transform:scale(1.1) }
+  .btns { display:flex; gap:8px; justify-content:center; margin-top:.5rem; flex-wrap:wrap }
+  .rtext { font-size:20px; font-weight:500; text-align:center; margin:.25rem 0 }
+  .quiz-box { background:var(--color-background-primary); border-radius:8px; padding:.6rem .8rem; margin:.5rem auto; max-width:280px; text-align:center }
+  .quiz-label { font-size:11px; color:var(--color-text-secondary); margin-bottom:.4rem }
+  .reveal-hint { font-size:11px; color:var(--color-text-secondary); margin-top:.3rem; opacity:.7 }
+  .rules { display:grid; grid-template-columns:1fr 1fr; gap:4px 1rem; margin-top:7px }
+  .rule-row { display:flex; flex-direction:column; gap:1px }
+  .rule-th { font-size:13px; color:var(--color-text-primary) }
+  .rule-jp { font-size:11px; color:var(--color-text-secondary) }
+  button { cursor:pointer; font-family:var(--font-sans) }
+  .btn-main {
+    font-size:13px;
+    background: var(--color-background-primary);
+    border: .5px solid var(--color-border-tertiary);
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: var(--color-text-primary);
+    transition: background .1s;
+  }
+  .btn-main:hover { background: #e5e5ea }
+  .btn-main:disabled { opacity:.4; cursor:default }
+  details summary { font-size:12px; color:var(--color-text-secondary); cursor:pointer; user-select:none; padding:.25rem 0 }
+</style>
+</head>
+<body>
+<p class="page-title">🃏 CARD GAME</p>
+<div id="pd"></div>
+
+<script>
+(function(){
+const RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+const SUITS=['♠','♥','♦','♣'];
+const RED=new Set(['♥','♦']);
+function mkDeck(){const d=[];for(const s of SUITS)for(const r of RANKS)d.push({r,s});return shuf(d)}
+function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]]}return b}
+function cv(r){return r==='A'?1:['10','J','Q','K'].includes(r)?0:+r}
+function sc(h){return h.reduce((s,c)=>s+cv(c.r),0)%10}
+function isPok(h){return h.length===2&&sc(h)>=8}
+function deng(h){
+  const rs=h.map(c=>c.r),ss=h.map(c=>c.s);
+  if(h.length===2)return rs[0]===rs[1]?{m:2,th:'คู่',jp:'ペア'}:{m:1,th:'',jp:''};
+  if(h.length===3){
+    const vs=rs.map(r=>RANKS.indexOf(r)+1).sort((a,b)=>a-b);
+    const tok=rs[0]===rs[1]&&rs[1]===rs[2];
+    const fl=ss[0]===ss[1]&&ss[1]===ss[2];
+    const st=vs[1]-vs[0]===1&&vs[2]-vs[1]===1;
+    const pr=new Set(rs).size<3;
+    if(tok)return{m:3,th:'ตอง',jp:'スリーカード'};
+    if(st&&fl)return{m:5,th:'เรียงดอก',jp:'ストレートフラッシュ'};
+    if(st)return{m:3,th:'เรียง',jp:'ストレート'};
+    if(fl)return{m:2,th:'ดอก',jp:'フラッシュ'};
+    if(pr)return{m:2,th:'คู่',jp:'ペア'};
+  }
+  return{m:1,th:'',jp:''};
+}
+
+const DENG_DESC={
+  'ペア':'同じランク2枚（例：7♠7♥）→ベット×2',
+  'フラッシュ':'3枚全部同じスート（例：♠3枚）→ベット×2',
+  'ストレート':'3枚が連続する数字（例：4-5-6）→ベット×3',
+  'スリーカード':'3枚全部同じランク（例：7-7-7）→ベット×3',
+  'ストレートフラッシュ':'同スートで連続3枚（例：♠4-5-6）→ベット×5',
+};
+
+let G={deck:[],pH:[],dH:[],phase:'bet',bal:1000,bet:0,res:null,msg:'',diff:0,drew:false,dengRevealed:false,scoreRevealed:false,dealerAction:null};
+G.deck=mkDeck();
+
+function deal(){
+  if(G.deck.length<20)G.deck=mkDeck();
+  G.pH=[G.deck.pop(),G.deck.pop()];
+  G.dH=[G.deck.pop(),G.deck.pop()];
+  if(isPok(G.pH)||isPok(G.dH)){G.phase='result';G.dengRevealed=false;G.scoreRevealed=false;resolve();}
+  else G.phase='player';
+}
+function resolve(){
+  const ps=sc(G.pH),ds=sc(G.dH);
+  const pd=deng(G.pH),dd=deng(G.dH);
+  G.phase='result';
+  if(ps>ds){
+    G.res='win';G.diff=G.bet*pd.m;G.bal+=G.diff;
+    G.msg=G.dealerAction==='stand'?'ディーラー：勝っとるけん立った':'ディーラー：勝てそうなんで引いた';
+  }else if(ds>ps){
+    G.res='lose';G.diff=G.bet*dd.m;G.bal-=G.diff;
+    G.msg=G.dealerAction==='hit'?'ディーラー：負けとったけん引いた':'ディーラー：勝っとるけん立った';
+  }else{G.res='tie';G.diff=0;G.msg=G.dealerAction==='hit'?'ディーラー：同点やけん引いた':'ディーラー：同点やけど高めやから立った';}
+}
+function dealerPlay(){
+  const ps=sc(G.pH),ds=sc(G.dH);
+  let action;
+  if(ds>ps){action='stand';}
+  else if(ds<ps){action='hit';}
+  else{action=ds>=7?'stand':'hit';}
+  G.dealerAction=action;
+  if(action==='hit')G.dH.push(G.deck.pop());
+  G.dengRevealed=false;G.scoreRevealed=false;
+  resolve();render();
+}
+
+function cardH(c){
+  const col=RED.has(c.s)?'#d00':'#1a1a1a';
+  return`<div class="card"><span style="font-size:13px;font-weight:500;color:${col};line-height:1">${c.r}</span><span style="font-size:20px;color:${col};line-height:1">${c.s}</span><span style="font-size:10px;color:transparent;line-height:1;user-select:text;cursor:text" title="ドラッグで点数を確認">${cv(c.r)}</span></div>`;
+}
+
+function scoreHtml(hand,isResult){
+  if(!hand.length)return'<div class="badges"></div>';
+  const s=sc(hand),pk=isPok(hand);
+  if(!isResult){
+    let h=`<div class="badges"><span class="bdg b-g">แต้ม (点数): ${s}</span>`;
+    if(pk)h+=`<span class="bdg b-w">ป๊อก! (8-9点)</span>`;
+    return h+'</div>';
+  }
+  if(G.scoreRevealed){
+    let h=`<div class="badges"><span class="bdg b-g">แต้ม (点数): ${s}</span>`;
+    if(pk)h+=`<span class="bdg b-w">ป๊อก! (8-9点)</span>`;
+    return h+'</div>';
+  }
+  return`<div class="badges"><div class="quiz-box" style="margin:0">
+    <div class="quiz-label">🤔 点数は何点？</div>
+    <button class="btn-main" data-action="revealScore">点数を確認する →</button>
+  </div></div>`;
+}
+
+function dengHtml(hand){
+  const dg=deng(hand);
+  if(dg.m<=1)return'';
+  const desc=DENG_DESC[dg.jp]||'';
+  return`<div class="quiz-box">
+    <div class="bdg b-s" style="display:inline-block;margin-bottom:.3rem">${dg.th} (${dg.jp}) ×${dg.m}</div>
+    <div style="font-size:11px;color:var(--color-text-secondary)">${desc}</div>
+  </div>`;
+}
+
+function quizHtml(hand){
+  const dg=deng(hand),pk=isPok(hand);
+  if(dg.m<=1&&!pk)return'';
+  if(pk)return'';
+  return`<div class="quiz-box">
+    <div class="quiz-label">🤔 この役は何？</div>
+    <button class="btn-main b-q" data-action="revealDeng">役を確認する →</button>
+    <div class="reveal-hint">タイ語名・倍率を隠し中</div>
+  </div>`;
+}
+
+const CHIP_AMT=[10,25,50,100,200];
+const CHIP_COL=['#1a8a4a','#1a8a4a','#1a4a8a','#8a1a8a','#c0392b'];
+
+function render(){
+  const rc=G.res==='win'?'var(--color-text-success)':G.res==='lose'?'var(--color-text-danger)':'var(--color-text-secondary)';
+  const rl=G.res==='win'?'ชนะ！ (勝ち！)':G.res==='lose'?'แพ้... (負け...)':G.res==='tie'?'เสมอ (引き分け)':'';
+
+  const pHasDeng=deng(G.pH).m>1&&!isPok(G.pH);
+  const dHasDeng=deng(G.dH).m>1&&!isPok(G.dH);
+  const anyDeng=pHasDeng||dHasDeng;
+
+  document.getElementById('pd').innerHTML=`
+  <div class="hdr">
+    <div style="display:flex;flex-direction:column;gap:1px">
+      <span style="font-size:16px;font-weight:500;color:var(--color-text-primary)">🃏 ป๊อกเด้ง</span>
+      <span style="font-size:11px;color:var(--color-text-secondary)">ポークデン</span>
+    </div>
+    <div style="display:flex;gap:1rem">
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--color-text-secondary)">เงิน (残高)</div>
+        <div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">${G.bal} ฿</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--color-text-secondary)">เดิมพัน (ベット)</div>
+        <div style="font-size:14px;font-weight:500;color:var(--color-text-info)">${G.bet} ฿</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="zone">
+    <div class="zlabel">เจ้ามือ (ディーラー)</div>
+    <div class="cards">${G.dH.length?G.dH.map(c=>cardH(c)).join(''):'<span style="color:var(--color-text-secondary);font-size:13px">—</span>'}</div>
+    ${G.dH.length&&G.phase!=='bet'?scoreHtml(G.dH,G.phase==='result'):'<div class="badges"></div>'}
+    ${G.phase==='result'?(G.dengRevealed?dengHtml(G.dH):quizHtml(G.dH)):''}
+  </div>
+
+  <div class="div"></div>
+
+  ${G.phase==='bet'?`
+  <div class="mid">
+    <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:.5rem">วางเดิมพัน (チップを選んでベット)</p>
+    <div class="chips">
+      ${CHIP_AMT.map((v,i)=>`<div class="chip" data-action="bet" data-val="${v}" style="border-color:${CHIP_COL[i]};color:${CHIP_COL[i]}"><span style="font-size:12px;font-weight:500">${v}฿</span></div>`).join('')}
+    </div>
+    <div class="btns">
+      <button class="btn-main" data-action="resetBet">ล้าง (リセット)</button>
+      <button class="btn-main" data-action="deal" ${G.bet===0?'disabled':''}>แจกไพ่ (配る)</button>
+    </div>
+  </div>`:''}
+
+  ${G.phase==='player'?`
+  <div class="mid">
+    <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:.5rem">จั่วไพ่ได้อีก 1 ใบ (あと1枚引けます)</p>
+    <div class="btns">
+      <button class="btn-main" data-action="hit" ${G.drew?'disabled':''}>จั่ว (引く)</button>
+      <button class="btn-main" data-action="stand">หยุด (立つ)</button>
+    </div>
+  </div>`:''}
+
+  ${G.phase==='result'?`
+  <div class="mid">
+    <div class="rtext" style="color:${rc}">${rl}</div>
+    ${G.diff>0?`<div style="font-size:22px;font-weight:600;color:${rc};text-align:center">${G.res==='win'?'+':'−'}${G.diff} ฿</div>`:''}
+    ${G.msg?`<p style="font-size:12px;color:var(--color-text-secondary);text-align:center;margin:.25rem 0">${G.msg}</p>`:''}
+    <div class="btns" style="margin-top:.5rem">
+      <button class="btn-main" data-action="newRound">รอบใหม่ (次のラウンド)</button>
+    </div>
+  </div>`:''}
+
+  <div class="div"></div>
+
+  <div class="zone">
+    <div class="zlabel">ผู้เล่น (プレイヤー)</div>
+    <div class="cards">${G.pH.length?G.pH.map(c=>cardH(c)).join(''):'<span style="color:var(--color-text-secondary);font-size:13px">—</span>'}</div>
+    ${G.pH.length&&G.phase!=='bet'?scoreHtml(G.pH,G.phase==='result'):'<div class="badges"></div>'}
+    ${G.phase==='result'?(G.dengRevealed?dengHtml(G.pH):quizHtml(G.pH)):''}
+  </div>
+
+  <div class="div"></div>
+
+  <details>
+    <summary>กติกา (ルール早見表)</summary>
+    <div class="rules">
+      <div class="rule-row"><span class="rule-th">แต้ม = ผลรวม mod 10</span><span class="rule-jp">点数 = 合計 mod 10</span></div>
+      <div class="rule-row"><span class="rule-th">ป๊อก = 2ใบได้ 8-9แต้ม</span><span class="rule-jp">2枚で8・9点 → 即勝負</span></div>
+      <div class="rule-row"><span class="rule-th">จั่วได้สูงสุด 1 ใบ</span><span class="rule-jp">追加ドローは1枚まで</span></div>
+      <div class="rule-row"><span class="rule-th">เจ้ามือ: ≤4แต้ม ต้องจั่ว</span><span class="rule-jp">ディーラー: 4点以下で強制ドロー</span></div>
+      <div class="rule-row"><span class="rule-th">คู่ (ペア) = ×2</span><span class="rule-jp">同ランク2枚</span></div>
+      <div class="rule-row"><span class="rule-th">ดอก (フラッシュ) = ×2</span><span class="rule-jp">3枚同スート</span></div>
+      <div class="rule-row"><span class="rule-th">เรียง (ストレート) = ×3</span><span class="rule-jp">3枚連続</span></div>
+      <div class="rule-row"><span class="rule-th">ตอง (スリーカード) = ×3</span><span class="rule-jp">3枚同ランク</span></div>
+      <div class="rule-row"><span class="rule-th">เรียงดอก (S.フラッシュ) = ×5</span><span class="rule-jp">同スート3枚連続</span></div>
+      <div class="rule-row"><span class="rule-th">10/J/Q/K = 0แต้ม, A = 1แต้ม</span><span class="rule-jp">絵札はゼロ点、Aは1点</span></div>
+    </div>
+  </details>`;
+}
+
+document.getElementById('pd').addEventListener('click',function(e){
+  const t=e.target.closest('[data-action]');
+  if(!t||t.disabled)return;
+  const a=t.dataset.action;
+  if(a==='bet'){if(G.phase!=='bet')return;G.bet=Math.min(G.bet+parseInt(t.dataset.val),G.bal);render();}
+  else if(a==='resetBet'){G.bet=0;render();}
+  else if(a==='deal'){if(G.bet===0)return;G.drew=false;G.dealerAction=null;deal();render();}
+  else if(a==='hit'){if(G.phase!=='player'||G.drew)return;G.pH.push(G.deck.pop());G.drew=true;dealerPlay();}
+  else if(a==='stand'){if(G.phase!=='player')return;dealerPlay();}
+  else if(a==='revealScore'){G.scoreRevealed=true;render();}
+  else if(a==='revealDeng'){G.dengRevealed=true;render();}
+  else if(a==='newRound'){G.bet=0;G.res=null;G.msg='';G.diff=0;G.drew=false;G.dengRevealed=false;G.scoreRevealed=false;G.dealerAction=null;G.phase='bet';if(G.bal<=0)G.bal=1000;render();}
+});
+
+render();
+})();
+</script>
+</body>
+</html>
