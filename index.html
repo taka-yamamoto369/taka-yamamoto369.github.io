@@ -828,51 +828,13 @@ nav.scrolled {
 .boss-result-label.victory { color:rgba(100,200,120,0.85); }
 .boss-result-label.defeat { color:rgba(220,80,80,0.75); }
 
-/* ── INTERESTS ── */
-.interests-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+/* ── MUSIC CARD PLAYER ── */
+.music-card-player {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-top: .7rem;
 }
-@media(max-width:640px){ .interests-grid { grid-template-columns: 1fr; } }
-.interest-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px; padding: 1.6rem;
-  transition: border-color .3s;
-}
-.interest-card:hover { border-color: rgba(200,146,42,0.35); }
-.interest-eyebrow {
-  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(200,146,42,0.55); margin-bottom: .8rem;
-}
-.interest-title {
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700; letter-spacing: -.02em;
-  color: var(--text); margin-bottom: .25rem; line-height: 1.1;
-}
-.interest-sub {
-  font-size: 11px; color: var(--sub); margin-bottom: 1rem;
-  letter-spacing: .06em;
-}
-.interest-body {
-  font-size: 13px; color: var(--sub); line-height: 1.8;
-  margin-bottom: 1.2rem;
-}
-.interest-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
-.lang-list { display: flex; flex-direction: column; gap: .55rem; margin-top: .25rem; }
-.lang-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-bottom: .55rem; border-bottom: 1px solid rgba(200,146,42,0.07);
-}
-.lang-row:last-child { border-bottom: none; padding-bottom: 0; }
-.lang-name { font-size: 13px; color: var(--sub); }
-.lang-badge {
-  font-size: 9px; letter-spacing: .1em; padding: 2px 8px;
-  border-radius: 2px; text-transform: uppercase; white-space: nowrap;
-}
-.lang-badge.n { background: rgba(200,146,42,0.18); color: var(--gold2); border: 1px solid rgba(200,146,42,0.4); }
-.lang-badge.h { background: rgba(200,146,42,0.09); color: rgba(200,146,42,0.8); border: 1px solid rgba(200,146,42,0.2); }
-.lang-badge.m { background: transparent; color: rgba(200,146,42,0.55); border: 1px solid rgba(200,146,42,0.15); }
-.lang-badge.l { background: transparent; color: rgba(200,146,42,0.35); border: 1px solid rgba(200,146,42,0.08); }
 
 /* ── STATEMENT FULLSCREEN ── */
 .statement-wrap {
@@ -1084,7 +1046,7 @@ nav.scrolled {
   overflow: hidden;
 }
 .card-grid-sm {
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 .card-grid-sm .card-image { height: 40px; }
 .card-grid-sm .card-body  { padding: .9rem 1.2rem 1.2rem; gap: .3rem; }
@@ -1142,6 +1104,61 @@ nav.scrolled {
 .ci-rainbow .card-image-bg  { background: linear-gradient(135deg,#08080f 0%,#182038 40%,#2a4a8a 100%); }
 .ci-lang .card-image-bg     { background: linear-gradient(135deg,#0f0808 0%,#3a1830 40%,#8a3a6a 100%); }
 .ci-kotoba .card-image-bg   { background: linear-gradient(135deg,#080c08 0%,#1a2e18 40%,#4a7a3a 100%); }
+.ci-morlam .card-image-bg   { background: linear-gradient(135deg,#0a0818 0%,#1e0f38 40%,#5a2a8a 100%); }
+
+/* ── MUSIC PLAYER (inline) ── */
+.music-inline {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-top: 1.4rem;
+  opacity: .65;
+  transition: opacity .2s;
+}
+.music-inline:hover { opacity: 1; }
+.music-inline-btn {
+  width: 1.6rem; height: 1.6rem;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--text-main, #fff);
+  cursor: pointer;
+  font-size: .65rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: border-color .2s, background .2s;
+}
+.music-inline-btn:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.07); }
+.music-seekbar-wrap {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 120px;
+}
+.music-seekbar {
+  height: 100%;
+  width: 0%;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+  transition: width 0.3s linear;
+}
+.music-time {
+  font-size: 10px;
+  color: var(--text-sub);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+.music-inline-title {
+  font-size: 10.5px;
+  color: var(--text-sub);
+  letter-spacing: .04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .card-image-label {
   position: absolute; z-index: 2;
@@ -1586,6 +1603,15 @@ footer {
             バスを逃したあの日の屋台、<br>
             まだずっとどこかにある。
           </p>
+          <audio id="audio-01" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
+          <div class="music-inline fade">
+            <button class="music-inline-btn" id="play-01" onclick="togglePlay('audio-01','play-01','seek-01','time-01')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-01','seek-01')">
+              <div class="music-seekbar" id="seek-01"></div>
+            </div>
+            <span class="music-time" id="time-01">0:00</span>
+            <span class="music-inline-title">Khaen no Koi (Mapless Mix)</span>
+          </div>
         </div>
 
         <div id="about-en" class="about-lang hidden about-en">
@@ -1889,6 +1915,19 @@ footer {
       <p class="field-photo-cap">2023.01 — Phongsali, Laos</p>
       <p class="field-photo-desc">An Akha village above the clouds. No electricity, no signal. Just mountains, mist, and tin roofs.</p>
     </div>
+  </div>
+</div>
+
+<!-- ── MUSIC 02 ── -->
+<div style="display:flex; justify-content:center; padding: 1.2rem 0 .4rem;">
+  <audio id="audio-02" src="/audio/Where You Going.mp3" preload="none"></audio>
+  <div class="music-inline fade">
+    <button class="music-inline-btn" id="play-02" onclick="togglePlay('audio-02','play-02','seek-02','time-02')" aria-label="Play">▶</button>
+    <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-02','seek-02')">
+      <div class="music-seekbar" id="seek-02"></div>
+    </div>
+    <span class="music-time" id="time-02">0:00</span>
+    <span class="music-inline-title">Where You Going</span>
   </div>
 </div>
 
@@ -2255,54 +2294,61 @@ footer {
 
 
 
-<!-- ── INTERESTS ── -->
-<div class="section-wrap" id="interests">
+<!-- ── MUSIC ── -->
+<div class="section-wrap" id="music">
   <div class="section">
     <div class="section-header fade">
-      <p class="section-label" style="margin-bottom:0">Interests / 興味</p>
+      <p class="section-label" style="margin-bottom:0">Music / 音楽</p>
     </div>
-    <div class="interests-grid">
+    <div class="card-grid card-grid-sm">
 
-      <div class="interest-card fade">
-        <div class="interest-eyebrow">Music</div>
-        <h2 class="interest-title">モーラム</h2>
-        <p class="interest-sub">Mor Lam &nbsp;·&nbsp; หมอลำ &nbsp;·&nbsp; ໝໍລຳ</p>
-        <p class="interest-body">
-          ラオスと東北タイに根ざした民族音楽。ケーン（ひょうたんの笛）とともに、語りかけるように歌う。<br><br>
-          フィールドで初めて聞いたとき、こんな音楽が存在することを知らなかった。
-          屋台の脇で、誰かがスピーカーから流していた。
-          それだけで、そこにいる理由ができた。
-        </p>
-        <div class="interest-tags">
-          <span class="tl-tag">Laos · Thailand</span>
-          <span class="tl-tag">Folk · Traditional</span>
+      <div class="card ci-morlam fade">
+        <div class="card-image"><div class="card-image-bg"></div></div>
+        <div class="card-body">
+          <div class="card-meta">01</div>
+          <div class="card-title">Khaen no Koi</div>
+          <div class="card-desc">ケーンの音色に乗せた、地図を持たない旅の歌。Mapless Mix。</div>
+          <audio id="audio-c1" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c1" onclick="togglePlay('audio-c1','play-c1','seek-c1','time-c1')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c1','seek-c1')">
+              <div class="music-seekbar" id="seek-c1"></div>
+            </div>
+            <span class="music-time" id="time-c1">0:00</span>
+          </div>
         </div>
       </div>
 
-      <div class="interest-card fade">
-        <div class="interest-eyebrow">Language</div>
-        <h2 class="interest-title">言語学習</h2>
-        <p class="interest-sub">Languages collected on the road</p>
-        <div class="lang-list">
-          <div class="lang-row">
-            <span class="lang-name">日本語</span>
-            <span class="lang-badge n">母語</span>
+      <div class="card ci-morlam fade" style="--grad-a:#0a1218;--grad-b:#0f2030;--grad-c:#2a5060;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#0a1218 0%,#0f2030 40%,#2a5060 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">02</div>
+          <div class="card-title">Where You Going</div>
+          <div class="card-desc">旅先で何度も聞かれた問いから生まれた。"I don't know" が答え。</div>
+          <audio id="audio-c2" src="/audio/Where You Going.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c2" onclick="togglePlay('audio-c2','play-c2','seek-c2','time-c2')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c2','seek-c2')">
+              <div class="music-seekbar" id="seek-c2"></div>
+            </div>
+            <span class="music-time" id="time-c2">0:00</span>
           </div>
-          <div class="lang-row">
-            <span class="lang-name">English</span>
-            <span class="lang-badge h">日常会話</span>
-          </div>
-          <div class="lang-row">
-            <span class="lang-name">中文（普通話）</span>
-            <span class="lang-badge h">日常会話</span>
-          </div>
-          <div class="lang-row">
-            <span class="lang-name">ภาษาไทย</span>
-            <span class="lang-badge m">旅行会話</span>
-          </div>
-          <div class="lang-row">
-            <span class="lang-name">ພາສາລາວ</span>
-            <span class="lang-badge l">勉強中</span>
+        </div>
+      </div>
+
+      <div class="card ci-morlam fade" style="background-image:none;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#100818 0%,#2a1040 40%,#603878 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">03</div>
+          <div class="card-title">Sticky Mango Moon</div>
+          <div class="card-desc">最初に作ったモーラム風の旅の歌。夜の屋台と満月。</div>
+          <audio id="audio-c3" src="/audio/Sticky Mango Moon.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c3" onclick="togglePlay('audio-c3','play-c3','seek-c3','time-c3')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c3','seek-c3')">
+              <div class="music-seekbar" id="seek-c3"></div>
+            </div>
+            <span class="music-time" id="time-c3">0:00</span>
           </div>
         </div>
       </div>
@@ -3205,6 +3251,61 @@ document.querySelectorAll('.stat-n[data-target]').forEach(el => statIO.observe(e
 
 /* ── HOLOGRAPHIC TILT ── */
 /* ── ABOUT LANG TOGGLE ── */
+/* ── MUSIC PLAYER ── */
+function fmtTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+const AUDIO_START = { 'audio-01': 113, 'audio-02': 52 };
+
+function togglePlay(audioId, btnId, seekId, timeId) {
+  const audio = document.getElementById(audioId);
+  const btn   = document.getElementById(btnId);
+  /* pause all other audio first */
+  document.querySelectorAll('audio').forEach(a => {
+    if (a !== audio && !a.paused) {
+      a.pause();
+      const b = document.getElementById(a.id.replace('audio-','play-'));
+      if (b) b.textContent = '▶';
+    }
+  });
+  if (audio.paused) {
+    if (audio.currentTime === 0 && AUDIO_START[audioId]) audio.currentTime = AUDIO_START[audioId];
+    audio.play();
+    btn.textContent = '⏸';
+  } else {
+    audio.pause();
+    btn.textContent = '▶';
+  }
+  audio.ontimeupdate = function() {
+    const seekBar = document.getElementById(seekId);
+    const timeEl  = document.getElementById(timeId);
+    if (seekBar && audio.duration) {
+      seekBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    }
+    if (timeEl) timeEl.textContent = fmtTime(audio.currentTime);
+  };
+  audio.onended = function() {
+    btn.textContent = '▶';
+    const seekBar = document.getElementById(seekId);
+    if (seekBar) seekBar.style.width = '0%';
+    const timeEl = document.getElementById(timeId);
+    if (timeEl) timeEl.textContent = '0:00';
+    audio.currentTime = 0;
+  };
+}
+function seekTo(e, audioId, seekId) {
+  const audio = document.getElementById(audioId);
+  if (!audio.duration) return;
+  const wrap = e.currentTarget;
+  const rect = wrap.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  audio.currentTime = ratio * audio.duration;
+  const seekBar = document.getElementById(seekId);
+  if (seekBar) seekBar.style.width = (ratio * 100) + '%';
+}
+
 function setLang(lang) {
   const langs = ['jp','en','zh','th','vi','es'];
   langs.forEach(l => {
