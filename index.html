@@ -836,6 +836,66 @@ nav.scrolled {
   margin-top: .7rem;
 }
 
+/* ── FULLBLEED PHOTO ── */
+.fb-wrap {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 400px;
+  overflow: hidden;
+  z-index: 1;
+}
+.fb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.7) saturate(0.75);
+  transform: scale(1.04);
+  transition: transform 6s ease-out;
+}
+.fb-wrap.visible .fb-img {
+  transform: scale(1);
+}
+.fb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(11,17,13,0.55) 0%,
+    rgba(11,17,13,0.1) 40%,
+    rgba(11,17,13,0.1) 60%,
+    rgba(11,17,13,0.75) 100%
+  );
+}
+.fb-text {
+  position: absolute;
+  bottom: 3rem;
+  left: 5vw;
+  max-width: 520px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .9s .3s ease, transform .9s .3s ease;
+}
+.fb-wrap.visible .fb-text {
+  opacity: 1;
+  transform: none;
+}
+.fb-cap {
+  font: 10px/1 'Courier New', monospace;
+  letter-spacing: .18em;
+  color: rgba(200,146,42,0.6);
+  margin-bottom: .75rem;
+}
+.fb-quote {
+  font-size: clamp(13px, 1.6vw, 16px);
+  color: rgba(240,235,224,0.85);
+  line-height: 1.85;
+  font-style: italic;
+}
+
 /* ── LYRICS BUTTON ── */
 .lyrics-btn {
   font-size: 9px;
@@ -2396,8 +2456,8 @@ footer {
         <div class="card-image"><div class="card-image-bg"></div></div>
         <div class="card-body">
           <div class="card-meta">01</div>
-          <div class="card-title">Khaen no Koi</div>
-          <div class="card-desc">ケーンの音色に乗せた、地図を持たない旅の歌。Mapless Mix。</div>
+          <div class="card-title">Koi Koi Suki Suki</div>
+          <div class="card-desc">ラオスの田舎道で拾った音に、日本語を一つまみ。あの夜の彷徨い録。</div>
           <audio id="audio-c1" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
           <div class="music-card-player">
             <button class="music-inline-btn" id="play-c1" onclick="togglePlay('audio-c1','play-c1','seek-c1','time-c1')" aria-label="Play">▶</button>
@@ -2433,7 +2493,7 @@ footer {
         <div class="card-body">
           <div class="card-meta">03</div>
           <div class="card-title">Sticky Mango Moon</div>
-          <div class="card-desc">最初に作ったモーラム風の旅の歌。夜の屋台と満月。</div>
+          <div class="card-desc">夜市の屋台、知らない祭り。三味線のグルーヴで、気づいたら踊ってた。</div>
           <audio id="audio-c3" src="/audio/Sticky Mango Moon.mp3" preload="none"></audio>
           <div class="music-card-player">
             <button class="music-inline-btn" id="play-c3" onclick="togglePlay('audio-c3','play-c3','seek-c3','time-c3')" aria-label="Play">▶</button>
@@ -2451,7 +2511,7 @@ footer {
         <div class="card-body">
           <div class="card-meta">04</div>
           <div class="card-title">No Map in My Hand</div>
-          <div class="card-desc">ケーンとEDMが衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。</div>
+          <div class="card-desc">EDMと旅が衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。</div>
           <audio id="audio-c4" src="/audio/No map in my hand.mp3" preload="none"></audio>
           <div class="music-card-player">
             <button class="music-inline-btn" id="play-c4" onclick="togglePlay('audio-c4','play-c4','seek-c4','time-c4')" aria-label="Play">▶</button>
@@ -2547,22 +2607,15 @@ footer {
   </div>
 </div>
 
-<div class="divider"></div>
-
-<!-- ── FIELD PHOTO: CUERNAVACA ── -->
-<div class="apr-wrap">
-  <div class="apr-inner">
-    <div class="apr-img-clip" id="apr-clip-mx">
-      <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="apr-img">
-    </div>
-    <div class="field-photo-meta apr-meta">
-      <p class="field-photo-cap">2019.07 — Cuernavaca, Mexico</p>
-      <p class="field-photo-desc">Got invited by the taco spot waiter. "We're doing paintball this weekend — you in?" Said yes without thinking twice.</p>
-    </div>
+<!-- ── FULLBLEED: CUERNAVACA ── -->
+<div class="fb-wrap fade" id="fb-cuernavaca">
+  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
+  <div class="fb-overlay"></div>
+  <div class="fb-text">
+    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
+    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
   </div>
 </div>
-
-<div class="divider"></div>
 
 <!-- 🐼 panda — ひっそり -->
 <!-- ── ENDING ROLL ── -->
@@ -2665,12 +2718,11 @@ footer {
 
   // Poetry lines (typewriter, loop-aware)
   const POEM=[
-    {t:2.5,  text:'あるいた。　まよった。'},
-    {t:5.5,  text:'それが　たびに　なった。'},
-    {t:9.8,  text:'まちがえた　みちが'},
-    {t:12.8, text:'ただしかった。'},
+    {t:2.5,  text:'あるいた。'},
+    {t:5.5,  text:'まよった。'},
+    {t:9.0,  text:'それが　たびに　なった。'},
   ];
-  const LOOP_DUR=19;
+  const LOOP_DUR=17;
 
   function drawPoetry(lt){
     ctx.save();
@@ -5442,7 +5494,7 @@ const SFX = (function(){
   // t: -1 はセクション区切り（空行）
   const LYRICS_DATA = {
     'audio-c1': {
-      title: 'Khaen no Koi — Mapless Mix',
+      title: 'Koi Koi Suki Suki',
       lines: [
         { t: 0,   text: '[Verse 1]' },
         { t: 2,   text: 'สาวน้อยมาแล้วเด้อ' },
