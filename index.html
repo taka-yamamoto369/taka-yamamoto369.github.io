@@ -836,6 +836,118 @@ nav.scrolled {
   margin-top: .7rem;
 }
 
+/* ── LYRICS BUTTON ── */
+.lyrics-btn {
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(200,146,42,0.25);
+  color: rgba(200,146,42,0.55);
+  padding: .18rem .5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color .2s, color .2s;
+  flex-shrink: 0;
+}
+.lyrics-btn:hover { border-color: var(--gold); color: var(--gold2); }
+
+/* ── LYRICS MODAL ── */
+#lyrics-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+#lyrics-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+#lyrics-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5,10,6,0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+#lyrics-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  max-height: 75vh;
+  background: rgba(12,20,13,0.92);
+  border: 1px solid rgba(200,146,42,0.2);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(16px);
+  transition: transform .3s cubic-bezier(.16,1,.3,1);
+}
+#lyrics-modal.open #lyrics-panel { transform: translateY(0); }
+#lyrics-header {
+  padding: 1.1rem 1.4rem .8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(200,146,42,0.1);
+  flex-shrink: 0;
+}
+#lyrics-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold2);
+  letter-spacing: .04em;
+}
+#lyrics-close {
+  background: none;
+  border: none;
+  color: var(--sub);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 .2rem;
+  transition: color .2s;
+}
+#lyrics-close:hover { color: var(--text); }
+#lyrics-body {
+  overflow-y: auto;
+  padding: 1.2rem 1.4rem 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200,146,42,0.15) transparent;
+}
+#lyrics-body::-webkit-scrollbar { width: 3px; }
+#lyrics-body::-webkit-scrollbar-thumb { background: rgba(200,146,42,0.15); border-radius: 2px; }
+.lyrics-line {
+  display: block;
+  font-size: 14px;
+  line-height: 2;
+  color: rgba(240,235,224,0.28);
+  letter-spacing: .02em;
+  transition: color .4s, font-size .3s;
+  cursor: default;
+  white-space: pre-wrap;
+}
+.lyrics-line.active {
+  color: var(--text);
+  font-size: 15px;
+}
+.lyrics-line.passed {
+  color: rgba(240,235,224,0.45);
+}
+.lyrics-line-break {
+  display: block;
+  height: 1rem;
+}
+
 /* ── STATEMENT FULLSCREEN ── */
 .statement-wrap {
   position: relative; z-index: 1;
@@ -2293,6 +2405,7 @@ footer {
               <div class="music-seekbar" id="seek-c1"></div>
             </div>
             <span class="music-time" id="time-c1">0:00</span>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c1')">歌詞</button>
           </div>
         </div>
       </div>
@@ -2310,6 +2423,7 @@ footer {
               <div class="music-seekbar" id="seek-c2"></div>
             </div>
             <span class="music-time" id="time-c2">0:00</span>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c2')">歌詞</button>
           </div>
         </div>
       </div>
@@ -2327,11 +2441,42 @@ footer {
               <div class="music-seekbar" id="seek-c3"></div>
             </div>
             <span class="music-time" id="time-c3">0:00</span>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c3')">歌詞</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade" style="background-image:none;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#080d18 0%,#0d1a38 30%,#1a2a6c 60%,#b21f1f 85%,#fdbb2d 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">04</div>
+          <div class="card-title">No Map in My Hand</div>
+          <div class="card-desc">ケーンとEDMが衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。</div>
+          <audio id="audio-c4" src="/audio/No map in my hand.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c4" onclick="togglePlay('audio-c4','play-c4','seek-c4','time-c4')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c4','seek-c4')">
+              <div class="music-seekbar" id="seek-c4"></div>
+            </div>
+            <span class="music-time" id="time-c4">0:00</span>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c4')">歌詞</button>
           </div>
         </div>
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- ── LYRICS MODAL ── -->
+<div id="lyrics-modal" role="dialog" aria-modal="true">
+  <div id="lyrics-backdrop"></div>
+  <div id="lyrics-panel">
+    <div id="lyrics-header">
+      <span id="lyrics-title"></span>
+      <button id="lyrics-close" onclick="closeLyrics()" aria-label="閉じる">×</button>
+    </div>
+    <div id="lyrics-body"></div>
   </div>
 </div>
 
@@ -3377,7 +3522,7 @@ function applyHolo(els, maxDeg) {
   });
 }
 
-applyHolo(document.querySelectorAll('.card'), 14);
+applyHolo(document.querySelectorAll('.card:not(#music .card)'), 14);
 
 /* ── JOURNEY FLAVOR POPUP ── */
 (function(){
@@ -5288,6 +5433,457 @@ const SFX = (function(){
     const nW=wrap.clientWidth, nH=wrap.clientHeight;
     renderer.setSize(nW, nH);
     camera.aspect=nW/nH; camera.updateProjectionMatrix();
+  });
+})();
+
+/* ── LYRICS MODAL ── */
+(function(){
+  // 歌詞データ。{ t: 秒数, text: '歌詞' } の配列。
+  // t: -1 はセクション区切り（空行）
+  const LYRICS_DATA = {
+    'audio-c1': {
+      title: 'Khaen no Koi — Mapless Mix',
+      lines: [
+        { t: 0,   text: '[Verse 1]' },
+        { t: 2,   text: 'สาวน้อยมาแล้วเด้อ' },
+        { t: 5,   text: 'เดินผ่านเฮ็ดใจสั่น' },
+        { t: 8,   text: 'กระโปรงปลิวตามลม' },
+        { t: 11,  text: 'เหมือนดอกไม้ในงาน' },
+        { t: 14,  text: 'ยิ้มทีเดียวอ้ายเผลอ' },
+        { t: 17,  text: 'หัวใจเต้นดังๆ' },
+        { t: 20,  text: 'โอ๊ะ โอ๊ะ มาเด้อ' },
+        { t: 23,  text: 'มานี่ใกล้อีกนิด' },
+        { t: -1,  text: '' },
+        { t: 26,  text: '[Pre-Chorus]' },
+        { t: 27,  text: 'ซังคือสิซังบ่ได้' },
+        { t: 30,  text: 'ฮักคือสิฮักบ่พอ' },
+        { t: 33,  text: 'อ้ายอยากฟังคำเดียว' },
+        { t: 36,  text: 'จากปากเจ้าพอ' },
+        { t: -1,  text: '' },
+        { t: 39,  text: '[Chorus]' },
+        { t: 40,  text: 'Koi koi, มาเด้อ' },
+        { t: 43,  text: 'ใจอ้ายมันเต้นแรง' },
+        { t: 46,  text: 'Suki suki, มาเด้อ' },
+        { t: 49,  text: 'ฮักนี้มันแซงแซง' },
+        { t: 52,  text: 'Koi koi, มาเด้อ' },
+        { t: 55,  text: 'เจ้าคือดวงดาว' },
+        { t: 58,  text: 'Suki suki, มาเด้อ' },
+        { t: 61,  text: 'เต้นนำกันยาวๆ' },
+        { t: -1,  text: '' },
+        { t: 65,  text: '[Verse 2]' },
+        { t: 66,  text: 'อยู่ไกลก็ยังนึก' },
+        { t: 69,  text: 'เห็นหน้าเจ้าแล้วหวั่น' },
+        { t: 72,  text: 'มือซ้ายยกขึ้นมา' },
+        { t: 75,  text: 'มือขวาก็โยกตาม' },
+        { t: 78,  text: 'เสียงแคนพาใจลอย' },
+        { t: 81,  text: 'ลอยไปถึงบ้านเจ้า' },
+        { t: 84,  text: 'โอ๊ะ โอ๊ะ ยิ้มหน่อย' },
+        { t: 87,  text: 'ให้อ้ายได้เดินต่อ' },
+        { t: -1,  text: '' },
+        { t: 90,  text: '[Pre-Chorus]' },
+        { t: 91,  text: 'ซังคือสิซังบ่ได้' },
+        { t: 94,  text: 'ฮักคือสิฮักบ่พอ' },
+        { t: 97,  text: 'อ้ายอยากฟังคำเดียว' },
+        { t: 100, text: 'จากปากเจ้าพอ' },
+        { t: -1,  text: '' },
+        { t: 103, text: '[Chorus]' },
+        { t: 104, text: 'Koi koi, มาเด้อ' },
+        { t: 107, text: 'ใจอ้ายมันเต้นแรง' },
+        { t: 110, text: 'Suki suki, มาเด้อ' },
+        { t: 113, text: 'ฮักนี้มันแซงแซง' },
+        { t: 116, text: 'Koi koi, มาเด้อ' },
+        { t: 119, text: 'เจ้าคือดวงดาว' },
+        { t: 122, text: 'Suki suki, มาเด้อ' },
+        { t: 125, text: 'เต้นนำกันยาวๆ' },
+        { t: -1,  text: '' },
+        { t: 129, text: '[Bridge]' },
+        { t: 130, text: 'เอวซ้าย เอวขวา' },
+        { t: 133, text: 'หมุนมาเบาๆ' },
+        { t: 136, text: 'เสียงแคนกับบีต' },
+        { t: 139, text: 'พาเราเข้ากัน' },
+        { t: 142, text: 'Kimi to banzai' },
+        { t: 145, text: 'คืนนี้ยังยาว' },
+        { t: 148, text: 'โอ๊ะ โอ๊ะ มาเด้อ' },
+        { t: 151, text: 'จูงมือแล้วไป' },
+        { t: -1,  text: '' },
+        { t: 154, text: '[Final Chorus]' },
+        { t: 155, text: 'Koi koi, มาเด้อ' },
+        { t: 158, text: 'ใจอ้ายมันเต้นแรง' },
+        { t: 161, text: 'Suki suki, มาเด้อ' },
+        { t: 164, text: 'ฮักนี้มันแซงแซง' },
+        { t: 167, text: 'Koi koi, มาเด้อ' },
+        { t: 170, text: 'เจ้าคือดวงดาว' },
+        { t: 173, text: 'Suki suki, มาเด้อ' },
+        { t: 176, text: 'เต้นนำกันยาวๆ' },
+      ]
+    },
+    'audio-c2': {
+      title: 'Where You Going',
+      lines: [
+        { t: 0,   text: '[Intro]' },
+        { t: 1,   text: '道の端で' },
+        { t: 4,   text: 'ぼくはまだ' },
+        { t: 7,   text: '靴の砂を払う' },
+        { t: 10,  text: '風が名前を' },
+        { t: 13,  text: '一つずつ' },
+        { t: 16,  text: '置いていく' },
+        { t: 19,  text: 'dao nimi tsutarajing se gahazimatsuta' },
+        { t: 23,  text: 'di tu wobi zitarashi' },
+        { t: 26,  text: 'jie gahirogatsuta' },
+        { t: -1,  text: '' },
+        { t: 29,  text: '[Verse 1]' },
+        { t: 30,  text: 'Bus left me here' },
+        { t: 33,  text: 'at the fried fish stall' },
+        { t: 36,  text: 'paper cup sweating' },
+        { t: 39,  text: 'under my palm' },
+        { t: 42,  text: 'Old auntie laughs' },
+        { t: 45,  text: 'with a toothless grin' },
+        { t: 48,  text: '"far is just far"' },
+        { t: 51,  text: 'and fills my bowl' },
+        { t: 54,  text: 'I count the coins' },
+        { t: 57,  text: 'I count the trains' },
+        { t: 60,  text: 'but my heart keeps' },
+        { t: 63,  text: 'missing the last one' },
+        { t: -1,  text: '' },
+        { t: 66,  text: '[Pre-Chorus]' },
+        { t: 67,  text: 'Where are you going?' },
+        { t: 70,  text: "I don't know" },
+        { t: 73,  text: 'Where are you going?' },
+        { t: 76,  text: "I don't know" },
+        { t: 79,  text: 'Filter climbs high' },
+        { t: 82,  text: 'my skin turns gold' },
+        { t: 85,  text: 'one more step' },
+        { t: 88,  text: 'and I let go' },
+        { t: -1,  text: '' },
+        { t: 91,  text: '[Chorus]' },
+        { t: 92,  text: 'Where are you going?' },
+        { t: 95,  text: "I don't know" },
+        { t: 98,  text: 'Where are you going?' },
+        { t: 101, text: "I don't know" },
+        { t: 104, text: 'ไปไหน' },
+        { t: 107, text: 'ไปไหน' },
+        { t: 110, text: 'Roadside fire' },
+        { t: 113, text: 'frontier bliss' },
+        { t: 116, text: 'I keep walking' },
+        { t: 119, text: 'into this' },
+        { t: 122, text: 'Where are you going?' },
+        { t: 125, text: "I don't know" },
+        { t: 128, text: 'Where are you going?' },
+        { t: 131, text: "I don't know" },
+        { t: -1,  text: '' },
+        { t: 134, text: '[Verse 2]' },
+        { t: 135, text: 'Night market steam' },
+        { t: 138, text: 'on a plastic chair' },
+        { t: 141, text: 'sweet chili on my sleeve' },
+        { t: 144, text: 'moon in my beer' },
+        { t: 147, text: 'You text my phone' },
+        { t: 150, text: 'then vanish again' },
+        { t: 153, text: 'like a station sign' },
+        { t: 156, text: 'in the rain' },
+        { t: 159, text: 'I laugh out loud' },
+        { t: 162, text: 'at my own plan' },
+        { t: 165, text: 'no map can hold' },
+        { t: 168, text: 'what my feet have' },
+        { t: -1,  text: '' },
+        { t: 171, text: '[Pre-Chorus]' },
+        { t: 172, text: 'Where are you going?' },
+        { t: 175, text: "I don't know" },
+        { t: 178, text: 'Where are you going?' },
+        { t: 181, text: "I don't know" },
+        { t: 184, text: 'Heart on the rise' },
+        { t: 187, text: 'bass in the dirt' },
+        { t: 190, text: 'one more breath' },
+        { t: 193, text: 'then it hurts' },
+        { t: -1,  text: '' },
+        { t: 196, text: '[Chorus]' },
+        { t: 197, text: 'Where are you going?' },
+        { t: 200, text: "I don't know" },
+        { t: 203, text: 'Where are you going?' },
+        { t: 206, text: "I don't know" },
+        { t: 209, text: 'ไปไหน' },
+        { t: 212, text: 'ไปไหน' },
+        { t: 215, text: 'Roadside fire' },
+        { t: 218, text: 'frontier bliss' },
+        { t: 221, text: 'I keep walking' },
+        { t: 224, text: 'into this' },
+        { t: 227, text: 'Where are you going?' },
+        { t: 230, text: "I don't know" },
+        { t: 233, text: 'Where are you going?' },
+        { t: 236, text: "I don't know" },
+        { t: -1,  text: '' },
+        { t: 239, text: '[Bridge]' },
+        { t: 240, text: '(ไปกับฉัน)' },
+        { t: 243, text: '(ไปกับฉัน)' },
+        { t: 246, text: 'Buses keep leaving' },
+        { t: 249, text: 'my name in the dust' },
+        { t: 252, text: 'I wave them away' },
+        { t: 255, text: 'and trust' },
+        { t: 258, text: 'No destination' },
+        { t: 261, text: "still I'm alive" },
+        { t: 264, text: 'stranger to nowhere' },
+        { t: 267, text: 'home in my stride' },
+        { t: -1,  text: '' },
+        { t: 270, text: '[Breakdown]' },
+        { t: 271, text: 'Where are you going?' },
+        { t: 274, text: "I don't know" },
+        { t: 277, text: 'จาไปไหน' },
+        { t: 280, text: 'ไม่รู้เลย' },
+        { t: 283, text: 'One hand open' },
+        { t: 286, text: 'one hand free' },
+        { t: 289, text: 'the whole wide road' },
+        { t: 292, text: 'is carrying me' },
+        { t: -1,  text: '' },
+        { t: 295, text: '[Final Chorus]' },
+        { t: 296, text: 'Where are you going?' },
+        { t: 299, text: "I don't know" },
+        { t: 302, text: 'Where are you going?' },
+        { t: 305, text: "I don't know" },
+        { t: 308, text: 'ไปไหน' },
+        { t: 311, text: 'ไปไหน' },
+        { t: 314, text: 'Roadside fire' },
+        { t: 317, text: 'frontier bliss' },
+        { t: 320, text: 'I keep walking' },
+        { t: 323, text: 'into this' },
+        { t: 326, text: 'Where are you going?' },
+        { t: 329, text: "I don't know" },
+        { t: 332, text: 'Where are you going?' },
+        { t: 335, text: "I don't know" },
+        { t: -1,  text: '' },
+        { t: 338, text: '[Outro]' },
+        { t: 339, text: '道の端で' },
+        { t: 342, text: '笑ってる' },
+        { t: 345, text: 'ぼくはまだ' },
+        { t: 348, text: 'まだ行ける' },
+        { t: 351, text: 'khaen in the dark' },
+        { t: 354, text: 'soft and long' },
+        { t: 357, text: 'I was lost' },
+        { t: 360, text: 'but I belong' },
+      ]
+    },
+    'audio-c4': {
+      title: 'No Map in My Hand',
+      lines: [
+        { t: 0,   text: '[Intro]' },
+        { t: 1,   text: 'No map in my hand' },
+        { t: 4,   text: 'No map in my hand' },
+        { t: 7,   text: 'No map in my hand' },
+        { t: 10,  text: 'No map in my hand' },
+        { t: -1,  text: '' },
+        { t: 13,  text: '[Verse 1]' },
+        { t: 14,  text: 'dao nimi tsutarajing' },
+        { t: 17,  text: 'se gahazimatsuta' },
+        { t: 20,  text: 'di tu wobi zitarashi' },
+        { t: 23,  text: 'jie gahirogatsuta' },
+        { t: 26,  text: 'My feet hit hard' },
+        { t: 29,  text: 'No map, no plan' },
+        { t: 32,  text: 'Open air, bare sky' },
+        { t: 35,  text: 'I came to dance' },
+        { t: -1,  text: '' },
+        { t: 38,  text: '[Verse 2]' },
+        { t: 39,  text: 'Quick tongue, quick grin' },
+        { t: 42,  text: 'Call me from the front' },
+        { t: 45,  text: 'Khaen cuts through heat' },
+        { t: 48,  text: 'Like a blade of light' },
+        { t: 51,  text: 'Hands go up now' },
+        { t: 54,  text: 'Crowd lean close' },
+        { t: 57,  text: 'Every two bars' },
+        { t: 60,  text: 'It strikes, it speaks' },
+        { t: -1,  text: '' },
+        { t: 63,  text: '[Chorus]' },
+        { t: 64,  text: 'Where are you going?' },
+        { t: 67,  text: 'I don\'t know' },
+        { t: 70,  text: 'Where are you going?' },
+        { t: 73,  text: 'I don\'t know' },
+        { t: 76,  text: 'Crowd shout back' },
+        { t: 79,  text: 'I don\'t know' },
+        { t: 82,  text: 'Where are you going?' },
+        { t: 85,  text: 'I don\'t know' },
+        { t: -1,  text: '' },
+        { t: 88,  text: '[Drop]' },
+        { t: 89,  text: 'Where are you going?' },
+        { t: 92,  text: 'I don\'t know' },
+        { t: 95,  text: 'Where are you going?' },
+        { t: 98,  text: 'I don\'t know' },
+        { t: 101, text: 'Step, step, spin' },
+        { t: 104, text: 'Step, step, spin' },
+        { t: 107, text: 'Khaen leads the line' },
+        { t: 110, text: 'And the floor goes wild' },
+        { t: 113, text: 'Where are you going?' },
+        { t: 116, text: 'I don\'t know' },
+        { t: 119, text: 'Where are you going?' },
+        { t: 122, text: 'I don\'t know' },
+        { t: -1,  text: '' },
+        { t: 125, text: '[Verse 3]' },
+        { t: 126, text: 'I came in alone' },
+        { t: 129, text: 'Left with your name' },
+        { t: 132, text: 'Dust on my sleeves' },
+        { t: 135, text: 'Fire in my chest' },
+        { t: 138, text: 'You move like thunder' },
+        { t: 141, text: 'I move like home' },
+        { t: 144, text: 'No fear tonight' },
+        { t: 147, text: 'We own this road' },
+        { t: -1,  text: '' },
+        { t: 150, text: '[Chorus]' },
+        { t: 151, text: 'Where are you going?' },
+        { t: 154, text: 'I don\'t know' },
+        { t: 157, text: 'Where are you going?' },
+        { t: 160, text: 'I don\'t know' },
+        { t: 163, text: 'Crowd shout back' },
+        { t: 166, text: 'I don\'t know' },
+        { t: 169, text: 'Where are you going?' },
+        { t: 172, text: 'I don\'t know' },
+        { t: -1,  text: '' },
+        { t: 175, text: '[Drop]' },
+        { t: 176, text: 'Where are you going?' },
+        { t: 179, text: 'I don\'t know' },
+        { t: 182, text: 'Where are you going?' },
+        { t: 185, text: 'I don\'t know' },
+        { t: 188, text: 'Kick on four' },
+        { t: 191, text: 'Hands in the air' },
+        { t: 194, text: 'Khaen cuts high' },
+        { t: 197, text: 'Like a shouting spear' },
+        { t: 200, text: 'Where are you going?' },
+        { t: 203, text: 'I don\'t know' },
+        { t: 206, text: 'Where are you going?' },
+        { t: 209, text: 'I don\'t know' },
+        { t: -1,  text: '' },
+        { t: 212, text: '[Outro]' },
+        { t: 213, text: 'When I got lost' },
+        { t: 216, text: 'The scenery began' },
+        { t: 219, text: 'When I closed the map' },
+        { t: 222, text: 'The world opened up' },
+        { t: 225, text: 'Khaen fades slow' },
+        { t: 228, text: 'But I still hear you' },
+        { t: 231, text: 'Open air stage' },
+        { t: 234, text: 'We danced it through' },
+      ]
+    },
+    'audio-c3': {
+      title: 'Sticky Mango Moon',
+      lines: [
+        { t: 0,   text: '[Verse 1]' },
+        { t: 2,   text: 'I came from the rice field road' },
+        { t: 5,   text: 'Dust on my shoes, gold in my throat' },
+        { t: 8,   text: 'You call my name, I turn around' },
+        { t: 11,  text: 'Smile like a drum, kicking the ground' },
+        { t: 14,  text: 'Cherry on my cheek, silk in the wind' },
+        { t: 17,  text: 'I got that fire, I let it spin' },
+        { t: 20,  text: 'Bamboo shadow, sweet and low' },
+        { t: 23,  text: 'I move fast, I steal the show' },
+        { t: -1,  text: '' },
+        { t: 26,  text: '[Pre-Chorus]' },
+        { t: 27,  text: 'Say it now' },
+        { t: 29,  text: 'Come on, say it' },
+        { t: 31,  text: 'One more time' },
+        { t: 33,  text: "Don't delay it" },
+        { t: 35,  text: 'My heart goes' },
+        { t: 37,  text: 'Doki-doki' },
+        { t: 39,  text: 'Swing that way' },
+        { t: 41,  text: 'Khaen and beat me' },
+        { t: -1,  text: '' },
+        { t: 43,  text: '[Chorus]' },
+        { t: 44,  text: 'Aiyo, aiyo, dance with me' },
+        { t: 47,  text: 'Aiyo, aiyo, let it be' },
+        { t: 50,  text: "Khao niaw sweet, I'm on the run" },
+        { t: 53,  text: 'Clap your hands, we rise as one' },
+        { t: 56,  text: 'Aiyo, aiyo, sing it loud' },
+        { t: 59,  text: 'Aiyo, aiyo, through the crowd' },
+        { t: 62,  text: "Moonlight spins, we don't go home" },
+        { t: 65,  text: 'Mekong fire, take me all night long' },
+        { t: -1,  text: '' },
+        { t: 69,  text: '[Verse 2]' },
+        { t: 70,  text: 'Lantern glow on the market lane' },
+        { t: 73,  text: 'Your laughing eyes keep breaking my chain' },
+        { t: 76,  text: 'I say "kon ni," you say "oh yeah"' },
+        { t: 79,  text: 'We make a storm out of thin air' },
+        { t: 82,  text: 'Papaya bright and lemon zed' },
+        { t: 85,  text: 'Feet on the floor, no time for bed' },
+        { t: 88,  text: 'One, two, three, then turn again' },
+        { t: 91,  text: 'Everybody shout, let the feeling in' },
+        { t: -1,  text: '' },
+        { t: 94,  text: '[Pre-Chorus]' },
+        { t: 95,  text: 'Say it now' },
+        { t: 97,  text: 'Come on, say it' },
+        { t: 99,  text: 'One more time' },
+        { t: 101, text: "Don't delay it" },
+        { t: 103, text: 'My heart goes' },
+        { t: 105, text: 'Doki-doki' },
+        { t: 107, text: 'Swing that way' },
+        { t: 109, text: 'Khaen and beat me' },
+        { t: -1,  text: '' },
+        { t: 111, text: '[Chorus]' },
+        { t: 112, text: 'Aiyo, aiyo, dance with me' },
+        { t: 115, text: 'Aiyo, aiyo, let it be' },
+        { t: 118, text: "Khao niaw sweet, I'm on the run" },
+        { t: 121, text: 'Clap your hands, we rise as one' },
+        { t: 124, text: 'Aiyo, aiyo, sing it loud' },
+        { t: 127, text: 'Aiyo, aiyo, through the crowd' },
+        { t: 130, text: "Moonlight spins, we don't go home" },
+        { t: 133, text: 'Mekong fire, take me all night long' },
+        { t: -1,  text: '' },
+        { t: 137, text: '[Bridge]' },
+        { t: 138, text: 'Hey, hey, hey, come close' },
+        { t: 141, text: 'Round and round, we lose control' },
+        { t: 144, text: 'Nihon shine in my smile' },
+        { t: 147, text: 'Isan soul all the while' },
+        { t: 150, text: "Hey, hey, hey, don't stop" },
+        { t: 153, text: "Hands up high, we never drop" },
+        { t: 156, text: 'One more wave, one more cheer' },
+        { t: 159, text: "Tonight is ours, we're living here" },
+        { t: -1,  text: '' },
+        { t: 162, text: '[Final Chorus]' },
+        { t: 163, text: 'Aiyo, aiyo, dance with me' },
+        { t: 166, text: 'Aiyo, aiyo, let it be' },
+        { t: 169, text: "Khao niaw sweet, I'm on the run" },
+        { t: 172, text: 'Clap your hands, we rise as one' },
+        { t: 175, text: 'Aiyo, aiyo, sing it loud' },
+        { t: 178, text: 'Aiyo, aiyo, through the crowd' },
+        { t: 181, text: "Moonlight spins, we don't go home" },
+        { t: 184, text: 'Mekong fire, take me all night long' },
+      ]
+    }
+  };
+
+  let currentAudioId = null;
+
+  function buildLyrics(audioId) {
+    const data = LYRICS_DATA[audioId];
+    if (!data) return;
+    document.getElementById('lyrics-title').textContent = data.title;
+    const body = document.getElementById('lyrics-body');
+    body.innerHTML = '';
+    data.lines.forEach(line => {
+      if (line.t === -1) {
+        const br = document.createElement('span');
+        br.className = 'lyrics-line-break';
+        body.appendChild(br);
+      } else {
+        const el = document.createElement('span');
+        el.className = 'lyrics-line active';
+        el.textContent = line.text;
+        body.appendChild(el);
+      }
+    });
+    body.scrollTop = 0;
+  }
+
+  window.openLyrics = function(audioId) {
+    buildLyrics(audioId);
+    document.getElementById('lyrics-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLyrics = function() {
+    document.getElementById('lyrics-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // 背景クリックで閉じる
+  document.getElementById('lyrics-backdrop').addEventListener('click', closeLyrics);
+
+  // Escキーで閉じる
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLyrics();
   });
 })();
 </script>
