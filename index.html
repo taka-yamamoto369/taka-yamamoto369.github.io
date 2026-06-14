@@ -233,6 +233,18 @@ nav.scrolled {
   background: linear-gradient(to bottom, rgba(200,146,42,.6), transparent);
   animation: dropLine 2.4s ease-in-out 2.4s infinite;
 }
+.tl-scroll-hint {
+  position: absolute;
+  top: 1rem; right: 5vw;
+  font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--sub); display: flex; flex-direction: column;
+  align-items: center; gap: .5rem;
+}
+.tl-scroll-hint::after {
+  content: ''; width: 1px; height: 50px;
+  background: linear-gradient(to bottom, rgba(200,146,42,.6), transparent);
+  animation: dropLine 2.4s ease-in-out infinite;
+}
 @keyframes dropLine {
   0%  { transform:scaleY(0); transform-origin:top; opacity:1; }
   65% { transform:scaleY(1); transform-origin:top; opacity:1; }
@@ -944,7 +956,7 @@ nav.scrolled {
   letter-spacing: .15em;
   color: rgba(200,146,42,0.55);
   display: block;
-  margin-top: 4px;
+  margin-bottom: 6px;
 }
 
 /* ── LYRICS BUTTON ── */
@@ -2004,23 +2016,28 @@ footer {
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
+    <span class="stat-n">6+</span>
+    <span class="stat-l">Languages</span>
+  </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
     <span class="stat-n">∞</span>
     <span class="stat-l">Borders crossed</span>
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n" data-target="2">0</span>
+    <span class="stat-n" id="stat-games" data-target="0">0</span>
     <span class="stat-l">Games</span>
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n" data-target="2">0</span>
-    <span class="stat-l">Essays</span>
+    <span class="stat-n" id="stat-music" data-target="0">0</span>
+    <span class="stat-l">Songs</span>
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n">6+</span>
-    <span class="stat-l">Languages</span>
+    <span class="stat-n" id="stat-essays" data-target="0">0</span>
+    <span class="stat-l">Essays</span>
   </div>
 </div>
 
@@ -2138,6 +2155,7 @@ footer {
     <span class="section-label fade">History / 年表</span>
   </div>
   <div class="timeline-wrap">
+    <div class="tl-scroll-hint">Scroll</div>
     <div class="tl-scroll-wrap">
     <div class="timeline-line"></div>
     <div class="timeline-scroll">
@@ -2146,7 +2164,7 @@ footer {
       <span class="tl-year">2012</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">インドにぶん殴られた。</h3>
+        <h3 class="tl-title">インドに、ぶん殴られた。</h3>
         <p class="tl-desc">高校の友達に誘われてインドへ。ドロまみれの道で、車もウシも人も三輪タクシーも好き勝手に行き交う。ガンジス川に着く頃には、自分の常識の方が流されていた。<br><span style="font-size:11px;opacity:.55">A high school friend dragged me to India. Muddy roads, cows, rickshaws, people — all doing their own thing. By the time I reached the Ganges, it wasn't the river washing things away. It was me.</span></p>
         <span class="tl-tag">Travel · India</span>
       </div>
@@ -2156,8 +2174,8 @@ footer {
       <span class="tl-year">2013</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">サンフランシスコで、ベーコントマトスパゲッティを作り続けた。</h3>
-        <p class="tl-desc">英語と、スパゲッティと、青春。サンフランシスコの半年。<br><span style="font-size:11px;opacity:.55">English, pasta, and something that felt like youth. Six months in San Francisco.</span></p>
+        <h3 class="tl-title">イタリア人に、ナポリタンを食べさせた。</h3>
+        <p class="tl-desc">英語を勉強しにサンフランシスコへ。ルームメイトがイタリア人だった。ナポリタンを作ったら、「マンマミーア！」と言われた。褒めてたのかは、今も分からない。<br><span style="font-size:11px;opacity:.55">Went to San Francisco to study English. My roommate was Italian. Made him Napolitan spaghetti. He said "Mamma mia." Still not sure if that was a compliment.</span></p>
         <span class="tl-tag">Travel · USA</span>
       </div>
     </div>
@@ -2166,8 +2184,8 @@ footer {
       <span class="tl-year">2014</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">香港で、スイッチが入った。</h3>
-        <p class="tl-desc">中国語ペラペラの白人2人と仲良くなり、俺だけ中国語が話せないアジア人になった。その日から中国語を始める。<br><span style="font-size:11px;opacity:.55">Two white guys spoke perfect Mandarin. I didn't. That stung. Started studying that night.</span></p>
+        <h3 class="tl-title">俺だけ、中国語が話せなかった。</h3>
+        <p class="tl-desc">香港の地元の食堂。スタッフ：「幾位呀？」——聞きとれなかった。代わりに答えたのは、後ろにいたアメリカ人とスウェーデン人だった。帰国後、中国語を始めた。<br><span style="font-size:11px;opacity:.55">A local diner in Hong Kong. Staff: "幾位呀？" — I had no idea. The American and Swede behind me answered instead. Started studying Chinese when I got home.</span></p>
         <span class="tl-tag">Travel · Hong Kong</span>
       </div>
     </div>
@@ -2176,8 +2194,8 @@ footer {
       <span class="tl-year">2015</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">台湾に、ハマった。気づいたら7回行ってた。</h3>
-        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Went to Taiwan once. Then again. Then five more times.</span></p>
+        <h3 class="tl-title">台湾にハマった。たぶんタピオカのせい。</h3>
+        <p class="tl-desc">Lサイズを30秒で飲み干し、1日2杯飲んでいた。気づいたら7回行っていた。</p>
         <span class="tl-tag">Travel · Taiwan</span>
       </div>
     </div>
@@ -2186,8 +2204,8 @@ footer {
       <span class="tl-year">2016</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">四川人の熱量に、やられた。</h3>
-        <p class="tl-desc">ゲストハウスで知り合った人たちと麻辣火鍋と麻雀。こういう旅がしたかった。<br><span style="font-size:11px;opacity:.55">Strangers at a guesthouse. Hotpot, mahjong, and more warmth than I expected.</span></p>
+        <h3 class="tl-title">四川人の"熱情"にやられた。</h3>
+        <p class="tl-desc">四川のゲストハウス。夜遅く、夕飯を食べずに戻った。オーナーに「なんでまだ飯を食ってないんだ！？」と怒鳴られ、閉まりかけの食堂へ連行された。しかも奢りだった。</p>
         <span class="tl-tag">Travel · China</span>
       </div>
     </div>
@@ -2293,6 +2311,16 @@ footer {
     </div>
     </div><!-- end timeline-scroll -->
     </div><!-- end tl-scroll-wrap -->
+  </div>
+</div>
+
+<!-- ── FULLBLEED: CUERNAVACA ── -->
+<div class="fb-wrap fade" id="fb-cuernavaca">
+  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
+  <div class="fb-overlay"></div>
+  <div class="fb-text">
+    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
+    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
   </div>
 </div>
 
@@ -2500,8 +2528,8 @@ footer {
   <div class="polaroid">
     <img src="images/sichuan-hotpot.jpg" alt="Hotpot in Sichuan">
     <div class="polaroid-caption">
-      Spicy broth. Warm strangers. One pot.
       <span class="pol-date">2016.02 — Sichuan, China</span>
+      Spicy broth. Warm strangers. One pot.
     </div>
   </div>
 </div>
@@ -2527,7 +2555,7 @@ footer {
               <div class="music-seekbar" id="seek-c1"></div>
             </div>
             <span class="music-time" id="time-c1">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c1')">歌詞</button>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2545,7 +2573,7 @@ footer {
               <div class="music-seekbar" id="seek-c2"></div>
             </div>
             <span class="music-time" id="time-c2">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c2')">歌詞</button>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2563,7 +2591,7 @@ footer {
               <div class="music-seekbar" id="seek-c3"></div>
             </div>
             <span class="music-time" id="time-c3">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c3')">歌詞</button>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2581,7 +2609,7 @@ footer {
               <div class="music-seekbar" id="seek-c4"></div>
             </div>
             <span class="music-time" id="time-c4">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c4')">歌詞</button>
+            <button class="lyrics-btn" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2666,16 +2694,6 @@ footer {
   <div id="globe-wrap" style="width:100%; max-width:560px; height:440px; cursor:grab; position:relative; overflow:hidden;">
     <canvas id="globe3d" style="width:100%; height:100%; display:block;"></canvas>
     <div id="globe-hint" style="position:absolute;bottom:.9rem;left:50%;transform:translateX(-50%);font:10px/1 'Courier New',monospace;color:rgba(200,146,42,0.35);letter-spacing:.12em;pointer-events:none;transition:opacity .6s;">drag to rotate</div>
-  </div>
-</div>
-
-<!-- ── FULLBLEED: CUERNAVACA ── -->
-<div class="fb-wrap fade" id="fb-cuernavaca">
-  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
-  <div class="fb-overlay"></div>
-  <div class="fb-text">
-    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
-    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
   </div>
 </div>
 
@@ -2784,7 +2802,7 @@ footer {
     {t:3.5,  text:'まよった。'},
     {t:4.5,  text:'それが　たびに　なった。'},
   ];
-  const LOOP_DUR=12;
+  const LOOP_DUR=7;
 
   function drawPoetry(lt){
     ctx.save();
@@ -3444,7 +3462,7 @@ const TRAVEL_DATA = {
     cities: ['San Francisco']},
 };
 
-/* ── STATS: auto-compute from TRAVEL_DATA ── */
+/* ── STATS: auto-compute from TRAVEL_DATA + DOM + note.com API ── */
 (function(){
   const vals = Object.values(TRAVEL_DATA);
   const countries = vals.length;
@@ -3457,6 +3475,22 @@ const TRAVEL_DATA = {
   set('stat-countries', countries);
   set('stat-cities',    cities);
   set('stat-days',      days);
+
+  // DOM-based counts
+  set('stat-games', document.querySelectorAll('#games .card').length);
+  set('stat-music', document.querySelectorAll('#music .card').length);
+
+  // Essays: fetch from note.com API
+  fetch('https://note.com/api/v2/creators/sozoro_tabi/contents?kind=note&per_page=1')
+    .then(r => r.json())
+    .then(d => {
+      const total = d.data?.totalCount;
+      if(total) set('stat-essays', total);
+    })
+    .catch(() => {
+      // fallback: count writing section cards
+      set('stat-essays', document.querySelectorAll('#writing .card').length);
+    });
 })();
 
 /* ── NAV ── */
@@ -5552,7 +5586,7 @@ const SFX = (function(){
 
 /* ── LYRICS MODAL ── */
 (function(){
-  // 歌詞データ。{ t: 秒数, text: '歌詞' } の配列。
+  // 歌詞 / Lyricsデータ。{ t: 秒数, text: '歌詞 / Lyrics' } の配列。
   // t: -1 はセクション区切り（空行）
   const LYRICS_DATA = {
     'audio-c1': {
