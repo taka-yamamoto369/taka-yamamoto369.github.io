@@ -896,6 +896,57 @@ nav.scrolled {
   font-style: italic;
 }
 
+/* ── POLAROID PHOTO ── */
+.polaroid-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 2rem 6rem;
+  /* override .fade defaults — wrapper itself doesn't animate */
+  opacity: 1 !important;
+  transform: none !important;
+}
+.polaroid-wrap .polaroid {
+  background: #f5f0e8;
+  padding: 14px 14px 48px;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.35),
+    0 1px 3px rgba(0,0,0,0.2);
+  max-width: 340px;
+  width: 100%;
+  opacity: 0;
+  transform: rotate(-1.8deg) translateY(24px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.polaroid-wrap.visible .polaroid {
+  opacity: 1;
+  transform: rotate(-1.8deg) translateY(0);
+}
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: saturate(0.85) contrast(1.05);
+}
+.polaroid-caption {
+  margin-top: 14px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #444;
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+.polaroid-caption .pol-date {
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: #888;
+  display: block;
+  margin-top: 4px;
+}
+
 /* ── LYRICS BUTTON ── */
 .lyrics-btn {
   font-size: 9px;
@@ -2444,6 +2495,17 @@ footer {
 
 
 
+<!-- ── POLAROID ── -->
+<div class="polaroid-wrap fade">
+  <div class="polaroid">
+    <img src="images/sichuan-hotpot.jpg" alt="Hotpot in Sichuan">
+    <div class="polaroid-caption">
+      Spicy broth. Warm strangers. One pot.
+      <span class="pol-date">2016.02 — Sichuan, China</span>
+    </div>
+  </div>
+</div>
+
 <!-- ── MUSIC ── -->
 <div class="section-wrap" id="music">
   <div class="section">
@@ -2719,10 +2781,10 @@ footer {
   // Poetry lines (typewriter, loop-aware)
   const POEM=[
     {t:2.5,  text:'あるいた。'},
-    {t:5.5,  text:'まよった。'},
-    {t:9.0,  text:'それが　たびに　なった。'},
+    {t:3.5,  text:'まよった。'},
+    {t:4.5,  text:'それが　たびに　なった。'},
   ];
-  const LOOP_DUR=17;
+  const LOOP_DUR=12;
 
   function drawPoetry(lt){
     ctx.save();
@@ -2736,7 +2798,7 @@ footer {
       let a=Math.min(1,age/0.35);
       if(lt>nxt+2.2) a=Math.max(0,1-(lt-nxt-2.2)/1.3);
       if(a<=0) return;
-      const py=H-158+i*38;
+      const py=H-100+i*38;
       ctx.fillStyle=`rgba(2,8,4,${a*0.6})`; ctx.fillRect(W/2-170,py-24,340,32);
       ctx.fillStyle=`rgba(240,235,224,${a*0.95})`; ctx.fillText(l.text.slice(0,chars),W/2,py);
     });
