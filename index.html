@@ -831,9 +831,17 @@ nav.scrolled {
 /* ── MUSIC CARD PLAYER ── */
 .music-card-player {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: .6rem;
+  gap: .5rem;
   margin-top: .7rem;
+}
+.music-player-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex: 1;
+  min-width: 0;
 }
 
 /* ── FULLBLEED PHOTO ── */
@@ -940,7 +948,7 @@ nav.scrolled {
 .rpg-record {
   background: rgba(2,5,3,0.85);
   border: 1px solid rgba(200,146,42,0.2);
-  max-width: 280px;
+  max-width: 320px;
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -962,7 +970,8 @@ nav.scrolled {
   object-fit: cover;
   object-position: center top;
   display: block;
-  filter: saturate(0.5) contrast(1.1) brightness(0.6);
+  filter: saturate(0.6) contrast(1.05) brightness(0.75);
+  opacity: 0.85;
   border: 1px solid rgba(200,146,42,0.1);
 }
 .rpg-record-caption {
@@ -1493,12 +1502,12 @@ nav.scrolled {
 }
 .music-seekbar-wrap {
   flex: 1;
-  height: 2px;
+  height: 3px;
   background: rgba(255,255,255,0.12);
   border-radius: 2px;
   cursor: pointer;
   overflow: hidden;
-  max-width: 120px;
+  min-width: 60px;
 }
 .music-seekbar {
   height: 100%;
@@ -2690,7 +2699,7 @@ footer {
               <div class="music-seekbar" id="seek-c1"></div>
             </div>
             <span class="music-time" id="time-c1">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2708,7 +2717,7 @@ footer {
               <div class="music-seekbar" id="seek-c2"></div>
             </div>
             <span class="music-time" id="time-c2">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2726,7 +2735,7 @@ footer {
               <div class="music-seekbar" id="seek-c3"></div>
             </div>
             <span class="music-time" id="time-c3">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2744,7 +2753,7 @@ footer {
               <div class="music-seekbar" id="seek-c4"></div>
             </div>
             <span class="music-time" id="time-c4">0:00</span>
-            <button class="lyrics-btn" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
           </div>
         </div>
       </div>
@@ -2814,7 +2823,7 @@ footer {
 
 <!-- ── FULLBLEED: YAK ── -->
 <div class="fb-wrap fade" id="fb-yak">
-  <img src="images/yak-tibet.jpg" alt="Yak, Yunnan" class="fb-img" style="object-position: 60% 20%;">
+  <img src="images/yak-tibet.jpg" alt="Yak, Yunnan" class="fb-img" style="object-position: 60% 45%;">
   <div class="fb-overlay"></div>
   <div class="fb-text">
     <p class="fb-cap">2025.03 — Yunnan, China</p>
