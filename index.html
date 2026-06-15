@@ -896,6 +896,46 @@ nav.scrolled {
   font-style: italic;
 }
 
+/* ── CINEMASCOPE PHOTO ── */
+.cinema-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21/9;
+  overflow: hidden;
+}
+.cinema-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.85) saturate(0.9);
+  transform: scale(1.03);
+  transition: transform 6s ease-out;
+}
+.cinema-wrap.visible .cinema-img {
+  transform: scale(1);
+}
+.cinema-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2rem;
+  text-align: right;
+}
+.cinema-date {
+  font: 9px/1 'Courier New', monospace;
+  letter-spacing: .15em;
+  color: rgba(200,146,42,0.6);
+  display: block;
+  margin-bottom: .4rem;
+}
+.cinema-text {
+  font-size: 12px;
+  color: rgba(240,235,224,0.7);
+  font-style: italic;
+}
+
 /* ── RPG FIELD RECORD ── */
 .rpg-record {
   background: rgba(2,5,3,0.85);
@@ -2069,13 +2109,13 @@ footer {
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n" id="stat-music" data-target="0">0</span>
-    <span class="stat-l">Songs</span>
+    <span class="stat-n" id="stat-essays" data-target="0">0</span>
+    <span class="stat-l">Essays</span>
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n" id="stat-essays" data-target="0">0</span>
-    <span class="stat-l">Essays</span>
+    <span class="stat-n" id="stat-music" data-target="0">0</span>
+    <span class="stat-l">Songs</span>
   </div>
 </div>
 
@@ -2291,8 +2331,8 @@ footer {
       <span class="tl-year">2021</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">ステイホーム。暇すぎて、あつ森でアジアの地図を作った。</h3>
-        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Stayed home. Built a map of Asia in Animal Crossing. That's it.</span></p>
+        <h3 class="tl-title">ステイホーム。</h3>
+        <p class="tl-desc">ヒマすぎて、「あつまれ どうぶつの森」で世界を作った。<br><span style="font-size:11px;opacity:.55">Too bored. Built a world in Animal Crossing: New Horizons. That's it.</span></p>
         <span class="tl-tag">Life · Japan</span>
       </div>
     </div>
@@ -2301,9 +2341,9 @@ footer {
       <span class="tl-year">2022</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">ベトナム。バイクを避けながら、生き返った。</h3>
-        <p class="tl-desc">コロナ後、久々の海外。バイクの波に飛び込んで、やっと戻ってきた気がした。<br><span style="font-size:11px;opacity:.55">First trip post-COVID. Dodged motorbikes in Hanoi. Felt alive again.</span></p>
-        <span class="tl-tag">Travel · Vietnam</span>
+        <h3 class="tl-title">テキトーに乗って、テキトーに降りて、テキトーに歩いた。</h3>
+        <p class="tl-desc">タイで1時間50円の列車に乗り、気になった駅で降りては歩き回っていた。髪も現地で切った。気づけばタイ人扱いされていた。<br><span style="font-size:11px;opacity:.55">Took a train in Thailand. Got off wherever looked interesting. Walked around. Got a haircut locally. Started getting mistaken for Thai.</span></p>
+        <span class="tl-tag">Travel · Thailand</span>
       </div>
     </div>
 
@@ -2331,9 +2371,9 @@ footer {
       <span class="tl-year">2025</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">砂まみれになりながら、ラオスとタイを往復した。</h3>
-        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Bounced between Laos and Thailand until I lost count. Always covered in dust.</span></p>
-        <span class="tl-tag">Travel · Thailand · Laos</span>
+        <h3 class="tl-title">ポケモンみたいなやつに乗った。</h3>
+        <p class="tl-desc">チベット人に案内されて、モフモフした巨大なヤクに乗った。標高3000m、バーで知り合った3人と雪山を歩いた。<br><span style="font-size:11px;opacity:.55">A Tibetan guide took me to ride a massive fluffy yak. Then hiked a snowy mountain at 3,000m with three strangers I'd met at a bar.</span></p>
+        <span class="tl-tag">Travel · Tibet</span>
       </div>
     </div>
 
@@ -2341,9 +2381,9 @@ footer {
       <span class="tl-year">2026</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">— 続く。</h3>
-        <p class="tl-desc">次の国、次の言葉、次の物語。<br><span style="font-size:11px;opacity:.55">Next country. Next language. Next story. To be continued.</span></p>
-        <span class="tl-tag">To be continued</span>
+        <h3 class="tl-title">気づけば、親族席でビールを飲んでいた。</h3>
+        <p class="tl-desc">ラオスの結婚式に呼ばれた。親族でもないのに、なぜか親族席に座り、豪華な料理とビールをごちそうになった。最後はみんなで踊っていた。<br><span style="font-size:11px;opacity:.55">Got invited to a Lao wedding. Somehow ended up in the family section. Fancy food, free beer. Ended the night dancing with everyone.</span></p>
+        <span class="tl-tag">Travel · Laos</span>
       </div>
     </div>
     </div><!-- end timeline-scroll -->
@@ -2563,17 +2603,6 @@ footer {
   </div>
 </div>
 
-<!-- ── RPG-MAP: WORLD MAP ── -->
-<div class="rpgm-wrap fade" id="rpg-map">
-  <div class="rpgm-inner">
-    <div class="rpgm-label">WORLD MAP</div>
-    <div class="map-grid" id="map-grid"></div>
-    <div class="rpgm-dialog" id="map-dialog"></div>
-  </div>
-</div>
-
-
-
 
 
 <!-- ── POLAROID ── -->
@@ -2683,6 +2712,15 @@ footer {
   </div>
 </div>
 
+<!-- ── RPG-MAP: WORLD MAP ── -->
+<div class="rpgm-wrap fade" id="rpg-map">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">WORLD MAP</div>
+    <div class="map-grid" id="map-grid"></div>
+    <div class="rpgm-dialog" id="map-dialog"></div>
+  </div>
+</div>
+
 <!-- ── SNS ── -->
 <div class="section-wrap" id="sns">
   <div class="section">
@@ -2721,8 +2759,16 @@ footer {
   </div>
 </div>
 
-<div class="divider"></div>
+<!-- ── CINEMASCOPE: YAK ── -->
+<div class="cinema-wrap fade">
+  <img src="images/yak-tibet.jpg" alt="Yak, Tibet" class="cinema-img">
+  <div class="cinema-caption">
+    <span class="cinema-date">2025 — Yunnan, China</span>
+    <span class="cinema-text">Rode a yak. 3,000m above sea level.</span>
+  </div>
+</div>
 
+<div class="divider"></div>
 
 <!-- ── TRAVEL MAP ── -->
 <section class="section fade" id="travel-map" style="padding:5rem 5vw;">
@@ -4015,7 +4061,6 @@ function autoCycleDialog(elId, dialogs, delay){
   autoCycleDialog('map-dialog', [
     'ワールドマップを開くと、\nまだ行ってない場所の方が多い。',
     'エンディングを、まだ見ていない。\nたぶん、ない。',
-    '同じフィールドは、二度と同じじゃない。\nだから、戻ってもいい。',
     'ランダムエンカウントが多い旅が、\n一番おもしろい。'
   ], 3500);
 })();
