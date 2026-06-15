@@ -233,18 +233,6 @@ nav.scrolled {
   background: linear-gradient(to bottom, rgba(200,146,42,.6), transparent);
   animation: dropLine 2.4s ease-in-out 2.4s infinite;
 }
-.tl-scroll-hint {
-  position: absolute;
-  top: 1rem; right: 5vw;
-  font-size: 9px; letter-spacing: .25em; text-transform: uppercase;
-  color: var(--sub); display: flex; flex-direction: column;
-  align-items: center; gap: .5rem;
-}
-.tl-scroll-hint::after {
-  content: ''; width: 1px; height: 50px;
-  background: linear-gradient(to bottom, rgba(200,146,42,.6), transparent);
-  animation: dropLine 2.4s ease-in-out infinite;
-}
 @keyframes dropLine {
   0%  { transform:scaleY(0); transform-origin:top; opacity:1; }
   65% { transform:scaleY(1); transform-origin:top; opacity:1; }
@@ -906,6 +894,54 @@ nav.scrolled {
   color: rgba(240,235,224,0.85);
   line-height: 1.85;
   font-style: italic;
+}
+
+/* ── RPG FIELD RECORD ── */
+.rpg-record {
+  background: rgba(2,5,3,0.85);
+  border: 1px solid rgba(200,146,42,0.2);
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+.rpg-record-label {
+  font: 9px/1 'Courier New', monospace;
+  letter-spacing: .2em;
+  color: rgba(200,146,42,0.5);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rpg-record-label::before {
+  content: '▶ FIELD RECORD';
+}
+.rpg-record-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: saturate(0.7) contrast(1.1) brightness(0.9);
+  border: 1px solid rgba(200,146,42,0.1);
+}
+.rpg-record-caption {
+  margin-top: 1rem;
+  border-top: 1px dashed rgba(200,146,42,0.15);
+  padding-top: .75rem;
+}
+.rpg-record-date {
+  font: 9px/1 'Courier New', monospace;
+  letter-spacing: .15em;
+  color: rgba(200,146,42,0.5);
+  display: block;
+  margin-bottom: .5rem;
+}
+.rpg-record-text {
+  font-size: 12px;
+  color: rgba(240,235,224,0.7);
+  line-height: 1.75;
+  font-family: inherit;
 }
 
 /* ── POLAROID PHOTO ── */
@@ -1728,9 +1764,11 @@ footer {
 <nav id="nav">
   <a class="nav-logo" href="#">TY</a>
   <ul class="nav-links">
-    <li><a href="#journey">Journey</a></li>
+    <li><a href="#history">History</a></li>
     <li><a href="#games">Games</a></li>
     <li><a href="#writing">Writing</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#sns">SNS</a></li>
   </ul>
 </nav>
 
@@ -2155,7 +2193,6 @@ footer {
     <span class="section-label fade">History / 年表</span>
   </div>
   <div class="timeline-wrap">
-    <div class="tl-scroll-hint">Scroll</div>
     <div class="tl-scroll-wrap">
     <div class="timeline-line"></div>
     <div class="timeline-scroll">
@@ -2184,7 +2221,7 @@ footer {
       <span class="tl-year">2014</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">俺だけ、中国語が話せなかった。</h3>
+        <h3 class="tl-title">俺だけ中国語が話せなかった。</h3>
         <p class="tl-desc">香港の地元の食堂。スタッフ：「幾位呀？」——聞きとれなかった。代わりに答えたのは、後ろにいたアメリカ人とスウェーデン人だった。帰国後、中国語を始めた。<br><span style="font-size:11px;opacity:.55">A local diner in Hong Kong. Staff: "幾位呀？" — I had no idea. The American and Swede behind me answered instead. Started studying Chinese when I got home.</span></p>
         <span class="tl-tag">Travel · Hong Kong</span>
       </div>
@@ -2194,8 +2231,8 @@ footer {
       <span class="tl-year">2015</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">台湾にハマった。たぶんタピオカのせい。</h3>
-        <p class="tl-desc">Lサイズを30秒で飲み干し、1日2杯飲んでいた。気づいたら7回行っていた。</p>
+        <h3 class="tl-title">台湾に、ハマった。気づいたら7回行ってた。</h3>
+        <p class="tl-desc"><span style="font-size:11px;opacity:.55">Went to Taiwan once. Then again. Then five more times.</span></p>
         <span class="tl-tag">Travel · Taiwan</span>
       </div>
     </div>
@@ -2204,8 +2241,8 @@ footer {
       <span class="tl-year">2016</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">四川人の"熱情"にやられた。</h3>
-        <p class="tl-desc">四川のゲストハウス。夜遅く、夕飯を食べずに戻った。オーナーに「なんでまだ飯を食ってないんだ！？」と怒鳴られ、閉まりかけの食堂へ連行された。しかも奢りだった。</p>
+        <h3 class="tl-title">四川人の熱量に、やられた。</h3>
+        <p class="tl-desc">ゲストハウスで知り合った人たちと麻辣火鍋と麻雀。こういう旅がしたかった。<br><span style="font-size:11px;opacity:.55">Strangers at a guesthouse. Hotpot, mahjong, and more warmth than I expected.</span></p>
         <span class="tl-tag">Travel · China</span>
       </div>
     </div>
@@ -2214,8 +2251,8 @@ footer {
       <span class="tl-year">2017</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">深圳→香港5分→深圳。を、繰り返した。</h3>
-        <p class="tl-desc">何をしていたのかよくわからない。でも楽しかった。<br><span style="font-size:11px;opacity:.55">Crossed the border just to turn around. Repeated until it stopped making sense.</span></p>
+        <h3 class="tl-title">深圳→香港→深圳ループ。</h3>
+        <p class="tl-desc">深圳から香港へ。5分だけいて、また深圳へ戻る。それを繰り返していた。<br><span style="font-size:11px;opacity:.55">Shenzhen to Hong Kong. Five minutes. Back to Shenzhen. Repeat.</span></p>
         <span class="tl-tag">Travel · Hong Kong · China</span>
       </div>
     </div>
@@ -2224,9 +2261,9 @@ footer {
       <span class="tl-year">2018</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">日本なのに、外国だった。</h3>
-        <p class="tl-desc">夏でも涼しくて、どこまでも広くて、スケールが違った。北海道は異文化だった。<br><span style="font-size:11px;opacity:.55">Same passport, different world. Hokkaido didn't feel like Japan.</span></p>
-        <span class="tl-tag">Life · Japan</span>
+        <h3 class="tl-title">国境の村で、先生になった。</h3>
+        <p class="tl-desc">タイとミャンマーの国境沿いの村へ。村人に頼まれて、中国系タイ人、シャン族、リス族、ワ族の子どもたちに授業をした。<br><span style="font-size:11px;opacity:.55">A village on the Thai-Myanmar border. The locals asked me to teach. Chinese-Thai, Shan, Lisu, Wa — kids from four different peoples in one classroom.</span></p>
+        <span class="tl-tag">Travel · Thailand · Myanmar</span>
       </div>
     </div>
 
@@ -2235,7 +2272,7 @@ footer {
       <div class="tl-dot"></div>
       <div class="tl-content">
         <h3 class="tl-title">タコスとチョコラテ。山には賊がいた。</h3>
-        <p class="tl-desc">メキシコ・オアハカ。カラフルでのほほんとした街。山に行こうとしたら止められた。<br><span style="font-size:11px;opacity:.55">Tacos and chocolate every day in Oaxaca. Tried to hike into the hills. Was warned about bandits.</span></p>
+        <p class="tl-desc">メキシコ・オアハカ。毎日タコスとチョコラテを飲んでいた。郊外に出ようとしたら、地元の人に「山賊に襲われるぞ」と真顔で止められた。<br><span style="font-size:11px;opacity:.55">Oaxaca, Mexico. Tacos and chocolate every day. Tried to head out of town. A local stopped me dead serious: "You'll get robbed by bandits."</span></p>
         <span class="tl-tag">Travel · Mexico</span>
       </div>
     </div>
@@ -2244,9 +2281,9 @@ footer {
       <span class="tl-year">2020</span>
       <div class="tl-dot"></div>
       <div class="tl-content">
-        <h3 class="tl-title">親友代表として呼ばれ、インドネシア語で何かを叫んだ。</h3>
-        <p class="tl-desc">友達の結婚式に出席。インドネシア語で詩みたいなやつを読み上げた。意味はわからなかった。<br><span style="font-size:11px;opacity:.55">Called up as best buddy at an Indonesian wedding. Delivered a speech in Indonesian. No idea what I said. Everyone cheered.</span></p>
-        <span class="tl-tag">Life · Indonesia</span>
+        <h3 class="tl-title">ラオスのド田舎から中国のキラキラシティへ。</h3>
+        <p class="tl-desc">年をまたいで、ミャンマー→タイ→ミャンマー→タイ→ラオス→中国。疲れ果てた末、ラオスの国境でバスに置いていかれた。なんとかたどり着いた中国は、未来だった。<br><span style="font-size:11px;opacity:.55">Crossed the new year across Myanmar→Thailand→Myanmar→Thailand→Laos→China. Got left behind by the bus at the Lao border. The China I finally reached felt like the future.</span></p>
+        <span class="tl-tag">Travel · Myanmar · Laos · China</span>
       </div>
     </div>
 
@@ -2357,6 +2394,22 @@ footer {
 </div>
 
 <div class="divider"></div>
+
+<!-- ── RPG FIELD RECORD: BANGLADESH ── -->
+<div class="rpgm-wrap fade">
+  <div class="rpgm-inner">
+    <div class="rpg-record">
+      <div class="rpg-record-label">
+        <span>2023.12 — Cox's Bazar, Bangladesh</span>
+      </div>
+      <img src="images/rohingya-camp.jpg" alt="Rohingya Camp, Bangladesh" class="rpg-record-img">
+      <div class="rpg-record-caption">
+        <span class="rpg-record-date">LOCATION: ROHINGYA REFUGEE CAMP</span>
+        <p class="rpg-record-text">The world's largest refugee camp. Walked for hours. Never reached the end.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ── GAMES ── -->
 <div class="section-wrap" id="games">
