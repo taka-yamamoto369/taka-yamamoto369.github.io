@@ -940,7 +940,7 @@ nav.scrolled {
 .rpg-record {
   background: rgba(2,5,3,0.85);
   border: 1px solid rgba(200,146,42,0.2);
-  max-width: 480px;
+  max-width: 280px;
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -1207,6 +1207,38 @@ nav.scrolled {
 .tl-scroll-wrap {
   position: relative;
 }
+.tl-scroll-arrow {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 14px;
+  color: rgba(200,146,42,0.45);
+  z-index: 4;
+  animation: tl-bounce 1.6s ease-in-out infinite;
+  pointer-events: none;
+  line-height: 1;
+}
+@keyframes tl-bounce {
+  0%, 100% { transform: translateY(0); opacity: .45; }
+  50% { transform: translateY(5px); opacity: .8; }
+}
+.tl-scroll-arrow.hidden { opacity: 0; transition: opacity .4s; }
+.tl-progress-track {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(200,146,42,0.08);
+  z-index: 3;
+}
+.tl-progress-fill {
+  width: 100%;
+  background: rgba(200,146,42,0.5);
+  border-radius: 1px;
+  height: 0%;
+  transition: height .1s linear;
+}
 .tl-scroll-wrap::after {
   content: '';
   position: absolute;
@@ -1428,18 +1460,37 @@ nav.scrolled {
 }
 .music-inline:hover { opacity: 1; }
 .music-inline-btn {
-  width: 1.6rem; height: 1.6rem;
+  width: 2.6rem; height: 2.6rem;
   border-radius: 50%;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.25);
-  color: var(--text-main, #fff);
+  background: radial-gradient(circle at 35% 35%, rgba(200,146,42,0.25), rgba(200,146,42,0.06));
+  border: 1px solid rgba(200,146,42,0.4);
+  color: rgba(200,146,42,0.95);
   cursor: pointer;
-  font-size: .65rem;
+  font-size: .95rem;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  transition: border-color .2s, background .2s;
+  transition: transform .15s, box-shadow .2s;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.5),
+    0 1px 2px rgba(0,0,0,0.4),
+    inset 0 1px 1px rgba(200,146,42,0.15),
+    inset 0 -1px 1px rgba(0,0,0,0.3);
 }
-.music-inline-btn:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.07); }
+.music-inline-btn:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.6),
+    0 2px 4px rgba(0,0,0,0.4),
+    inset 0 1px 1px rgba(200,146,42,0.2),
+    inset 0 -1px 1px rgba(0,0,0,0.3),
+    0 0 12px rgba(200,146,42,0.2);
+}
+.music-inline-btn:active {
+  transform: scale(0.96);
+  box-shadow:
+    0 1px 4px rgba(0,0,0,0.5),
+    inset 0 2px 4px rgba(0,0,0,0.4);
+}
 .music-seekbar-wrap {
   flex: 1;
   height: 2px;
@@ -2234,8 +2285,10 @@ footer {
   </div>
   <div class="timeline-wrap">
     <div class="tl-scroll-wrap">
+    <div class="tl-progress-track"><div class="tl-progress-fill" id="tl-progress"></div></div>
+    <div class="tl-scroll-arrow" id="tl-arrow">↓</div>
     <div class="timeline-line"></div>
-    <div class="timeline-scroll">
+    <div class="timeline-scroll" id="tl-scroll">
 
     <div class="tl-item">
       <span class="tl-year">2012</span>
@@ -2761,7 +2814,7 @@ footer {
 
 <!-- ── FULLBLEED: YAK ── -->
 <div class="fb-wrap fade" id="fb-yak">
-  <img src="images/yak-tibet.jpg" alt="Yak, Yunnan" class="fb-img" style="object-position: center 20%;">
+  <img src="images/yak-tibet.jpg" alt="Yak, Yunnan" class="fb-img" style="object-position: 60% 20%;">
   <div class="fb-overlay"></div>
   <div class="fb-text">
     <p class="fb-cap">2025.03 — Yunnan, China</p>
@@ -3625,6 +3678,19 @@ const io = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
 allFade.forEach(el => io.observe(el));
+
+/* ── TIMELINE SCROLL PROGRESS ── */
+(function(){
+  const scroller = document.getElementById('tl-scroll');
+  const fill = document.getElementById('tl-progress');
+  const arrow = document.getElementById('tl-arrow');
+  if(!scroller || !fill) return;
+  scroller.addEventListener('scroll', () => {
+    const pct = scroller.scrollTop / (scroller.scrollHeight - scroller.clientHeight) * 100;
+    fill.style.height = Math.min(pct, 100) + '%';
+    if(arrow) arrow.classList.toggle('hidden', scroller.scrollTop > 40);
+  });
+})();
 
 /* ── TIMELINE OBSERVER ── */
 const tlIO = new IntersectionObserver((entries) => {
