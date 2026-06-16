@@ -2179,10 +2179,100 @@ footer {
   </div>
 </div>
 
-<!-- ── AREA CLEAR ── -->
-<div class="pref-section" style="padding:0 5vw 3rem;">
-  <p class="pref-section-label">AREA CLEAR <span style="font:9px/1 'Courier New',monospace; color:rgba(200,146,42,0.3); letter-spacing:.1em;">— tap to explore</span></p>
-  <div class="pref-grid" id="pref-grid"></div>
+<!-- ── MUSIC ── -->
+<div class="section-wrap" id="music">
+  <div class="section">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">Music / 音楽</p>
+    </div>
+    <div class="card-grid card-grid-sm">
+
+      <div class="card ci-morlam fade">
+        <div class="card-image"><div class="card-image-bg"></div></div>
+        <div class="card-body">
+          <div class="card-meta">01</div>
+          <div class="card-title">Koi Koi Suki Suki</div>
+          <div class="card-desc">ラオスの田舎道で拾った音に、日本語を一つまみ。あの夜の彷徨い録。<br><span style="font-size:11px;opacity:.6">Sounds from a Laotian backroad, with a pinch of Japanese. A record of wandering that night.</span></div>
+          <audio id="audio-c1" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c1" onclick="togglePlay('audio-c1','play-c1','seek-c1','time-c1')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c1','seek-c1')">
+              <div class="music-seekbar" id="seek-c1"></div>
+            </div>
+            <span class="music-time" id="time-c1">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card ci-morlam fade" style="--grad-a:#0a1218;--grad-b:#0f2030;--grad-c:#2a5060;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#0a1218 0%,#0f2030 40%,#2a5060 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">02</div>
+          <div class="card-title">Where You Going</div>
+          <div class="card-desc">旅先で何度も聞かれた問いから生まれた。"I don't know" が答え。<br><span style="font-size:11px;opacity:.6">Born from a question asked everywhere I traveled. The answer was always "I don't know."</span></div>
+          <audio id="audio-c2" src="/audio/Where You Going.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c2" onclick="togglePlay('audio-c2','play-c2','seek-c2','time-c2')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c2','seek-c2')">
+              <div class="music-seekbar" id="seek-c2"></div>
+            </div>
+            <span class="music-time" id="time-c2">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card ci-morlam fade" style="background-image:none;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#100818 0%,#2a1040 40%,#603878 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">03</div>
+          <div class="card-title">Sticky Mango Moon</div>
+          <div class="card-desc">夜市の屋台、知らない祭り。三味線のグルーヴで、気づいたら踊ってた。<br><span style="font-size:11px;opacity:.6">Night market stalls, an unfamiliar festival. A shamisen groove that had me dancing before I knew it.</span></div>
+          <audio id="audio-c3" src="/audio/Sticky Mango Moon.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c3" onclick="togglePlay('audio-c3','play-c3','seek-c3','time-c3')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c3','seek-c3')">
+              <div class="music-seekbar" id="seek-c3"></div>
+            </div>
+            <span class="music-time" id="time-c3">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade" style="background-image:none;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#080d18 0%,#0d1a38 30%,#1a2a6c 60%,#b21f1f 85%,#fdbb2d 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">04</div>
+          <div class="card-title">No Map in My Hand</div>
+          <div class="card-desc">EDMと旅が衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。<br><span style="font-size:11px;opacity:.6">Four-on-the-floor where EDM collides with travel. A floor chanting "Where are you going — I don't know."</span></div>
+          <audio id="audio-c4" src="/audio/No map in my hand.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c4" onclick="togglePlay('audio-c4','play-c4','seek-c4','time-c4')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c4','seek-c4')">
+              <div class="music-seekbar" id="seek-c4"></div>
+            </div>
+            <span class="music-time" id="time-c4">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── LYRICS MODAL ── -->
+<div id="lyrics-modal" role="dialog" aria-modal="true">
+  <div id="lyrics-backdrop"></div>
+  <div id="lyrics-panel">
+    <div id="lyrics-header">
+      <span id="lyrics-title"></span>
+      <button id="lyrics-close" onclick="closeLyrics()" aria-label="閉じる">×</button>
+    </div>
+    <div id="lyrics-body"></div>
+  </div>
 </div>
 
 <!-- ── STATEMENT ── -->
@@ -2242,6 +2332,12 @@ footer {
   </div>
 </div>
 
+<!-- ── AREA CLEAR ── -->
+<div class="pref-section" style="padding:0 5vw 3rem;">
+  <p class="pref-section-label">AREA CLEAR <span style="font:9px/1 'Courier New',monospace; color:rgba(200,146,42,0.3); letter-spacing:.1em;">— tap to explore</span></p>
+  <div class="pref-grid" id="pref-grid"></div>
+</div>
+
 <!-- ── JOURNEY (removed) ── -->
 <div class="journey-wrap" id="journey" style="display:none">
   <div class="journey-header">
@@ -2284,6 +2380,46 @@ footer {
       <p class="field-photo-cap">2023.01 — Phongsali, Laos</p>
       <p class="field-photo-desc">An Akha village above the clouds. No electricity, no signal. Just mountains, mist, and tin roofs.</p>
     </div>
+  </div>
+</div>
+
+<!-- ── RPG-ENC: ENCOUNTER ── -->
+<div class="rpgm-wrap fade" id="rpg-enc">
+  <div class="rpgm-inner">
+    <div class="enc-box">
+      <div class="enc-header">
+        <span class="enc-bang">！</span>
+        <span class="enc-title">ENCOUNTER</span>
+      </div>
+      <div class="enc-battle-ui">
+        <canvas id="enc-monster" width="280" height="130" style="display:block;width:100%;border:1px solid rgba(200,146,42,0.3);border-bottom:none;border-radius:4px 4px 0 0;"></canvas>
+        <div class="enc-battle-text" id="enc-battle-text">未知の言語が現れた！</div>
+        <div class="enc-menu" id="enc-menu">
+          <div class="enc-choice cursor" data-idx="0">▶ A：学習する</div>
+          <div class="enc-choice"        data-idx="1">　 B：話しかける</div>
+          <div class="enc-choice"        data-idx="2">　 C：写真をとる</div>
+          <div class="enc-choice"        data-idx="3">　 D：にげる</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RPG-LANGDEX ── -->
+<div class="rpgm-wrap fade" id="rpg-langdex">
+  <div class="rpgm-inner">
+    <div class="rpgm-label">PARTY / 手持ち言語</div>
+    <div id="langdex-list"></div>
+  </div>
+</div>
+
+<!-- ── FULLBLEED: CUERNAVACA ── -->
+<div class="fb-wrap fade" id="fb-cuernavaca">
+  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
+  <div class="fb-overlay"></div>
+  <div class="fb-text">
+    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
+    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
   </div>
 </div>
 
@@ -2450,48 +2586,6 @@ footer {
     </div>
     </div><!-- end timeline-scroll -->
     </div><!-- end tl-scroll-wrap -->
-  </div>
-</div>
-
-<!-- ── FULLBLEED: CUERNAVACA ── -->
-<div class="fb-wrap fade" id="fb-cuernavaca">
-  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
-  <div class="fb-overlay"></div>
-  <div class="fb-text">
-    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
-    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- ── RPG-ENC: ENCOUNTER ── -->
-<div class="rpgm-wrap fade" id="rpg-enc">
-  <div class="rpgm-inner">
-    <div class="enc-box">
-      <div class="enc-header">
-        <span class="enc-bang">！</span>
-        <span class="enc-title">ENCOUNTER</span>
-      </div>
-      <div class="enc-battle-ui">
-        <canvas id="enc-monster" width="280" height="130" style="display:block;width:100%;border:1px solid rgba(200,146,42,0.3);border-bottom:none;border-radius:4px 4px 0 0;"></canvas>
-        <div class="enc-battle-text" id="enc-battle-text">未知の言語が現れた！</div>
-        <div class="enc-menu" id="enc-menu">
-          <div class="enc-choice cursor" data-idx="0">▶ A：学習する</div>
-          <div class="enc-choice"        data-idx="1">　 B：話しかける</div>
-          <div class="enc-choice"        data-idx="2">　 C：写真をとる</div>
-          <div class="enc-choice"        data-idx="3">　 D：にげる</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── RPG-LANGDEX ── -->
-<div class="rpgm-wrap fade" id="rpg-langdex">
-  <div class="rpgm-inner">
-    <div class="rpgm-label">PARTY / 手持ち言語</div>
-    <div id="langdex-list"></div>
   </div>
 </div>
 
@@ -2675,102 +2769,6 @@ footer {
       <span class="pol-date">2016.02 — Sichuan, China</span>
       Spicy broth. Warm strangers. One pot.
     </div>
-  </div>
-</div>
-
-<!-- ── MUSIC ── -->
-<div class="section-wrap" id="music">
-  <div class="section">
-    <div class="section-header fade">
-      <p class="section-label" style="margin-bottom:0">Music / 音楽</p>
-    </div>
-    <div class="card-grid card-grid-sm">
-
-      <div class="card ci-morlam fade">
-        <div class="card-image"><div class="card-image-bg"></div></div>
-        <div class="card-body">
-          <div class="card-meta">01</div>
-          <div class="card-title">Koi Koi Suki Suki</div>
-          <div class="card-desc">ラオスの田舎道で拾った音に、日本語を一つまみ。あの夜の彷徨い録。<br><span style="font-size:11px;opacity:.6">Sounds from a Laotian backroad, with a pinch of Japanese. A record of wandering that night.</span></div>
-          <audio id="audio-c1" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c1" onclick="togglePlay('audio-c1','play-c1','seek-c1','time-c1')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c1','seek-c1')">
-              <div class="music-seekbar" id="seek-c1"></div>
-            </div>
-            <span class="music-time" id="time-c1">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card ci-morlam fade" style="--grad-a:#0a1218;--grad-b:#0f2030;--grad-c:#2a5060;">
-        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#0a1218 0%,#0f2030 40%,#2a5060 100%)"></div></div>
-        <div class="card-body">
-          <div class="card-meta">02</div>
-          <div class="card-title">Where You Going</div>
-          <div class="card-desc">旅先で何度も聞かれた問いから生まれた。"I don't know" が答え。<br><span style="font-size:11px;opacity:.6">Born from a question asked everywhere I traveled. The answer was always "I don't know."</span></div>
-          <audio id="audio-c2" src="/audio/Where You Going.mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c2" onclick="togglePlay('audio-c2','play-c2','seek-c2','time-c2')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c2','seek-c2')">
-              <div class="music-seekbar" id="seek-c2"></div>
-            </div>
-            <span class="music-time" id="time-c2">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card ci-morlam fade" style="background-image:none;">
-        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#100818 0%,#2a1040 40%,#603878 100%)"></div></div>
-        <div class="card-body">
-          <div class="card-meta">03</div>
-          <div class="card-title">Sticky Mango Moon</div>
-          <div class="card-desc">夜市の屋台、知らない祭り。三味線のグルーヴで、気づいたら踊ってた。<br><span style="font-size:11px;opacity:.6">Night market stalls, an unfamiliar festival. A shamisen groove that had me dancing before I knew it.</span></div>
-          <audio id="audio-c3" src="/audio/Sticky Mango Moon.mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c3" onclick="togglePlay('audio-c3','play-c3','seek-c3','time-c3')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c3','seek-c3')">
-              <div class="music-seekbar" id="seek-c3"></div>
-            </div>
-            <span class="music-time" id="time-c3">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card fade" style="background-image:none;">
-        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#080d18 0%,#0d1a38 30%,#1a2a6c 60%,#b21f1f 85%,#fdbb2d 100%)"></div></div>
-        <div class="card-body">
-          <div class="card-meta">04</div>
-          <div class="card-title">No Map in My Hand</div>
-          <div class="card-desc">EDMと旅が衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。<br><span style="font-size:11px;opacity:.6">Four-on-the-floor where EDM collides with travel. A floor chanting "Where are you going — I don't know."</span></div>
-          <audio id="audio-c4" src="/audio/No map in my hand.mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c4" onclick="togglePlay('audio-c4','play-c4','seek-c4','time-c4')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c4','seek-c4')">
-              <div class="music-seekbar" id="seek-c4"></div>
-            </div>
-            <span class="music-time" id="time-c4">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ── LYRICS MODAL ── -->
-<div id="lyrics-modal" role="dialog" aria-modal="true">
-  <div id="lyrics-backdrop"></div>
-  <div id="lyrics-panel">
-    <div id="lyrics-header">
-      <span id="lyrics-title"></span>
-      <button id="lyrics-close" onclick="closeLyrics()" aria-label="閉じる">×</button>
-    </div>
-    <div id="lyrics-body"></div>
   </div>
 </div>
 
@@ -5797,10 +5795,12 @@ const SFX = (function(){
         { t: 69,  text: 'เห็นหน้าเจ้าแล้วหวั่น' },
         { t: 72,  text: 'มือซ้ายยกขึ้นมา' },
         { t: 75,  text: 'มือขวาก็โยกตาม' },
-        { t: 78,  text: 'เสียงแคนพาใจลอย' },
-        { t: 81,  text: 'ลอยไปถึงบ้านเจ้า' },
-        { t: 84,  text: 'โอ๊ะ โอ๊ะ ยิ้มหน่อย' },
-        { t: 87,  text: 'ให้อ้ายได้เดินต่อ' },
+        { t: 78,  text: 'いきさきは　ない。やども　きめてない。' },
+        { t: 80,  text: 'きょう　なにを　たべるかさえ、まだわからない。' },
+        { t: 82,  text: 'きづいたら、ちずをとじていた。' },
+        { t: 84,  text: 'ลอยไปถึงบ้านเจ้า' },
+        { t: 87,  text: 'โอ๊ะ โอ๊ะ ยิ้มหน่อย' },
+        { t: 89,  text: 'ให้อ้ายได้เดินต่อ' },
         { t: -1,  text: '' },
         { t: 90,  text: '[Pre-Chorus]' },
         { t: 91,  text: 'ซังคือสิซังบ่ได้' },
