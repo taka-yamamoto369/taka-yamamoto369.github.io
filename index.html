@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MZVB5BF5L4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MZVB5BF5L4');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Taka Yamamoto</title>
@@ -1864,10 +1872,10 @@ footer {
 <nav id="nav">
   <a class="nav-logo" href="#">TY</a>
   <ul class="nav-links">
-    <li><a href="#music">Music</a></li>
     <li><a href="#history">History</a></li>
     <li><a href="#games">Games</a></li>
     <li><a href="#writing">Writing</a></li>
+    <li><a href="#music">Music</a></li>
     <li><a href="#sns">SNS</a></li>
   </ul>
 </nav>
@@ -2164,11 +2172,6 @@ footer {
   </div>
   <div class="stat-sep">—</div>
   <div class="stat">
-    <span class="stat-n" id="stat-music" data-target="0">0</span>
-    <span class="stat-l">Songs</span>
-  </div>
-  <div class="stat-sep">—</div>
-  <div class="stat">
     <span class="stat-n" id="stat-games" data-target="0">0</span>
     <span class="stat-l">Games</span>
   </div>
@@ -2177,102 +2180,17 @@ footer {
     <span class="stat-n" id="stat-essays" data-target="0">0</span>
     <span class="stat-l">Essays</span>
   </div>
-</div>
-
-<!-- ── MUSIC ── -->
-<div class="section-wrap" id="music">
-  <div class="section">
-    <div class="section-header fade">
-      <p class="section-label" style="margin-bottom:0">Music / 音楽</p>
-    </div>
-    <div class="card-grid card-grid-sm">
-
-      <div class="card ci-morlam fade">
-        <div class="card-image"><div class="card-image-bg"></div></div>
-        <div class="card-body">
-          <div class="card-meta">01</div>
-          <div class="card-title">Koi Koi Suki Suki</div>
-          <div class="card-desc">ラオスの田舎道で拾った音に、日本語を一つまみ。あの夜の彷徨い録。<br><span style="font-size:11px;opacity:.6">Sounds from a Laotian backroad, with a pinch of Japanese. A record of wandering that night.</span></div>
-          <audio id="audio-c1" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c1" onclick="togglePlay('audio-c1','play-c1','seek-c1','time-c1')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c1','seek-c1')">
-              <div class="music-seekbar" id="seek-c1"></div>
-            </div>
-            <span class="music-time" id="time-c1">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card ci-morlam fade" style="--grad-a:#0a1218;--grad-b:#0f2030;--grad-c:#2a5060;">
-        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#0a1218 0%,#0f2030 40%,#2a5060 100%)"></div></div>
-        <div class="card-body">
-          <div class="card-meta">02</div>
-          <div class="card-title">Where You Going</div>
-          <div class="card-desc">旅先で何度も聞かれた問いから生まれた。"I don't know" が答え。<br><span style="font-size:11px;opacity:.6">Born from a question asked everywhere I traveled. The answer was always "I don't know."</span></div>
-          <audio id="audio-c2" src="/audio/Where You Going.mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c2" onclick="togglePlay('audio-c2','play-c2','seek-c2','time-c2')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c2','seek-c2')">
-              <div class="music-seekbar" id="seek-c2"></div>
-            </div>
-            <span class="music-time" id="time-c2">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card ci-morlam fade" style="background-image:none;">
-        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#100818 0%,#2a1040 40%,#603878 100%)"></div></div>
-        <div class="card-body">
-          <div class="card-meta">03</div>
-          <div class="card-title">Sticky Mango Moon</div>
-          <div class="card-desc">夜市の屋台、知らない祭り。三味線のグルーヴで、気づいたら踊ってた。<br><span style="font-size:11px;opacity:.6">Night market stalls, an unfamiliar festival. A shamisen groove that had me dancing before I knew it.</span></div>
-          <audio id="audio-c3" src="/audio/Sticky Mango Moon.mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c3" onclick="togglePlay('audio-c3','play-c3','seek-c3','time-c3')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c3','seek-c3')">
-              <div class="music-seekbar" id="seek-c3"></div>
-            </div>
-            <span class="music-time" id="time-c3">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card fade" style="background-image:none;">
-        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#080d18 0%,#0d1a38 30%,#1a2a6c 60%,#b21f1f 85%,#fdbb2d 100%)"></div></div>
-        <div class="card-body">
-          <div class="card-meta">04</div>
-          <div class="card-title">No Map in My Hand</div>
-          <div class="card-desc">EDMと旅が衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。<br><span style="font-size:11px;opacity:.6">Four-on-the-floor where EDM collides with travel. A floor chanting "Where are you going — I don't know."</span></div>
-          <audio id="audio-c4" src="/audio/No map in my hand.mp3" preload="none"></audio>
-          <div class="music-card-player">
-            <button class="music-inline-btn" id="play-c4" onclick="togglePlay('audio-c4','play-c4','seek-c4','time-c4')" aria-label="Play">▶</button>
-            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c4','seek-c4')">
-              <div class="music-seekbar" id="seek-c4"></div>
-            </div>
-            <span class="music-time" id="time-c4">0:00</span>
-            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <div class="stat-sep">—</div>
+  <div class="stat">
+    <span class="stat-n" id="stat-music" data-target="0">0</span>
+    <span class="stat-l">Songs</span>
   </div>
 </div>
 
-<!-- ── LYRICS MODAL ── -->
-<div id="lyrics-modal" role="dialog" aria-modal="true">
-  <div id="lyrics-backdrop"></div>
-  <div id="lyrics-panel">
-    <div id="lyrics-header">
-      <span id="lyrics-title"></span>
-      <button id="lyrics-close" onclick="closeLyrics()" aria-label="閉じる">×</button>
-    </div>
-    <div id="lyrics-body"></div>
-  </div>
+<!-- ── AREA CLEAR ── -->
+<div class="pref-section" style="padding:0 5vw 3rem;">
+  <p class="pref-section-label">AREA CLEAR <span style="font:9px/1 'Courier New',monospace; color:rgba(200,146,42,0.3); letter-spacing:.1em;">— tap to explore</span></p>
+  <div class="pref-grid" id="pref-grid"></div>
 </div>
 
 <!-- ── STATEMENT ── -->
@@ -2332,12 +2250,6 @@ footer {
   </div>
 </div>
 
-<!-- ── AREA CLEAR ── -->
-<div class="pref-section" style="padding:0 5vw 3rem;">
-  <p class="pref-section-label">AREA CLEAR <span style="font:9px/1 'Courier New',monospace; color:rgba(200,146,42,0.3); letter-spacing:.1em;">— tap to explore</span></p>
-  <div class="pref-grid" id="pref-grid"></div>
-</div>
-
 <!-- ── JOURNEY (removed) ── -->
 <div class="journey-wrap" id="journey" style="display:none">
   <div class="journey-header">
@@ -2383,6 +2295,184 @@ footer {
   </div>
 </div>
 
+<!-- ── TIMELINE ── -->
+<div class="section-wrap" id="history">
+  <div class="section" style="padding-bottom:0">
+    <span class="section-label fade">History / 年表</span>
+  </div>
+  <div class="timeline-wrap">
+    <div class="tl-scroll-wrap">
+    <div class="tl-progress-track"><div class="tl-progress-fill" id="tl-progress"></div></div>
+    <div class="tl-scroll-arrow" id="tl-arrow">↓</div>
+    <div class="timeline-line"></div>
+    <div class="timeline-scroll" id="tl-scroll">
+
+    <div class="tl-item">
+      <span class="tl-year">2012</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">インドに、ぶん殴られた。</h3>
+        <p class="tl-desc">高校の友達に誘われてインドへ。ドロまみれの道で、車もウシも人も三輪タクシーも好き勝手に行き交う。ガンジス川に着く頃には、自分の常識の方が流されていた。<br><span style="font-size:11px;opacity:.55">A high school friend dragged me to India. Muddy roads, cows, rickshaws, people — all doing their own thing. By the time I reached the Ganges, it wasn't the river washing things away. It was me.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2013</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">イタリア人に、ナポリタンを食べさせた。</h3>
+        <p class="tl-desc">英語を勉強しにサンフランシスコへ。ルームメイトがイタリア人だった。ナポリタンを作ったら、「マンマミーア！」と言われた。褒めてたのかは、今も分からない。<br><span style="font-size:11px;opacity:.55">Went to San Francisco to study English. My roommate was Italian. Made him Napolitan spaghetti. He said "Mamma mia." Still not sure if that was a compliment.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2014</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">俺だけ中国語が話せなかった。</h3>
+        <p class="tl-desc">香港の地元の食堂。スタッフ：「幾位呀？」——聞きとれなかった。代わりに答えたのは、後ろにいたアメリカ人とスウェーデン人だった。帰国後、中国語を始めた。<br><span style="font-size:11px;opacity:.55">A local diner in Hong Kong. Staff: "幾位呀？" — I had no idea. The American and Swede behind me answered instead. Started studying Chinese when I got home.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2015</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">台湾にハマった。たぶんタピオカのせい。</h3>
+        <p class="tl-desc">タピオカミルクティーのLサイズを30秒で飲み干し、1日2杯飲んでいた。気づいたら7回行っていた。<br><span style="font-size:11px;opacity:.55">Addicted to Taiwan. Probably the boba. Drained an L-size in 30 seconds. Two cups a day. Somehow ended up going back seven times.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2016</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">四川人の"熱情"にやられた。</h3>
+        <p class="tl-desc">夕飯を食べずにゲストハウスへ戻った。オーナーに「なんでまだ飯を食ってないんだ！？」と怒鳴られ、閉まりかけの食堂へ連行された。しかも奢りだった。<br><span style="font-size:11px;opacity:.55">Came back to the guesthouse without eating. The owner yelled "Why haven't you eaten yet?!" and dragged me to a restaurant about to close. He paid for everything.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2017</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">深圳→香港→深圳ループ。</h3>
+        <p class="tl-desc">深圳から香港へ。5分だけいて、また深圳へ戻る。それを繰り返していた。<br><span style="font-size:11px;opacity:.55">Shenzhen to Hong Kong. Five minutes. Back to Shenzhen. Repeat.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2018</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">国境の村で、先生になった。</h3>
+        <p class="tl-desc">タイとミャンマーの国境沿いの村へ。村人に頼まれて、中国系タイ人、シャン族、リス族、ワ族の子どもたちに授業をした。<br><span style="font-size:11px;opacity:.55">A village on the Thai-Myanmar border. The locals asked me to teach. Chinese-Thai, Shan, Lisu, Wa — kids from four different peoples in one classroom.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2019</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">タコスとチョコラテ。山には賊がいた。</h3>
+        <p class="tl-desc">メキシコ・オアハカ。毎日タコスとチョコラテを飲んでいた。郊外に出ようとしたら、地元の人に「山賊に襲われるぞ」と真顔で止められた。<br><span style="font-size:11px;opacity:.55">Oaxaca, Mexico. Tacos and chocolate every day. Tried to head out of town. A local stopped me dead serious: "You'll get robbed by bandits."</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2020</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">ラオスのド田舎から中国のキラキラシティへ。</h3>
+        <p class="tl-desc">年をまたいで、ミャンマー→タイ→ミャンマー→タイ→ラオス→中国。疲れ果てた末、ラオスの国境でバスに置いていかれた。なんとかたどり着いた中国は、未来だった。<br><span style="font-size:11px;opacity:.55">Crossed the new year across Myanmar→Thailand→Myanmar→Thailand→Laos→China. Got left behind by the bus at the Lao border. The China I finally reached felt like the future.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2021</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">ステイホーム。</h3>
+        <p class="tl-desc">ヒマすぎて、「あつまれ どうぶつの森」で世界を作った。<br><span style="font-size:11px;opacity:.55">Too bored. Built a world in Animal Crossing: New Horizons. That's it.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2022</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">テキトーに乗って、テキトーに降りて、テキトーに歩いた。</h3>
+        <p class="tl-desc">タイで1時間50円の列車に乗り、気になった駅で降りては歩き回っていた。髪も現地で切った。気づけばタイ人扱いされていた。<br><span style="font-size:11px;opacity:.55">Took a train in Thailand. Got off wherever looked interesting. Walked around. Got a haircut locally. Started getting mistaken for Thai.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2023</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">バングラデシュで、世界最大の集落を歩いた。</h3>
+        <p class="tl-desc">コックスバザールのミャンマー料理屋で知り合った家族と、ロヒンギャキャンプへ。どこまでも続いていた。<br><span style="font-size:11px;opacity:.55">A family I met at a Myanmar restaurant took me to a Rohingya camp. It went on and on.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2024</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">桃源郷、実在した。</h3>
+        <p class="tl-desc">ラオス北部の山奥、雲の上の村。アカ族の集落に数日滞在した。水なし、電気なし、電波なし。雲海が毎朝見えた。夜、竹筒の煙を吸い、赤いスープと名前のわからない植物を食べた。なんにもないのに、なんかあった。<br><span style="font-size:11px;opacity:.55">A village above the clouds in northern Laos. No water, no electricity, no signal. Sea of clouds every morning. Bamboo pipe smoke, red soup, unidentified plants. Nothing there, but something was.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2025</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">ポケモンみたいなやつに乗った。</h3>
+        <p class="tl-desc">チベット人に案内されて、モフモフした巨大なヤクに乗った。標高3000m、バーで知り合った3人と雪山を歩いた。<br><span style="font-size:11px;opacity:.55">A Tibetan guide took me to ride a massive fluffy yak. Then hiked a snowy mountain at 3,000m with three strangers I'd met at a bar.</span></p>
+
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">2026</span>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <h3 class="tl-title">気づけば、親族席でビールを飲んでいた。</h3>
+        <p class="tl-desc">ラオスの結婚式に呼ばれた。親族でもないのに、なぜか親族席に座り、豪華な料理とビールをごちそうになった。最後はみんなで踊っていた。<br><span style="font-size:11px;opacity:.55">Got invited to a Lao wedding. Somehow ended up in the family section. Fancy food, free beer. Ended the night dancing with everyone.</span></p>
+
+      </div>
+    </div>
+    </div><!-- end timeline-scroll -->
+    </div><!-- end tl-scroll-wrap -->
+  </div>
+</div>
+
+<!-- ── FULLBLEED: CUERNAVACA ── -->
+<div class="fb-wrap fade" id="fb-cuernavaca">
+  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
+  <div class="fb-overlay"></div>
+  <div class="fb-text">
+    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
+    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <!-- ── RPG-ENC: ENCOUNTER ── -->
 <div class="rpgm-wrap fade" id="rpg-enc">
   <div class="rpgm-inner">
@@ -2410,198 +2500,6 @@ footer {
   <div class="rpgm-inner">
     <div class="rpgm-label">PARTY / 手持ち言語</div>
     <div id="langdex-list"></div>
-  </div>
-</div>
-
-<!-- ── FULLBLEED: CUERNAVACA ── -->
-<div class="fb-wrap fade" id="fb-cuernavaca">
-  <img src="images/cuernavaca.jpg" alt="Cuernavaca, Mexico" class="fb-img">
-  <div class="fb-overlay"></div>
-  <div class="fb-text">
-    <p class="fb-cap">2019.07 — Cuernavaca, Mexico</p>
-    <p class="fb-quote">Got invited by the taco spot waiter.<br>"We're doing paintball this weekend — you in?"<br>Said yes without thinking twice.</p>
-  </div>
-</div>
-
-<!-- ── TIMELINE ── -->
-<div class="section-wrap" id="history">
-  <div class="section" style="padding-bottom:0">
-    <span class="section-label fade">History / 年表</span>
-  </div>
-  <div class="timeline-wrap">
-    <div class="tl-scroll-wrap">
-    <div class="tl-progress-track"><div class="tl-progress-fill" id="tl-progress"></div></div>
-    <div class="tl-scroll-arrow" id="tl-arrow">↓</div>
-    <div class="timeline-line"></div>
-    <div class="timeline-scroll" id="tl-scroll">
-
-    <div class="tl-item" style="opacity:0.35;pointer-events:none;">
-      <span class="tl-year" style="opacity:0.4;">····</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title" style="font-size:clamp(0.9rem,1.8vw,1.2rem);color:rgba(200,146,42,0.5);letter-spacing:.08em;">↑ into the future</h3>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2026</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">親族席で、ビールを飲んでいた。</h3>
-        <p class="tl-desc">ラオスの結婚式に呼ばれた。親族でもないのに、なぜか親族席に座り、豪華な料理とビールをごちそうになった。最後はみんなで踊っていた。<br><span style="font-size:11px;opacity:.55">Got invited to a Lao wedding. Somehow ended up in the family section. Fancy food, free beer. Ended the night dancing with everyone.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2025</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">ポケモンみたいなやつに乗った。</h3>
-        <p class="tl-desc">チベット人に案内されて、モフモフした巨大なヤクに乗った。標高3000m、バーで知り合った3人と雪山を歩いた。<br><span style="font-size:11px;opacity:.55">A Tibetan guide took me to ride a massive fluffy yak. Then hiked a snowy mountain at 3,000m with three strangers I'd met at a bar.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2024</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">桃源郷、実在した。</h3>
-        <p class="tl-desc">ラオス北部の山奥、雲の上の村。アカ族の集落に数日滞在した。水なし、電気なし、電波なし。雲海が毎朝見えた。夜、竹筒の煙を吸い、赤いスープと名前のわからない植物を食べた。なんにもないのに、なんかあった。<br><span style="font-size:11px;opacity:.55">A village above the clouds in northern Laos. No water, no electricity, no signal. Sea of clouds every morning. Bamboo pipe smoke, red soup, unidentified plants. Nothing there, but something was.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2023</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">バングラデシュで、世界最大の集落を歩いた。</h3>
-        <p class="tl-desc">コックスバザールのミャンマー料理屋で知り合った家族と、ロヒンギャキャンプへ。どこまでも続いていた。<br><span style="font-size:11px;opacity:.55">A family I met at a Myanmar restaurant took me to a Rohingya camp. It went on and on.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2022</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">テキトーに乗って、テキトーに降りて、テキトーに歩いた。</h3>
-        <p class="tl-desc">タイで1時間50円の列車に乗り、気になった駅で降りては歩き回っていた。髪も現地で切った。気づけばタイ人扱いされていた。<br><span style="font-size:11px;opacity:.55">Took a train in Thailand. Got off wherever looked interesting. Walked around. Got a haircut locally. Started getting mistaken for Thai.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2021</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">ステイホーム。</h3>
-        <p class="tl-desc">ヒマすぎて、「あつまれ どうぶつの森」で世界を作った。<br><span style="font-size:11px;opacity:.55">Too bored. Built a world in Animal Crossing: New Horizons. That's it.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2020</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">ラオスのド田舎から中国のキラキラシティへ。</h3>
-        <p class="tl-desc">年をまたいで、ミャンマー→タイ→ミャンマー→タイ→ラオス→中国。疲れ果てた末、ラオスの国境でバスに置いていかれた。なんとかたどり着いた中国は、未来だった。<br><span style="font-size:11px;opacity:.55">Crossed the new year across Myanmar→Thailand→Myanmar→Thailand→Laos→China. Got left behind by the bus at the Lao border. The China I finally reached felt like the future.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2019</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">タコスとチョコラテ。山には賊がいた。</h3>
-        <p class="tl-desc">メキシコ・オアハカ。毎日タコスとチョコラテを飲んでいた。郊外に出ようとしたら、地元の人に「山賊に襲われるぞ」と真顔で止められた。<br><span style="font-size:11px;opacity:.55">Oaxaca, Mexico. Tacos and chocolate every day. Tried to head out of town. A local stopped me dead serious: "You'll get robbed by bandits."</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2018</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">国境の村で、先生になった。</h3>
-        <p class="tl-desc">タイとミャンマーの国境沿いの村へ。村人に頼まれて、中国系タイ人、シャン族、リス族、ワ族の子どもたちに授業をした。<br><span style="font-size:11px;opacity:.55">A village on the Thai-Myanmar border. The locals asked me to teach. Chinese-Thai, Shan, Lisu, Wa — kids from four different peoples in one classroom.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2017</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">深圳→香港→深圳ループ。</h3>
-        <p class="tl-desc">深圳から香港へ。5分だけいて、また深圳へ戻る。それを繰り返していた。<br><span style="font-size:11px;opacity:.55">Shenzhen to Hong Kong. Five minutes. Back to Shenzhen. Repeat.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2016</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">四川人の"熱情"にやられた。</h3>
-        <p class="tl-desc">夕飯を食べずにゲストハウスへ戻った。オーナーに「なんでまだ飯を食ってないんだ！？」と怒鳴られ、閉まりかけの食堂へ連行された。しかも奢りだった。<br><span style="font-size:11px;opacity:.55">Came back to the guesthouse without eating. The owner yelled "Why haven't you eaten yet?!" and dragged me to a restaurant about to close. He paid for everything.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2015</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">台湾にハマった。たぶんタピオカのせい。</h3>
-        <p class="tl-desc">タピオカミルクティーのLサイズを30秒で飲み干し、1日2杯飲んでいた。気づいたら7回行っていた。<br><span style="font-size:11px;opacity:.55">Addicted to Taiwan. Probably the boba. Drained an L-size in 30 seconds. Two cups a day. Somehow ended up going back seven times.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2014</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">俺だけ中国語が話せなかった。</h3>
-        <p class="tl-desc">香港の地元の食堂。スタッフ：「幾位呀？」——聞きとれなかった。代わりに答えたのは、後ろにいたアメリカ人とスウェーデン人だった。帰国後、中国語を始めた。<br><span style="font-size:11px;opacity:.55">A local diner in Hong Kong. Staff: "幾位呀？" — I had no idea. The American and Swede behind me answered instead. Started studying Chinese when I got home.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2013</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">イタリア人に、ナポリタンを食べさせた。</h3>
-        <p class="tl-desc">英語を勉強しにサンフランシスコへ。ルームメイトがイタリア人だった。ナポリタンを作ったら、「マンマミーア！」と言われた。褒めてたのかは、今も分からない。<br><span style="font-size:11px;opacity:.55">Went to San Francisco to study English. My roommate was Italian. Made him Napolitan spaghetti. He said "Mamma mia." Still not sure if that was a compliment.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <span class="tl-year">2012</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title">インドに、ぶん殴られた。</h3>
-        <p class="tl-desc">高校の友達に誘われてインドへ。ドロまみれの道で、車もウシも人も三輪タクシーも好き勝手に行き交う。ガンジス川に着く頃には、自分の常識の方が流されていた。<br><span style="font-size:11px;opacity:.55">A high school friend dragged me to India. Muddy roads, cows, rickshaws, people — all doing their own thing. By the time I reached the Ganges, it wasn't the river washing things away. It was me.</span></p>
-
-      </div>
-    </div>
-
-    <div class="tl-item" style="opacity:0.35;pointer-events:none;">
-      <span class="tl-year" style="opacity:0.4;">····</span>
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h3 class="tl-title" style="font-size:clamp(0.9rem,1.8vw,1.2rem);color:rgba(200,146,42,0.5);letter-spacing:.08em;">↓ into the past</h3>
-      </div>
-    </div>
-</div><!-- end timeline-scroll -->
-    </div><!-- end tl-scroll-wrap -->
   </div>
 </div>
 
@@ -2785,6 +2683,102 @@ footer {
       <span class="pol-date">2016.02 — Sichuan, China</span>
       Spicy broth. Warm strangers. One pot.
     </div>
+  </div>
+</div>
+
+<!-- ── MUSIC ── -->
+<div class="section-wrap" id="music">
+  <div class="section">
+    <div class="section-header fade">
+      <p class="section-label" style="margin-bottom:0">Music / 音楽</p>
+    </div>
+    <div class="card-grid card-grid-sm">
+
+      <div class="card ci-morlam fade">
+        <div class="card-image"><div class="card-image-bg"></div></div>
+        <div class="card-body">
+          <div class="card-meta">01</div>
+          <div class="card-title">Koi Koi Suki Suki</div>
+          <div class="card-desc">ラオスの田舎道で拾った音に、日本語を一つまみ。あの夜の彷徨い録。<br><span style="font-size:11px;opacity:.6">Sounds from a Laotian backroad, with a pinch of Japanese. A record of wandering that night.</span></div>
+          <audio id="audio-c1" src="/audio/Khaen no Koi (Mapless Mix).mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c1" onclick="togglePlay('audio-c1','play-c1','seek-c1','time-c1')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c1','seek-c1')">
+              <div class="music-seekbar" id="seek-c1"></div>
+            </div>
+            <span class="music-time" id="time-c1">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c1')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card ci-morlam fade" style="--grad-a:#0a1218;--grad-b:#0f2030;--grad-c:#2a5060;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#0a1218 0%,#0f2030 40%,#2a5060 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">02</div>
+          <div class="card-title">Where You Going</div>
+          <div class="card-desc">旅先で何度も聞かれた問いから生まれた。"I don't know" が答え。<br><span style="font-size:11px;opacity:.6">Born from a question asked everywhere I traveled. The answer was always "I don't know."</span></div>
+          <audio id="audio-c2" src="/audio/Where You Going.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c2" onclick="togglePlay('audio-c2','play-c2','seek-c2','time-c2')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c2','seek-c2')">
+              <div class="music-seekbar" id="seek-c2"></div>
+            </div>
+            <span class="music-time" id="time-c2">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c2')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card ci-morlam fade" style="background-image:none;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#100818 0%,#2a1040 40%,#603878 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">03</div>
+          <div class="card-title">Sticky Mango Moon</div>
+          <div class="card-desc">夜市の屋台、知らない祭り。三味線のグルーヴで、気づいたら踊ってた。<br><span style="font-size:11px;opacity:.6">Night market stalls, an unfamiliar festival. A shamisen groove that had me dancing before I knew it.</span></div>
+          <audio id="audio-c3" src="/audio/Sticky Mango Moon.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c3" onclick="togglePlay('audio-c3','play-c3','seek-c3','time-c3')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c3','seek-c3')">
+              <div class="music-seekbar" id="seek-c3"></div>
+            </div>
+            <span class="music-time" id="time-c3">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c3')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card fade" style="background-image:none;">
+        <div class="card-image"><div class="card-image-bg" style="background:linear-gradient(135deg,#080d18 0%,#0d1a38 30%,#1a2a6c 60%,#b21f1f 85%,#fdbb2d 100%)"></div></div>
+        <div class="card-body">
+          <div class="card-meta">04</div>
+          <div class="card-title">No Map in My Hand</div>
+          <div class="card-desc">EDMと旅が衝突する4つ打ち。"Where are you going — I don't know" を叫ぶフロア。<br><span style="font-size:11px;opacity:.6">Four-on-the-floor where EDM collides with travel. A floor chanting "Where are you going — I don't know."</span></div>
+          <audio id="audio-c4" src="/audio/No map in my hand.mp3" preload="none"></audio>
+          <div class="music-card-player">
+            <button class="music-inline-btn" id="play-c4" onclick="togglePlay('audio-c4','play-c4','seek-c4','time-c4')" aria-label="Play">▶</button>
+            <div class="music-seekbar-wrap" onclick="seekTo(event,'audio-c4','seek-c4')">
+              <div class="music-seekbar" id="seek-c4"></div>
+            </div>
+            <span class="music-time" id="time-c4">0:00</span>
+            <button class="lyrics-btn" style="margin-left:auto;" onclick="openLyrics('audio-c4')">歌詞 / Lyrics</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── LYRICS MODAL ── -->
+<div id="lyrics-modal" role="dialog" aria-modal="true">
+  <div id="lyrics-backdrop"></div>
+  <div id="lyrics-panel">
+    <div id="lyrics-header">
+      <span id="lyrics-title"></span>
+      <button id="lyrics-close" onclick="closeLyrics()" aria-label="閉じる">×</button>
+    </div>
+    <div id="lyrics-body"></div>
   </div>
 </div>
 
@@ -5811,12 +5805,10 @@ const SFX = (function(){
         { t: 69,  text: 'เห็นหน้าเจ้าแล้วหวั่น' },
         { t: 72,  text: 'มือซ้ายยกขึ้นมา' },
         { t: 75,  text: 'มือขวาก็โยกตาม' },
-        { t: 78,  text: 'いきさきは　ない。やども　きめてない。' },
-        { t: 80,  text: 'きょう　なにを　たべるかさえ、まだわからない。' },
-        { t: 82,  text: 'きづいたら、ちずをとじていた。' },
-        { t: 84,  text: 'ลอยไปถึงบ้านเจ้า' },
-        { t: 87,  text: 'โอ๊ะ โอ๊ะ ยิ้มหน่อย' },
-        { t: 89,  text: 'ให้อ้ายได้เดินต่อ' },
+        { t: 78,  text: 'เสียงแคนพาใจลอย' },
+        { t: 81,  text: 'ลอยไปถึงบ้านเจ้า' },
+        { t: 84,  text: 'โอ๊ะ โอ๊ะ ยิ้มหน่อย' },
+        { t: 87,  text: 'ให้อ้ายได้เดินต่อ' },
         { t: -1,  text: '' },
         { t: 90,  text: '[Pre-Chorus]' },
         { t: 91,  text: 'ซังคือสิซังบ่ได้' },
